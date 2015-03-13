@@ -1,0 +1,168 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema H3408_3
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `H3408_3` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `H3408_3` ;
+
+-- -----------------------------------------------------
+-- Table `H3408_3`.`Kayttaja`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Kayttaja` (
+  `idKayttaja` INT NOT NULL AUTO_INCREMENT,
+  `kayttajaNimi` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `salasana` VARCHAR(45) NULL,
+  `liittymisPaiva` DATETIME NULL,
+  PRIMARY KEY (`idKayttaja`),
+  UNIQUE INDEX `kayttajaNimi_UNIQUE` (`kayttajaNimi` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `H3408_3`.`Teema`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Teema` (
+  `idUlkoasu` INT NOT NULL AUTO_INCREMENT,
+  `blogiNimi` VARCHAR(45) NULL,
+  `merkintaVari` VARCHAR(45) NULL,
+  `taustaVari` VARCHAR(45) NULL,
+  PRIMARY KEY (`idUlkoasu`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `H3408_3`.`Postaus`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Postaus` (
+  `idPostaus` INT NOT NULL AUTO_INCREMENT,
+  `otsikko` VARCHAR(45) NULL,
+  `sisalto` LONGTEXT NULL,
+  `Kayttaja_id` INT NOT NULL,
+  `Ulkoasu_idUlkoasu` INT NOT NULL,
+  `luontiAika` DATETIME NOT NULL,
+  `Tila` VARCHAR(30) NULL,
+  `KommenttienMaara` INT NULL,
+  `Muokattu` DATETIME NULL,
+  `idKooste` INT NULL,
+  PRIMARY KEY (`idPostaus`),
+  INDEX `fk_Merkinta_Kayttaja_idx` (`Kayttaja_id` ASC),
+  INDEX `fk_Merkinta_Ulkoasu1_idx` (`Ulkoasu_idUlkoasu` ASC),
+  CONSTRAINT `fk_Merkinta_Kayttaja`
+    FOREIGN KEY (`Kayttaja_id`)
+    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Merkinta_Ulkoasu1`
+    FOREIGN KEY (`Ulkoasu_idUlkoasu`)
+    REFERENCES `H3408_3`.`Teema` (`idUlkoasu`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `H3408_3`.`Kommentti`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Kommentti` (
+  `idKommentti` INT NOT NULL AUTO_INCREMENT,
+  `otsikko` VARCHAR(45) NOT NULL,
+  `sisalto` TEXT NULL,
+  `Kayttaja_id` INT NOT NULL,
+  `idPostaus` INT NOT NULL,
+  `luontiAika` DATETIME NULL,
+  `Vanhempi` INT NULL,
+  `Tila` VARCHAR(30) NULL,
+  `Muokattu` DATETIME NULL,
+  PRIMARY KEY (`idKommentti`),
+  INDEX `fk_Kommnetti_Kayttaja1_idx` (`Kayttaja_id` ASC),
+  INDEX `fk_Kommnetti_Merkinta1_idx` (`idPostaus` ASC),
+  CONSTRAINT `fk_Kommnetti_Kayttaja1`
+    FOREIGN KEY (`Kayttaja_id`)
+    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Kommnetti_Merkinta1`
+    FOREIGN KEY (`idPostaus`)
+    REFERENCES `H3408_3`.`Postaus` (`idPostaus`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `H3408_3`.`Oikeus`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Oikeus` (
+  `idOikeudet` INT NOT NULL,
+  `oikeusNimi` VARCHAR(45) NOT NULL,
+  `oikeusKuvaus` VARCHAR(45) NULL,
+  PRIMARY KEY (`idOikeudet`),
+  UNIQUE INDEX `oikeusNimi_UNIQUE` (`oikeusNimi` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `H3408_3`.`Rooli`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Rooli` (
+  `idOikeudet` INT NOT NULL,
+  `idKayttaja` INT NOT NULL,
+  `aktiivinen` BIT NULL,
+  `banniLoppu` DATETIME NULL,
+  INDEX `fk_Oikeudet_has_Kayttaja_Kayttaja1_idx` (`idKayttaja` ASC),
+  INDEX `fk_Oikeudet_has_Kayttaja_Oikeudet1_idx` (`idOikeudet` ASC),
+  PRIMARY KEY (`idOikeudet`, `idKayttaja`),
+  CONSTRAINT `fk_Oikeudet_has_Kayttaja_Oikeudet1`
+    FOREIGN KEY (`idOikeudet`)
+    REFERENCES `H3408_3`.`Oikeus` (`idOikeudet`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Oikeudet_has_Kayttaja_Kayttaja1`
+    FOREIGN KEY (`idKayttaja`)
+    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `H3408_3`.`Tagi`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Tagi` (
+  `idTagi` INT NOT NULL AUTO_INCREMENT,
+  `tagiNimi` VARCHAR(45) NOT NULL,
+  `tagiKuvaus` VARCHAR(45) NULL,
+  PRIMARY KEY (`idTagi`),
+  UNIQUE INDEX `tagiNimi_UNIQUE` (`tagiNimi` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `H3408_3`.`Esiintyma`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Esiintyma` (
+  `Postaus_idPostaus` INT NOT NULL,
+  `Tagi_idTagi` INT NOT NULL,
+  PRIMARY KEY (`Postaus_idPostaus`, `Tagi_idTagi`),
+  INDEX `fk_Postaus_has_Tagi_Tagi1_idx` (`Tagi_idTagi` ASC),
+  INDEX `fk_Postaus_has_Tagi_Postaus1_idx` (`Postaus_idPostaus` ASC),
+  CONSTRAINT `fk_Postaus_has_Tagi_Postaus1`
+    FOREIGN KEY (`Postaus_idPostaus`)
+    REFERENCES `H3408_3`.`Postaus` (`idPostaus`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Postaus_has_Tagi_Tagi1`
+    FOREIGN KEY (`Tagi_idTagi`)
+    REFERENCES `H3408_3`.`Tagi` (`idTagi`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

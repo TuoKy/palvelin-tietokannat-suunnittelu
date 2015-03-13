@@ -1,3 +1,8 @@
+<?php 
+
+require_once ("../palvelin/myslijuttu/SesamAukene.php"); // kytän tietokanta avaus juttu
+// mikko pistä oma tietokannan avaus taikasi tähän ja pistä mun oma kommentteihin
+?>
 <!DOCTYPE html>
 <html>
 <head>
