@@ -2,6 +2,23 @@
 
 require_once ("../palvelin/myslijuttu/hurhur.php"); // kytän tietokanta avaus juttu
 // mikko pistä oma tietokannan avaus taikasi tähän ja pistä mun oma kommentteihin
+
+session_start();
+if (isset($_POST['username']) AND isset($_POST['password'])) {
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+ 
+$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana =?");
+$stmt->execute(array($username,$password));
+    if ($stmt->rowCount() == 1) {
+  
+        $_SESSION['app2_islogged'] = true;
+        $_SESSION['username'] = $_POST['username'];
+        }
+        else
+          echo 'wrong username/password !';
+        }
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,16 +46,6 @@ require_once ("../palvelin/myslijuttu/hurhur.php"); // kytän tietokanta avaus j
         <center>
             <div class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link</a>
-                    </li>
-                    <li><a href="#">Link</a>
-                    </li>
-                    <li><a href="#">Link</a>
-                    </li>
-                    <li><a href="#">Link</a>
-                    </li>
-                    <li><a href="#">Link</a>
-                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -57,7 +64,9 @@ require_once ("../palvelin/myslijuttu/hurhur.php"); // kytän tietokanta avaus j
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-right" role="search">
+				<?php               
+				$form = <<<FORM
+				<form class="navbar-form navbar-right" role="search" method="post" action="{$_SERVER['PHP_SELF']}">
                     <div class="form-group">
                         <input type="text" class="form-control" name="username" placeholder="Username">
                     </div>
@@ -66,6 +75,12 @@ require_once ("../palvelin/myslijuttu/hurhur.php"); // kytän tietokanta avaus j
                     </div>
                     <button type="submit" class="btn btn-default">Sign In</button>
                 </form>
+FORM;
+if ($_SESSION['app2_islogged'] == FALSE)
+			echo $form;
+		else
+			echo ("<a href ='logout.php'> Logout ({$_POST['username']})</a>");				
+				?>
             </div>
         </center>
     </div>
