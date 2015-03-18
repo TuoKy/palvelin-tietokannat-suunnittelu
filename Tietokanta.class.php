@@ -36,13 +36,11 @@ class Tietokanta {
 		$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ?");
 		$stmt->execute(array($kayttajaNimi));
 		
-		$date = date('Y-m-d H:i:s');
-		
 		if ($stmt->rowCount() == 1) {
 			return false;
 		} else {
-			$stmt = $db->prepare("INSERT INTO Kayttaja VALUES(?,?,?,?)");
-			$stmt->execute(array($kayttajaNimi, $email, $salasana, $date));
+			$stmt = $db->prepare("INSERT INTO Kayttaja (kayttajaNimi, email, salasana, liittymisPaiva) VALUES(?,?,?,NOW())");
+			$stmt->execute(array($kayttajaNimi, $email, $salasana));
 
 			return true;
 		}
@@ -62,9 +60,21 @@ class Tietokanta {
 		}
     } 
 
-	//KESKEN
     public function muokkaa_kayttaja($kayttajaNimi, $email) {
 		$stmt = $db->prepare("UPDATE Kayttaja SET email=? WHERE kayttajaNimi=?");
 		$stmt->execute(array($email, $kayttajaNimi));
-    } 
+    }
+	
+	
+	public function luo_postaus($otsikko, $sisalto, $kayttajaNimi) {
+		$stmt = $db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
+		$stmt->execute(array($idKayttaja));
+		
+		$idKayttaja = $stmt['idKayttaja'];
+		
+		$stmt = $db->prepare("INSERT INTO Postaus (otsikko, sisalto, idKayttaja, luontiAika, Muokattu) VALUES(?,?,?,NOW(),NOW())");
+		$stmt->execute(array($otsikko, $sisalto, $idKayttaja));
+    }
+	
+	
 }?>

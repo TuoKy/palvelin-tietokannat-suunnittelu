@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Kayttaja` (
   `kayttajaNimi` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `salasana` VARCHAR(45) NULL,
+  `salasana` VARCHAR(45) NULL,
   `liittymisPaiva` DATETIME NULL,
   PRIMARY KEY (`idKayttaja`),
   UNIQUE INDEX `kayttajaNimi_UNIQUE` (`kayttajaNimi` ASC))
@@ -41,23 +42,20 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Postaus` (
   `idPostaus` INT NOT NULL AUTO_INCREMENT,
   `otsikko` VARCHAR(45) NULL,
   `sisalto` LONGTEXT NULL,
-  `Kayttaja_id` INT NOT NULL,
-  `Ulkoasu_idUlkoasu` INT NOT NULL,
+  `idKayttaja` INT NOT NULL,
+  `idUlkoasu` INT NOT NULL,
   `luontiAika` DATETIME NOT NULL,
-  `Tila` VARCHAR(30) NULL,
-  `KommenttienMaara` INT NULL,
-  `Muokattu` DATETIME NULL,
-  `idKooste` INT NULL,
+  `muokattu` DATETIME NULL,
   PRIMARY KEY (`idPostaus`),
-  INDEX `fk_Merkinta_Kayttaja_idx` (`Kayttaja_id` ASC),
-  INDEX `fk_Merkinta_Ulkoasu1_idx` (`Ulkoasu_idUlkoasu` ASC),
+  INDEX `fk_Merkinta_Kayttaja_idx` (`idKayttaja` ASC),
+  INDEX `fk_Merkinta_Ulkoasu1_idx` (`idUlkoasu` ASC),
   CONSTRAINT `fk_Merkinta_Kayttaja`
-    FOREIGN KEY (`Kayttaja_id`)
+    FOREIGN KEY (`idKayttaja`)
     REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Merkinta_Ulkoasu1`
-    FOREIGN KEY (`Ulkoasu_idUlkoasu`)
+    FOREIGN KEY (`idUlkoasu`)
     REFERENCES `H3408_3`.`Teema` (`idUlkoasu`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -71,17 +69,17 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Kommentti` (
   `idKommentti` INT NOT NULL AUTO_INCREMENT,
   `otsikko` VARCHAR(45) NOT NULL,
   `sisalto` TEXT NULL,
-  `Kayttaja_id` INT NOT NULL,
+  `idKayttaja` INT NOT NULL,
   `idPostaus` INT NOT NULL,
   `luontiAika` DATETIME NULL,
-  `Vanhempi` INT NULL,
-  `Tila` VARCHAR(30) NULL,
-  `Muokattu` DATETIME NULL,
+  `vanhempi` INT NULL,
+  `tila` VARCHAR(30) NULL,
+  `muokattu` DATETIME NULL,
   PRIMARY KEY (`idKommentti`),
-  INDEX `fk_Kommnetti_Kayttaja1_idx` (`Kayttaja_id` ASC),
+  INDEX `fk_Kommnetti_Kayttaja1_idx` (`idKayttaja` ASC),
   INDEX `fk_Kommnetti_Merkinta1_idx` (`idPostaus` ASC),
   CONSTRAINT `fk_Kommnetti_Kayttaja1`
-    FOREIGN KEY (`Kayttaja_id`)
+    FOREIGN KEY (`idKayttaja`)
     REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -145,18 +143,18 @@ ENGINE = InnoDB;
 -- Table `H3408_3`.`Esiintyma`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `H3408_3`.`Esiintyma` (
-  `Postaus_idPostaus` INT NOT NULL,
-  `Tagi_idTagi` INT NOT NULL,
-  PRIMARY KEY (`Postaus_idPostaus`, `Tagi_idTagi`),
-  INDEX `fk_Postaus_has_Tagi_Tagi1_idx` (`Tagi_idTagi` ASC),
-  INDEX `fk_Postaus_has_Tagi_Postaus1_idx` (`Postaus_idPostaus` ASC),
+  `idPostaus` INT NOT NULL,
+  `idTagi` INT NOT NULL,
+  PRIMARY KEY (`idPostaus`, `idTagi`),
+  INDEX `fk_Postaus_has_Tagi_Tagi1_idx` (`idTagi` ASC),
+  INDEX `fk_Postaus_has_Tagi_Postaus1_idx` (`idPostaus` ASC),
   CONSTRAINT `fk_Postaus_has_Tagi_Postaus1`
-    FOREIGN KEY (`Postaus_idPostaus`)
+    FOREIGN KEY (`idPostaus`)
     REFERENCES `H3408_3`.`Postaus` (`idPostaus`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Postaus_has_Tagi_Tagi1`
-    FOREIGN KEY (`Tagi_idTagi`)
+    FOREIGN KEY (`idTagi`)
     REFERENCES `H3408_3`.`Tagi` (`idTagi`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
