@@ -1,90 +1,36 @@
 <?php 
 
-require_once ("../palvelin/myslijuttu/hurhur.php"); // kytän tietokanta avaus juttu
-// mikko pistä oma tietokannan avaus taikasi tähän ja pistä mun oma kommentteihin
+require_once ("../palvelin/myslijuttu/hurhur.php");
 
 session_start();
-if (isset($_POST['username']) AND isset($_POST['password'])) {
 
-$username = $_POST['username'];
-$password = $_POST['password'];
- 
-$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana =?");
-$stmt->execute(array($username,$password));
-    if ($stmt->rowCount() == 1) {
-  
-        $_SESSION['app2_islogged'] = true;
-        $_SESSION['username'] = $_POST['username'];
-        }
-        else
-          echo 'wrong username/password !';
-        }
+
+if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['password'])) {
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+
+	$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana =?");
+	$stmt->execute(array($username,$password));
+	if ($stmt->rowCount() == 1) {	  
+		$_SESSION['app2_islogged'] = true;
+		$_SESSION['username'] = $_POST['username'];
+	}
+	else
+		echo 'wrong username/password !';       
+}
+else if (isset($_POST['register']))
+	header("Location:register.php"); 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Testiblogi</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="style.css"/>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<?php include("head.txt");?>
 </head>
 
 <body>
-	<!--BootstrapNavbar-->
-	<div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Sitename</a>
-        </div>
-        <center>
-            <div class="navbar-collapse collapse" id="navbar-main">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a>
-                            </li>
-                            <li><a href="#">Another action</a>
-                            </li>
-                            <li><a href="#">Something else here</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-				<?php               
-				$form = <<<FORM
-				<form class="navbar-form navbar-right" role="search" method="post" action="{$_SERVER['PHP_SELF']}">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="username" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="password" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-default">Sign In</button>
-                </form>
-FORM;
-if ($_SESSION['app2_islogged'] == FALSE)
-			echo $form;
-		else
-			echo ("<a href ='logout.php'> Logout ({$_POST['username']})</a>");				
-				?>
-            </div>
-        </center>
-    </div>
-	</div>
+	<!--Navbar-->
+	 <?php include("navbar.php");?>
 	<div class="container">
 		<h3>dogemeister</h3>
 	</div>

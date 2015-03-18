@@ -1,20 +1,21 @@
 <?php
 
 class Tietokanta {
-    
+    private $stmt;
+	private $db;
+	
     function __construct() {
 		try {
-			require_once ("/home/H3543/db-init.php");
-			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+			//require_once ("/home/H3543/db-init.php");
+			require_once ("../palvelin/myslijuttu/hurhur.php");
+			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		} catch(PDOException $ex) {
 			echo "ErrMsg to enduser!<hr>\n";
 			echo "CatchErrMsg: " . $ex->getMessage() . "<hr>\n";
 		}
 	}
-	
-	
-	
+		
     function __destruct() {
 		
     }
