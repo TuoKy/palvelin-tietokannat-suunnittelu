@@ -1,26 +1,3 @@
-<?php 
-
-require_once ("../palvelin/myslijuttu/hurhur.php");
-
-session_start();
-
-
-if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['password'])) {
-	$username = $_POST['username'];
-	$password = $_POST['password'];
-
-	$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana =?");
-	$stmt->execute(array($username,$password));
-	if ($stmt->rowCount() == 1) {	  
-		$_SESSION['app2_islogged'] = true;
-		$_SESSION['username'] = $_POST['username'];
-	}
-	else
-		echo 'wrong username/password !';       
-}
-else if (isset($_POST['register']))
-	header("Location:register.php"); 
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,6 +28,6 @@ In nulla ut laoreet libero. Bibendum cum phasellus quam maecenas. Odio scelerisq
 Dignissim lorem dui augue. Luctus magnis, lacinia suspendisse blandit duis excepteur lectus, bibendum augue, in magna pede nunc luctus nullam neque, gravida parturient ac semper morbi. Bibendum vitae ac, ipsum urna natoque vestibulum tortor nibh vestibulum, ac in, ultrices gravida erat. A tortor lacus ac tincidunt, id elementum dictum rhoncus mauris in. Viverra sollicitudin tincidunt sem aenean leo, vestibulum varius felis vel nulla, fusce urna amet sed.</p>
 		</div>
 	</div>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
 </body>
 </html>

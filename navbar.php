@@ -1,3 +1,25 @@
+<?php
+require_once ("../palvelin/myslijuttu/hurhur.php");
+
+session_start();
+
+if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['password'])) {
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	
+	$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana =?");
+	$stmt->execute(array($username,$password));
+	if ($stmt->rowCount() == 1) {	  
+		$_SESSION['app2_islogged'] = true;
+		$_SESSION['username'] = $_POST['username'];
+	}
+	else
+		echo 'wrong username/password !';       
+}
+else if (isset($_POST['register']))
+	header("Location:register.php"); 
+?>
+
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -6,7 +28,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Sitename</a>
+            <a class="navbar-brand" href="index.php">Sitename</a>
         </div>
         <center>
             <div class="navbar-collapse collapse" id="navbar-main">
@@ -83,7 +105,7 @@ FORM;
 if (@$_SESSION['app2_islogged'] == FALSE)
 			echo $form;
 		else
-			echo ("<span class='right'> <a href ='logout.php'> Logout ({$_POST['username']})</a> </span>");				
+			echo ("<span class='right'> <a href ='logout.php'> Logout ({$_SESSION['username']})</a> </span>");				
 				?>
             </div>
         </center>

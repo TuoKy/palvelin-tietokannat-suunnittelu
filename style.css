@@ -13,8 +13,17 @@ body {
 	-o-background-size: cover;
 	background-size: cover;
 }
-
-
+.formContainer {
+	margin-left:20%;
+	margin-right:20%;
+    width: 60%px;
+    clear: both;
+}
+.formContainer input {
+    width: 100%;
+    clear: both;
+	margin-bottom:20px;
+}
 
 h1, h3 {
 	margin-top: auto;
@@ -22,8 +31,6 @@ h1, h3 {
 	color: magenta;
     border-radius: 5px;
 }
-
-
 
 a:hover {
 	color: #920072
