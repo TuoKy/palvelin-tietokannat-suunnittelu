@@ -7,7 +7,8 @@ class Tietokanta {
     function __construct() {
 		try {
 			//require_once ("/home/H3543/db-init.php");
-			require_once ("../palvelin/myslijuttu/hurhur2.php");
+			//require_once ("../palvelin/myslijuttu/hurhur2.php");
+			require_once ("../php-dbconfig/db-init.php");
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		} catch(PDOException $ex) {
