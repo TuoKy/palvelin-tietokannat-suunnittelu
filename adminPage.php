@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Testiblogi</title>
+	<title>Adminsivu</title>
 <?php include("head.txt");?>
 </head>
 
