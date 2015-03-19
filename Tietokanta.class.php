@@ -1,13 +1,13 @@
 <?php
 
 class Tietokanta {
-    private $stmt;
+    //private $stmt;
 	private $db;
 	
     function __construct() {
 		try {
 			//require_once ("/home/H3543/db-init.php");
-			require_once ("../palvelin/myslijuttu/hurhur.php");
+			require_once ("../palvelin/myslijuttu/hurhur2.php");
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		} catch(PDOException $ex) {
@@ -21,7 +21,7 @@ class Tietokanta {
     }
 	
 	public function kirjaudu_sisaan($kayttajaNimi, $salasana) {
-		$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
+		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
 		$stmt->execute(array($kayttajaNimi, $salasana));
 		
 		if ($stmt->rowCount() == 1) {
