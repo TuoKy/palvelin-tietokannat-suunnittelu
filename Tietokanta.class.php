@@ -65,6 +65,15 @@ class Tietokanta {
 		$stmt->execute(array($email, $kayttajaNimi));
     }
 	
+	public function kayttaja_tiedot() {
+		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(idPostaus) FROM Kayttaja INNER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi");
+		
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			echo "{$row['idKayttaja']}, {$row['kayttajaNimi']}, {$row['COUNT(idPostaus)']}<br>\n";
+		}
+		
+    }
+	
 	
 	public function luo_postaus($otsikko, $sisalto, $kayttajaNimi) {
 		$stmt = $this->db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
@@ -75,6 +84,7 @@ class Tietokanta {
 		$stmt = $this->db->prepare("INSERT INTO Postaus (otsikko, sisalto, idKayttaja, luontiAika, Muokattu) VALUES(?,?,?,NOW(),NOW())");
 		$stmt->execute(array($otsikko, $sisalto, $idKayttaja));
     }
+	
 	
 	
 }?>
