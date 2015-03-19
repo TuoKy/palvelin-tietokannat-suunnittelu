@@ -66,12 +66,13 @@ class Tietokanta {
     }
 	
 	public function kayttaja_tiedot() {
-		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(idPostaus) FROM Kayttaja INNER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi");
+		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(idPostaus) as postausten_lukumaara FROM Kayttaja INNER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi");
+		$kayttaja_taulukko = array();
 		
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			echo "{$row['idKayttaja']}, {$row['kayttajaNimi']}, {$row['COUNT(idPostaus)']}<br>\n";
+			$kayttaja_taulukko[] = $row;
 		}
-		
+		return $kayttaja_taulukko;
     }
 	
 	
