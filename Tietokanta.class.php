@@ -33,13 +33,13 @@ class Tietokanta {
 	
 	
 	public function luo_kayttaja($kayttajaNimi, $email, $salasana) {
-		$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ?");
+		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ?");
 		$stmt->execute(array($kayttajaNimi));
 		
 		if ($stmt->rowCount() == 1) {
 			return false;
 		} else {
-			$stmt = $db->prepare("INSERT INTO Kayttaja (kayttajaNimi, email, salasana, liittymisPaiva) VALUES(?,?,?,NOW())");
+			$stmt = $this->db->prepare("INSERT INTO Kayttaja (kayttajaNimi, email, salasana, liittymisPaiva) VALUES(?,?,?,NOW())");
 			$stmt->execute(array($kayttajaNimi, $email, $salasana));
 
 			return true;
@@ -47,11 +47,11 @@ class Tietokanta {
     }
 	
 	public function vaihda_salasana($kayttajaNimi, $vanhaSalasana, $uusiSalasana) {
-		$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
+		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
 		$stmt->execute(array($kayttajaNimi, $vanhaSalasana));
 		
 		if ($stmt->rowCount() == 1) {
-			$stmt = $db->prepare("UPDATE Kayttaja SET salasana=? WHERE kayttajaNimi=?");
+			$stmt = $this->db->prepare("UPDATE Kayttaja SET salasana=? WHERE kayttajaNimi=?");
 			$stmt->execute(array($uusiSalasana, $kayttajaNimi));
 			
 			return true;
@@ -61,18 +61,18 @@ class Tietokanta {
     } 
 
     public function muokkaa_kayttaja($kayttajaNimi, $email) {
-		$stmt = $db->prepare("UPDATE Kayttaja SET email=? WHERE kayttajaNimi=?");
+		$stmt = $this->db->prepare("UPDATE Kayttaja SET email=? WHERE kayttajaNimi=?");
 		$stmt->execute(array($email, $kayttajaNimi));
     }
 	
 	
 	public function luo_postaus($otsikko, $sisalto, $kayttajaNimi) {
-		$stmt = $db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
+		$stmt = $this->db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
 		$stmt->execute(array($idKayttaja));
 		
 		$idKayttaja = $stmt['idKayttaja'];
 		
-		$stmt = $db->prepare("INSERT INTO Postaus (otsikko, sisalto, idKayttaja, luontiAika, Muokattu) VALUES(?,?,?,NOW(),NOW())");
+		$stmt = $this->db->prepare("INSERT INTO Postaus (otsikko, sisalto, idKayttaja, luontiAika, Muokattu) VALUES(?,?,?,NOW(),NOW())");
 		$stmt->execute(array($otsikko, $sisalto, $idKayttaja));
     }
 	
