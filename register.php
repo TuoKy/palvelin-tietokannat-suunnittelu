@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,13 +25,19 @@
 </html>	
 <?php
 
+require_once ("Tietokanta.class.php");
+
 if (isset($_POST['register']) AND isset($_POST['name']) AND isset($_POST['password'])){
 			$kayttajaNimi = $_POST['name'];
 			$email = $_POST['email'];
 			$salasana = $_POST['password'];
 			
+			$dbTouch = new Tietokanta();
+			$dbTouch->luo_kayttaja($kayttajaNimi, $email, $salasana); 
+			/*
 			$stmt = $db->prepare("INSERT INTO Kayttaja (kayttajaNimi,email, salasana,liittymisPaiva) VALUES(?,?,?,NOW())");
 			$stmt->execute(array($kayttajaNimi, $email, $salasana));
 			echo "toimi";
+			*/
 }
 ?>	
