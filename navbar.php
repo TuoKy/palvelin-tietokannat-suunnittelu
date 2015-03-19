@@ -1,15 +1,16 @@
 <?php
-require_once ("../palvelin/myslijuttu/hurhur.php");
-
+require_once ("Tietokanta.class.php");
 session_start();
 
 if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['password'])) {
 	$username = $_POST['username'];
 	$password = $_POST['password'];
+	$dbTouch = new Tietokanta();
 	
-	$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana =?");
-	$stmt->execute(array($username,$password));
-	if ($stmt->rowCount() == 1) {	  
+	//$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana =?");
+	//$stmt->execute(array($username,$password));
+	//if ($stmt->rowCount() == 1) {	 	
+	if ($dbTouch->kirjaudu_sisaan($username,$password)) {	
 		$_SESSION['app2_islogged'] = true;
 		$_SESSION['username'] = $_POST['username'];
 	}
