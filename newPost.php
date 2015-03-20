@@ -13,24 +13,26 @@
 				<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 					<label>Otsikko</label>
 						<input type="text" name="otsikko"><br />
-					<label>Sisältö</label>
-						<div class="row-fluid">							
-							<div id="wysiwygEditor">
-								<div>
-									<textarea class="input-xlarge" name="editor" id="editor" style="width: 100%; height: 200px; outline: none;"></textarea>
-								</div>
-								<div style="margin-top: 20px;">
-									<button type="submit" name ="post" class="btn btn-default">Post</button>
-									<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>
-								</div>
+					<label>Sisältö</label>	
+					<textarea name="newPost" ></textarea>					
+						<button type="submit" name ="post" class="btn btn-default">Post</button>
+						<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>								
 				</form>
-							</div>
-							
-
-						</div>
-			</div>					
+			</div>							
 		</div>
+</div>					
+		
 </div>
 </body>
 </html>
-
+<?php
+require_once ("Tietokanta.class.php");
+if($_SESSION['username'] == "admin" AND isset($_POST['post'])){
+if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){			
+			$dbTouch = new Tietokanta();
+			$dbTouch->luo_postaus($_POST['otsikko'], $_POST['newPost'], $_SESSION['username']); 
+}
+else
+ echo "haistavittu";
+ }
+?>	

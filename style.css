@@ -13,8 +13,7 @@ body {
 	-o-background-size: cover;
 	background-size: cover;
 }
- #editor {overflow:scroll; max-height:300px}
- 
+
 .formContainer {
 	margin-left:20%;
 	margin-right:20%;

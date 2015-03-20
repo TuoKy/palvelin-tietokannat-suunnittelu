@@ -24,7 +24,6 @@
 </div>			
 </html>	
 <?php
-
 require_once ("Tietokanta.class.php");
 
 if (isset($_POST['register']) AND isset($_POST['name']) AND isset($_POST['password'])){
@@ -34,10 +33,5 @@ if (isset($_POST['register']) AND isset($_POST['name']) AND isset($_POST['passwo
 			
 			$dbTouch = new Tietokanta();
 			$dbTouch->luo_kayttaja($kayttajaNimi, $email, $salasana); 
-			/*
-			$stmt = $db->prepare("INSERT INTO Kayttaja (kayttajaNimi,email, salasana,liittymisPaiva) VALUES(?,?,?,NOW())");
-			$stmt->execute(array($kayttajaNimi, $email, $salasana));
-			echo "toimi";
-			*/
 }
 ?>	
