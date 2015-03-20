@@ -6,9 +6,12 @@ class Tietokanta {
 	
     function __construct() {
 		try {
-			//require_once ("/home/H3543/db-init.php");
+			require_once ("/home/H3543/db-init-harkkatyo.php");
 			//require_once ("../palvelin/myslijuttu/hurhur2.php");
-			require_once ("../php-dbconfig/db-init.php");
+			//require_once ("../php-dbconfig/db-init.php");
+			
+			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
+			
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		} catch(PDOException $ex) {
@@ -70,16 +73,15 @@ class Tietokanta {
 		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(idPostaus) as postausten_lukumaara FROM Kayttaja INNER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi");
 		$kayttaja_taulukko = array();
 		
-		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$kayttaja_taulukko[] = $row;
-		}
+		$kayttaja_taulukko[] = $stmt->fetchAll(PDO::FETCH_ASSOC)
+			
 		return $kayttaja_taulukko;
     }
 	
 	
 	public function luo_postaus($otsikko, $sisalto, $kayttajaNimi) {
 		$stmt = $this->db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
-		$stmt->execute(array($idKayttaja));
+		$stmt->execute(array($kayttajaNimi));
 		
 		$idKayttaja = $stmt['idKayttaja'];
 		
