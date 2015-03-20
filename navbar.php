@@ -1,15 +1,12 @@
 <?php
 require_once ("Tietokanta.class.php");
 session_start();
+$dbTouch = new Tietokanta();
 
 if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['password'])) {
 	$username = $_POST['username'];
-	$password = $_POST['password'];
-	$dbTouch = new Tietokanta();
-	
-	//$stmt = $db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana =?");
-	//$stmt->execute(array($username,$password));
-	//if ($stmt->rowCount() == 1) {	 	
+	$password = $_POST['password'];	
+
 	if ($dbTouch->kirjaudu_sisaan($username,$password)) {	
 		$_SESSION['app2_islogged'] = true;
 		$_SESSION['username'] = $_POST['username'];
@@ -75,7 +72,7 @@ else if (isset($_POST['register']))
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin stuff <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Action</a>
+                            <li><a href="ShowUsers.php">Show users</a>
                             </li>
                             <li><a href="#">Another action</a>
                             </li>

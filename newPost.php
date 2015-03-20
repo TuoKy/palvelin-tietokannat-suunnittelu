@@ -12,11 +12,13 @@
 			<div class="formContainer">
 				<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 					<label>Otsikko</label>
-						<input type="text" name="otsikko"><br />
+						<input type="text" name="otsikko"><br/>
 					<label>Sisältö</label>	
-					<textarea name="newPost" ></textarea>					
-						<button type="submit" name ="post" class="btn btn-default">Post</button>
-						<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>								
+					<textarea name="newPost" ></textarea>
+					<label>Avainsanat (erota pilkulla)</label>
+						<input type="text" name="avainsanat"><br/>
+					<button type="submit" name ="post" class="btn btn-default">Post</button>
+					<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>								
 				</form>
 			</div>							
 		</div>
@@ -26,13 +28,15 @@
 </body>
 </html>
 <?php
-require_once ("Tietokanta.class.php");
-if($_SESSION['username'] == "admin" AND isset($_POST['post'])){
-if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){			
+if(isset($_POST['post'])){
+if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){	
+	
+		$otsikko = "<h2>{$_POST['otsikko']}</h2>";
+		
 			$dbTouch = new Tietokanta();
-			$dbTouch->luo_postaus($_POST['otsikko'], $_POST['newPost'], $_SESSION['username']); 
+			$dbTouch->luo_postaus($otsikko, $_POST['newPost'], $_SESSION['username']); 
 }
 else
- echo "haistavittu";
+ echo "Ei oikeuksia / virhe";
  }
 ?>	

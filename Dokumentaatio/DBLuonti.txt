@@ -3,15 +3,15 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema H3667_2
+-- Schema H3408_3
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `H3667_2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `H3667_2` ;
+CREATE SCHEMA IF NOT EXISTS `H3408_3` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `H3408_3` ;
 
 -- -----------------------------------------------------
--- Table `H3667_2`.`Kayttaja`
+-- Table `H3408_3`.`Kayttaja`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3667_2`.`Kayttaja` (
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Kayttaja` (
   `idKayttaja` INT NOT NULL AUTO_INCREMENT,
   `kayttajaNimi` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
@@ -23,21 +23,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3667_2`.`Teema`
+-- Table `H3408_3`.`Postaus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3667_2`.`Teema` (
-  `idUlkoasu` INT NOT NULL AUTO_INCREMENT,
-  `blogiNimi` VARCHAR(45) NULL,
-  `merkintaVari` VARCHAR(45) NULL,
-  `taustaVari` VARCHAR(45) NULL,
-  PRIMARY KEY (`idUlkoasu`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `H3667_2`.`Postaus`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3667_2`.`Postaus` (
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Postaus` (
   `idPostaus` INT NOT NULL AUTO_INCREMENT,
   `otsikko` VARCHAR(45) NULL,
   `sisalto` LONGTEXT NULL,
@@ -47,24 +35,18 @@ CREATE TABLE IF NOT EXISTS `H3667_2`.`Postaus` (
   `muokattu` DATETIME NULL,
   PRIMARY KEY (`idPostaus`),
   INDEX `fk_Merkinta_Kayttaja_idx` (`idKayttaja` ASC),
-  INDEX `fk_Merkinta_Ulkoasu1_idx` (`idUlkoasu` ASC),
   CONSTRAINT `fk_Merkinta_Kayttaja`
     FOREIGN KEY (`idKayttaja`)
-    REFERENCES `H3667_2`.`Kayttaja` (`idKayttaja`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Merkinta_Ulkoasu1`
-    FOREIGN KEY (`idUlkoasu`)
-    REFERENCES `H3667_2`.`Teema` (`idUlkoasu`)
+    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3667_2`.`Kommentti`
+-- Table `H3408_3`.`Kommentti`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3667_2`.`Kommentti` (
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Kommentti` (
   `idKommentti` INT NOT NULL AUTO_INCREMENT,
   `otsikko` VARCHAR(45) NOT NULL,
   `sisalto` TEXT NULL,
@@ -79,21 +61,21 @@ CREATE TABLE IF NOT EXISTS `H3667_2`.`Kommentti` (
   INDEX `fk_Kommnetti_Merkinta1_idx` (`idPostaus` ASC),
   CONSTRAINT `fk_Kommnetti_Kayttaja1`
     FOREIGN KEY (`idKayttaja`)
-    REFERENCES `H3667_2`.`Kayttaja` (`idKayttaja`)
+    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Kommnetti_Merkinta1`
     FOREIGN KEY (`idPostaus`)
-    REFERENCES `H3667_2`.`Postaus` (`idPostaus`)
+    REFERENCES `H3408_3`.`Postaus` (`idPostaus`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3667_2`.`Oikeus`
+-- Table `H3408_3`.`Oikeus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3667_2`.`Oikeus` (
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Oikeus` (
   `idOikeudet` INT NOT NULL,
   `oikeusNimi` VARCHAR(45) NOT NULL,
   `oikeusKuvaus` VARCHAR(45) NULL,
@@ -103,9 +85,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3667_2`.`Rooli`
+-- Table `H3408_3`.`Rooli`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3667_2`.`Rooli` (
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Rooli` (
   `idOikeudet` INT NOT NULL,
   `idKayttaja` INT NOT NULL,
   `aktiivinen` BIT NULL,
@@ -115,21 +97,21 @@ CREATE TABLE IF NOT EXISTS `H3667_2`.`Rooli` (
   PRIMARY KEY (`idOikeudet`, `idKayttaja`),
   CONSTRAINT `fk_Oikeudet_has_Kayttaja_Oikeudet1`
     FOREIGN KEY (`idOikeudet`)
-    REFERENCES `H3667_2`.`Oikeus` (`idOikeudet`)
+    REFERENCES `H3408_3`.`Oikeus` (`idOikeudet`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Oikeudet_has_Kayttaja_Kayttaja1`
     FOREIGN KEY (`idKayttaja`)
-    REFERENCES `H3667_2`.`Kayttaja` (`idKayttaja`)
+    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3667_2`.`Tagi`
+-- Table `H3408_3`.`Tagi`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3667_2`.`Tagi` (
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Tagi` (
   `idTagi` INT NOT NULL AUTO_INCREMENT,
   `tagiNimi` VARCHAR(45) NOT NULL,
   `tagiKuvaus` VARCHAR(45) NULL,
@@ -139,9 +121,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3667_2`.`Esiintyma`
+-- Table `H3408_3`.`Esiintyma`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3667_2`.`Esiintyma` (
+CREATE TABLE IF NOT EXISTS `H3408_3`.`Esiintyma` (
   `idPostaus` INT NOT NULL,
   `idTagi` INT NOT NULL,
   PRIMARY KEY (`idPostaus`, `idTagi`),
@@ -149,12 +131,12 @@ CREATE TABLE IF NOT EXISTS `H3667_2`.`Esiintyma` (
   INDEX `fk_Postaus_has_Tagi_Postaus1_idx` (`idPostaus` ASC),
   CONSTRAINT `fk_Postaus_has_Tagi_Postaus1`
     FOREIGN KEY (`idPostaus`)
-    REFERENCES `H3667_2`.`Postaus` (`idPostaus`)
+    REFERENCES `H3408_3`.`Postaus` (`idPostaus`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Postaus_has_Tagi_Tagi1`
     FOREIGN KEY (`idTagi`)
-    REFERENCES `H3667_2`.`Tagi` (`idTagi`)
+    REFERENCES `H3408_3`.`Tagi` (`idTagi`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
