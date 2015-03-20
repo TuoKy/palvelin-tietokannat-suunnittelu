@@ -70,7 +70,7 @@ class Tietokanta {
     }
 	
 	public function kayttaja_tiedot() {
-		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(idPostaus) as postausten_lukumaara FROM Kayttaja INNER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi");
+		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(Postaus.idPostaus) as postausten_lukumaara, COUNT(idKommentti) as kommenttien_lukumaara FROM Kayttaja INNER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja LEFT OUTER JOIN Kommentti ON Kommentti.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi;");
 			
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
