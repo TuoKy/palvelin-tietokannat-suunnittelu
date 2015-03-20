@@ -71,11 +71,8 @@ class Tietokanta {
 	
 	public function kayttaja_tiedot() {
 		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(idPostaus) as postausten_lukumaara FROM Kayttaja INNER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi");
-		$kayttaja_taulukko = array();
-		
-		$kayttaja_taulukko[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			
-		return $kayttaja_taulukko;
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 	
 	
