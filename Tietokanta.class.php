@@ -83,7 +83,8 @@ class Tietokanta {
 		$stmt = $this->db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
 		$stmt->execute(array($kayttajaNimi));
 		
-		$idKayttaja = $stmt[0]['idKayttaja'];
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$idKayttaja = $row['idKayttaja'];
 		
 		$stmt = $this->db->prepare("INSERT INTO Postaus (otsikko, sisalto, idKayttaja, luontiAika, Muokattu) VALUES(?,?,?,NOW(),NOW())");
 		$stmt->execute(array($otsikko, $sisalto, $idKayttaja));
