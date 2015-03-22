@@ -1,6 +1,7 @@
 <?php
 require_once ("Tietokanta.class.php");
 session_start();
+
 $dbTouch = new Tietokanta();
 
 if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['password'])) {
