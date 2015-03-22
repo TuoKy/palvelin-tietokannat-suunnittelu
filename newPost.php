@@ -24,7 +24,7 @@
 			<!-- KUVA / KUVAT -->
 			<iframe id="form_target" name="form_target" style="display:none"></iframe>
 			<form id="my_form" action="<?php echo $_SERVER['PHP_SELF'];?>" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
-			<input name="image" type="file" onchange="$('#my_form').submit();this.value='';">
+			<input name="image" type="file" onchange="$('#my_form').submit(); this.value='';">
 			</form>			
 		</div>
 </div>					
@@ -42,14 +42,30 @@ else
  echo "Ei oikeuksia / virhe";
  }
 
-if($_FILES){
+if(isset($_FILES)){
+
+$allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG);
+@$detectedType = exif_imagetype($_FILES['image']['tmp_name']);
+$error = !in_array($detectedType, $allowedTypes);
+ 
+if(!$error){
 @$image = $_FILES['image'];
 $path = 'Pictures';
+$path1 = 'http://student.labranet.jamk.fi/~H3408/palvelin-tietokannat-suunnittelu/'; // tämä pitää muuttaa
 $tmpName = $image['tmp_name'];
 $ext = array_pop(explode('.',$image['name']));
-$name = hash("crc32b", str_replace(' ','-',$image['name']));
-move_uploaded_file($tmpName, $path . '/'.$name.'.'.$ext);
-$weburl = '/Pictures/'.$name.'.'.$ext; echo ""; }
-
+$name = $image['name'];
+move_uploaded_file($tmpName, $path . '/'.$name);
+$weburl = $path1.'/Pictures/'.$name;
+echo "";
 ?>	
+<script>
+top.$('.mce-btn.mce-open').parent().find('.mce-textbox').val('<?php echo $weburl ?> ').closest('.mce-window').find('.mce-primary');
+</script>
+<?php
+}
+}
+?>
+
+
 
