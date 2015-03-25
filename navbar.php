@@ -16,7 +16,7 @@ if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['pass
 		echo 'wrong username/password !';       
 }
 else if (isset($_POST['register']))
-	header("Location:register.php"); 
+	$_GET['page']='register'; 
 ?>
 
 <div class="navbar navbar-default navbar-fixed-top">
@@ -35,7 +35,7 @@ else if (isset($_POST['register']))
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stuff <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="newPost.php">Write new post</a>
+                            <li><a href="index.php?page=newPost">Write new post</a>
                             </li>
                             <li><a href="#">Another action</a>
                             </li>
@@ -73,7 +73,7 @@ else if (isset($_POST['register']))
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin stuff <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="ShowUsers.php">Show users</a>
+                            <li><a href="index.php?page=showUsers">Show users</a>
                             </li>
                             <li><a href="#">Another action</a>
                             </li>

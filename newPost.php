@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>NewPost</title>
-<?php include("head.txt");?>
- 
-</head>
-<!--Navbar-->
-<?php include("navbar.php");?>
+
 <div class="container">
 		<div class="content">
-			<div class="formContainer">
+			
 				<form id="form" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 					<label>Otsikko</label>
 						<input type="text" name="otsikko"> <br/>
@@ -20,7 +12,7 @@
 					<button type="submit" name ="post" class="btn btn-default">Post</button>
 					<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>								
 				</form>
-			</div>
+			
 			<!-- KUVA / KUVAT -->
 			<iframe id="form_target" name="form_target" style="display:none"></iframe>
 			<form id="my_form" action="<?php echo $_SERVER['PHP_SELF'];?>" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
@@ -29,9 +21,6 @@
 		</div>
 </div>					
 		
-</div>
-</body>
-</html>
 <?php
 if(isset($_POST['post']) AND $_SESSION['app2_islogged'] == true){
 if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){		

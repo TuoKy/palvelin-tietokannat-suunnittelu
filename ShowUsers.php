@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Users</title>
-<?php include("head.txt");?>
-</head>
-<body>
-	<!--Navbar-->
-	 <?php include("navbar.php");?>
-	<div class="container">
+<div class="container">
 		<div class="content">
 		<div class="table-responsive">
 			<table class="table">
@@ -25,7 +16,5 @@
 			</table>
 		</div>		
 		</div>		
-	</div>
-	 
-</body>
-</html>	 
+</div>
+

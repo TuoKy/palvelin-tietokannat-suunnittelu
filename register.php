@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Register</title>
-<?php include("head.txt");?>
-</head>
-<!--Navbar-->
-<?php include("navbar.php");?>
+
 <div class="container">
 	<div class="content">	
 		<div class="formContainer">
@@ -22,7 +15,6 @@
 		</div>
 	</div>
 </div>			
-</html>	
 <?php
 if (isset($_POST['register']) AND isset($_POST['name']) AND isset($_POST['password'])){
 			$kayttajaNimi = $_POST['name'];
