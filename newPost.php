@@ -1,8 +1,7 @@
-
 <div class="container">
 		<div class="content">
 			
-				<form id="form" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+				<form id="form" method="post" action="newPost.php">
 					<label>Otsikko</label>
 						<input type="text" name="otsikko"> <br/>
 					<label>Sisältö</label>	
@@ -15,7 +14,7 @@
 			
 			<!-- KUVA / KUVAT -->
 			<iframe id="form_target" name="form_target" style="display:none"></iframe>
-			<form id="my_form" action="<?php echo $_SERVER['PHP_SELF'];?>" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
+			<form id="my_form" action="newPost.php" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
 			<input name="image" type="file" onchange="$('#my_form').submit(); this.value='';">
 			</form>			
 		</div>
@@ -37,22 +36,24 @@ $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG);
 @$detectedType = exif_imagetype($_FILES['image']['tmp_name']);
 $error = !in_array($detectedType, $allowedTypes);
  
-if(!$error){
-@$image = $_FILES['image'];
-$path = 'Pictures';
-$path1 = 'http://student.labranet.jamk.fi/~H3408/palvelin-tietokannat-suunnittelu/'; // tämä pitää muuttaa
-$tmpName = $image['tmp_name'];
-$ext = array_pop(explode('.',$image['name']));
-$name = $image['name'];
-move_uploaded_file($tmpName, $path . '/'.$name);
-$weburl = $path1.'/Pictures/'.$name;
-echo "";
-?>	
-<script>
-top.$('.mce-btn.mce-open').parent().find('.mce-textbox').val('<?php echo $weburl ?> ').closest('.mce-window').find('.mce-primary');
-</script>
-<?php
-}
+	if(!$error){
+		$path = 'pictures';
+		$path1 = 'http://student.labranet.jamk.fi/~H3408/palvelin-tietokannat-suunnittelu/'; // tämä pitää muuttaa
+		@$image = $_FILES['image'];
+		$name = $image['name'];
+		var_dump($_FILES);
+		move_uploaded_file($name, $path.'/'.$name); 
+		$kakka = "kissa";
+		var_dump($kakka);
+		$weburl = $path1.'pictures/'.$name;
+		echo "";
+		?>	
+		<script>
+		top.$('.mce-btn.mce-open').parent().find('.mce-textbox').val('<?php echo $weburl ?> ').closest('.mce-window').find('.mce-primary');
+		</script>
+		<?php
+		
+	}
 }
 ?>
 
