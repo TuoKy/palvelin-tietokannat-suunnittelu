@@ -10,14 +10,14 @@
 	 <?php include("navbar.php");?>
 
 	<?php
-	@$page = $_GET['page'];	/* gets the variable $page */
+	@$page = $_GET['page'];
 	if (!empty($page)) {
 		$page .= '.php';
 		include($page);
-	} 			/* if $page has a value, include it */
+	}
 	else {
-		include('list.php');
-	} 	/* otherwise, include the default page */
+		include('listPosts.php');
+	}
 	?>	
 </body>
 </html>

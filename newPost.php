@@ -1,4 +1,3 @@
-<?php var_dump($_FILES);?>
 <div class="container">
 		<div class="content">
 			
@@ -29,9 +28,11 @@ if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){
 }
 else
  echo "Ei oikeuksia / virhe";
- }
+}
+else if (isset($_POST['post']) AND $_SESSION['app2_islogged'] == false)
+	 echo "Ei oikeuksia / virhe";
 
-if(isset($_FILES)){
+if(isset($_FILES) AND $_SESSION['app2_islogged'] == true){
 
 $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG);
 @$detectedType = exif_imagetype($_FILES['image']['tmp_name']);
