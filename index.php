@@ -29,16 +29,6 @@ else if (isset($_POST['register']))
 <body>
 	<!--Navbar-->
 	 <?php include("privilege.php");?>
-
-	<?php
-	@$page = $_GET['page'];
-	if (!empty($page)) {
-		$page .= '.php';
-		include($page);
-	}
-	else {
-		include('listPosts.php');
-	}
-	?>	
+	
 </body>
 </html>
