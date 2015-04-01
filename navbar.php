@@ -1,23 +1,3 @@
-<?php
-require_once ("Tietokanta.class.php");
-session_start();
-
-$dbTouch = new Tietokanta();
-
-if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['password'])) {
-	$username = $_POST['username'];
-	$password = $_POST['password'];	
-
-	if ($dbTouch->kirjaudu_sisaan($username,$password)) {	
-		$_SESSION['app2_islogged'] = true;
-		$_SESSION['username'] = $_POST['username'];
-	}
-	else
-		echo 'wrong username/password !';       
-}
-else if (isset($_POST['register']))
-	$_GET['page']='register'; 
-?>
 
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -31,25 +11,6 @@ else if (isset($_POST['register']))
         </div>
         <center>
             <div class="navbar-collapse collapse" id="navbar-main">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stuff <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="index.php?page=newPost">Write new post</a>
-                            </li>
-                            <li><a href="#">Another action</a>
-                            </li>
-                            <li><a href="#">Something else here</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
 				<ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
@@ -69,26 +30,17 @@ else if (isset($_POST['register']))
                         </ul>
                     </li>
                 </ul>
-				<ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin stuff <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="index.php?page=showUsers">Show users</a>
-                            </li>
-                            <li><a href="#">Another action</a>
-                            </li>
-                            <li><a href="#">Something else here</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-				<?php               
+
+				<?php
+
+				foreach($yourPrivileges as $key => $value) {
+					$navFile = 'nav'.$key.'.php';
+					if(file_exists($navFile)) {
+						include($navFile);
+					}
+				}
+				
+				
 				$form = <<<FORM
 				<form class="navbar-form navbar-right" role="search" method="post" action="{$_SERVER['PHP_SELF']}">
                     <div class="form-group">
