@@ -6,9 +6,15 @@ class Tietokanta {
 	
     function __construct() {
 		try {
+<<<<<<< HEAD
 			require_once ("/home/H3543/db-init-harkkatyo.php");
 			//require_once ("../palvelin/myslijuttu/hurhur2.php");
 			//require_once ("../php-dbconfig/db-init.php");
+=======
+			//require_once ("/home/H3543/db-init-harkkatyo.php");
+			//require_once ("../palvelin/myslijuttu/hurhur2.php");
+			require_once ("../php-dbconfig/db-init.php");
+>>>>>>> origin/master
 			
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
 			

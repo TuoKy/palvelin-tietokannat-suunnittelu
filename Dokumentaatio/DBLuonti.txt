@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Postaus` (
   `otsikko` VARCHAR(45) NULL,
   `sisalto` LONGTEXT NULL,
   `idKayttaja` INT NOT NULL,
-  `idUlkoasu` INT NOT NULL,
   `luontiAika` DATETIME NOT NULL,
   `muokattu` DATETIME NULL,
   PRIMARY KEY (`idPostaus`),
