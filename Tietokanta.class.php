@@ -88,7 +88,7 @@ class Tietokanta {
     }
 	
 	public function showPosts() {
-		$stmt = $this->db->query("SELECT * FROM Postaus;");
+		$stmt = $this->db->query("SELECT * FROM Postaus order by idPostaus DESC;");
 			
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 		

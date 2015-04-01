@@ -44,7 +44,7 @@ $error = !in_array($detectedType, $allowedTypes);
 		@$image = $_FILES['image'];
 		$name = $image['name'];
 		move_uploaded_file($_FILES['image']['tmp_name'], $path.$name); 
-		$weburl = $path1.'pictures/'.$name;
+		$weburl = $path1. $path .$name;
 		?>	
 		<script>
 		top.$('.mce-btn.mce-open').parent().find('.mce-textbox').val('<?php echo $weburl ?> ').closest('.mce-window').find('.mce-primary');
