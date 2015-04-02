@@ -6,7 +6,7 @@
 				foreach($tiedot as $plaa)
 				{
 				echo "<div class='content'>";
-				echo "{$plaa['otsikko']} {$plaa['sisalto']}  Kirjoittaja:{$plaa['idKayttaja']} <br>Tämä poistetaan:{$plaa['idUlkoasu']}<br> Luotu: {$plaa['luontiAika']}<br> Muokattu: {$plaa['muokattu']} ";
+				echo "{$plaa['otsikko']} {$plaa['sisalto']}  Kirjoittaja:{$plaa['idKayttaja']} <br> Luotu: {$plaa['luontiAika']}<br> Muokattu: {$plaa['muokattu']} ";
 				echo "</div>";
 				}	
 			?>	

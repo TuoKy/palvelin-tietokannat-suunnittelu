@@ -7,8 +7,8 @@ class Tietokanta {
     function __construct() {
 		try {
 			//require_once ("/home/H3543/db-init-harkkatyo.php");
-			//require_once ("../palvelin/myslijuttu/hurhur2.php");
-			require_once ("../php-dbconfig/db-init.php");
+			require_once ("../palvelin/myslijuttu/hurhur2.php");
+			//require_once ("../php-dbconfig/db-init.php");
 
 			
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
@@ -70,12 +70,17 @@ class Tietokanta {
 		$stmt->execute(array($email, $kayttajaNimi));
     }
 	
-	public function kayttaja_tiedot() {
-		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(Postaus.idPostaus) as postausten_lukumaara, COUNT(idKommentti) as kommenttien_lukumaara FROM Kayttaja LEFT OUTER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja LEFT OUTER JOIN Kommentti ON Kommentti.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi;");
+	public function kayttaja_postaukset() {
+		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(Postaus.idPostaus) as postausten_lukumaara FROM Kayttaja LEFT OUTER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi ORDER BY idKayttaja;");
 			
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 	
+	public function kayttaja_kommentit() {
+		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, COUNT(Kommentti.idKommentti) as kommenttien_lukumaara FROM Kayttaja LEFT OUTER JOIN Kommentti ON Kommentti.idKayttaja = Kayttaja.IdKayttaja group by idKayttaja;");
+			
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 	
 	public function luo_postaus($otsikko, $sisalto, $kayttajaNimi) {
 		$stmt = $this->db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
