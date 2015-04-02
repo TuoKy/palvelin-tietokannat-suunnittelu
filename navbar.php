@@ -32,14 +32,14 @@
                 </ul>
 
 				<?php
-
-				foreach($yourPrivileges as $key => $value) {
-					$navFile = 'nav'.$key.'.php';
-					if(file_exists($navFile)) {
-						include($navFile);
+				if(!empty($yourPrivileges)){	
+					foreach($yourPrivileges as $key => $value) {
+						$navFile = 'nav'.$key.'.php';
+						if(file_exists($navFile)) {
+							include($navFile);
+						}
 					}
 				}
-				
 				
 				$form = <<<FORM
 				<form class="navbar-form navbar-right" role="search" method="post" action="{$_SERVER['PHP_SELF']}">

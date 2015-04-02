@@ -1,6 +1,6 @@
 <?php
 $requiredPrivileges = array(
-	'ShowUsers' => '3',
+	'showUsers' => '3',
 	'newPost' => '2'
 );
 //privileges are as follows:
@@ -8,7 +8,7 @@ $requiredPrivileges = array(
 //2 = user can make posts
 //3 = user is admin
 
-$yourPrivileges = $dbTouch->oikeudet($_SESSION['idKayttaja']);
+@$yourPrivileges = $dbTouch->oikeudet($_SESSION['idKayttaja']);
 
 include("navbar.php");
 
