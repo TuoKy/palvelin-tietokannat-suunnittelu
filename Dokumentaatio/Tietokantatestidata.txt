@@ -9,19 +9,69 @@ insert into Kayttaja (kayttajaNimi, salasana, email, liittymisPaiva) values
 Postaus testidata
 
 insert into Postaus (idKayttaja, luontiAika, muokattu, otsikko, sisalto) values
-('1',NOW(),NULL,'Kyllikki Mansikkam�ki sano n�in','Iltakurssit olivat aikanaan oiva koulutusmuoto sis�lle seuratoimintaan ja nuorisoseura-aatteeseen. Sotatalven 1943 iltakurssilaiset. Ohjaajana oli Kyllikki Mansikkam�ki Nurmosta. (Juhani Yli-Rantalan arkisto) '),
-('1',NOW(),NULL,'Jean Sibeliuksen salatut tarinat','Sibeliuksen keskeisimm�t teokset ovat h�nen seitsem�n sinfoniaansa. Sinfonioiden lis�ksi h�nen tunnetuimmat teoksensa ovat viulukonsertto sek� orkesteriteokset Finlandia, Karelia-sarja, Tuonelan joutsen (osa Lemmink�inen-sarjaa) ja Valse triste. H�nen muihin teoksiinsa kuuluu muun muassa vokaali-, kuoro- ja pianomusiikkia, n�ytelm�musiikkia ja kamarimusiikkia. Sibeliuksen viimeiset suurimuotoiset teokset olivat seitsem�s sinfonia (1924), n�ytt�m�teos Myrsky (1926) ja s�velruno Tapiola (1926). Suomessa Sibeliuksen syntym�p�iv� 8. joulukuuta on liputusp�iv�, suomalaisen musiikin p�iv�.'),
-('2',NOW(),NULL,'Ari-Pekan uusimmat uutiset','Suomalainen olympiauimari  kaapista ulos - �Vihdoin voin olla oma itseni� Olympiatason uimari Ari-Pekka Liukkonen kertoi olevansa homoseksuaali Ylen suorassa Urheiluviikonloppu-ohjelmassa ja sit� ennen Ylen Urheilun haastattelussa t�n��n. Tasan viikon p��st� 25 vuotta t�ytt�v� Liukkonen on tiett�v�sti ensimm�inen suomalainen huippumiesurheilija, joka on tullut julkisesti ulos kaapista uransa aikana.'),
-('3',NOW(),NOW(),'ASD p�ivitys','ASD'),
-('1',NOW(),NULL,'ASD p�ivitys2','ASD2'),
-('1',NOW(),NULL,'ASD p�ivitys3','ASD3'),
-('1',NOW(),NOW(),'ASD p�ivitys4','ASD4'),
-('2',NOW(),NOW(),'ASD p�ivitys5','ASD5');
+('1',NOW(),NULL,'Kyllikki Mansikkamäki sano näin','Iltakurssit olivat aikanaan oiva koulutusmuoto sisälle seuratoimintaan ja nuorisoseura-aatteeseen. Sotatalven 1943 iltakurssilaiset. Ohjaajana oli Kyllikki Mansikkamäki Nurmosta. (Juhani Yli-Rantalan arkisto) '),
+('1',NOW(),NULL,'Jean Sibeliuksen salatut tarinat','Sibeliuksen keskeisimmät teokset ovat hänen seitsemän sinfoniaansa. Sinfonioiden lisäksi hänen tunnetuimmat teoksensa ovat viulukonsertto sekä orkesteriteokset Finlandia, Karelia-sarja, Tuonelan joutsen (osa Lemminkäinen-sarjaa) ja Valse triste. Hänen muihin teoksiinsa kuuluu muun muassa vokaali-, kuoro- ja pianomusiikkia, näytelmämusiikkia ja kamarimusiikkia. Sibeliuksen viimeiset suurimuotoiset teokset olivat seitsemäs sinfonia (1924), näyttämöteos Myrsky (1926) ja sävelruno Tapiola (1926). Suomessa Sibeliuksen syntymäpäivä 8. joulukuuta on liputuspäivä, suomalaisen musiikin päivä.'),
+('2',NOW(),NULL,'Ari-Pekan uusimmat uutiset','Suomalainen olympiauimari  kaapista ulos - *Vihdoin voin olla oma* itseni Olympiatason uimari Ari-Pekka Liukkonen kertoi olevansa homoseksuaali Ylen suorassa Urheiluviikonloppu-ohjelmassa ja sitä ennen Ylen Urheilun haastattelussa tänään. Tasan viikon päästä 25 vuotta täyttävä Liukkonen on tiettävästi ensimmäinen suomalainen huippumiesurheilija, joka on tullut julkisesti ulos kaapista uransa aikana.'),
+('3',NOW(),NOW(),'ASD päivitys','ASD'),
+('1',NOW(),NULL,'ASD päivitys2','ASD2'),
+('1',NOW(),NULL,'ASD päivitys3','ASD3'),
+('1',NOW(),NOW(),'ASD päivitys4','ASD4'),
+('2',NOW(),NOW(),'ASD päivitys5','ASD5');
 
 Kommentti testidata
 
-insert into Kommentti (idKayttaja, idPostaus, luontiAika, vanhempi, tila, muokattu, otsikko, sisalto) values ('1','1',NOW(), NULL, '0', NULL, 'asd','T�m� on minun eka kommenttini, pls be gentle.'),
-('2','1',NOW(),'1', '0', NULL, 'asd','Mene pois, t��ll� ei kaivata ensimm�isi� kommentoijia'),
+insert into Kommentti (idKayttaja, idPostaus, luontiAika, vanhempi, tila, muokattu, otsikko, sisalto) values 
+('1','1',NOW(), NULL, '0', NULL, 'asd','Tämä on minun eka kommenttini, pls be gentle.'),
+('2','1',NOW(),'1', '0', NULL, 'asd','Mene pois, täällä ei kaivata ensimmäisiä kommentoijia'),
 ('3','1',NOW(),'2','1', NULL, 'asd','H***T S*****A KAIKKI POIS'),
-('1','3',NOW(), NULL, '0', NULL, 'asd','Oih, olipas mukava postaus, tykk�sin ja laikkasin facebookissa. Twiittasin my�s <3!'),
+('1','3',NOW(), NULL, '0', NULL, 'asd','Oih, olipas mukava postaus, tykkäsin ja laikkasin facebookissa. Twiittasin myös <3!'),
 ('3','3',NOW(), NULL, '0',NOW(), 'asd','Sibelius oli hieno mies!');
+
+Oikeus testidata
+
+insert into Oikeus (idOikeudet, oikeusNimi, oikeusKuvaus) values
+('1', 'Guest', 'Saa tehdä kommentteja'),
+('2', 'User', 'Saa tehdä postauksia'),
+('3', 'Admin', 'Näkee admin valikot');
+
+Rooli testidata
+
+insert into Rooli (idOikeudet, idKayttaja) values
+('1', '1'),
+('2', '1'),
+('3', '1');
+
+Helpommin insertattava muoto:
+
+insert into Kayttaja (kayttajaNimi, salasana, email, liittymisPaiva) values 
+('admin','admin','pekanputka@gmail.com',NOW()),
+('petismatis','salasana1234','petis@hotmail.com',NOW()),
+('Pandaspede','panda1','panda@live.fi',NOW()),
+('Penapontikka','viina','kilju@live.fi',NOW());
+
+insert into Postaus (idKayttaja, luontiAika, muokattu, otsikko, sisalto) values
+('1',NOW(),NULL,'Kyllikki Mansikkamäki sano näin','Iltakurssit olivat aikanaan oiva koulutusmuoto sisälle seuratoimintaan ja nuorisoseura-aatteeseen. Sotatalven 1943 iltakurssilaiset. Ohjaajana oli Kyllikki Mansikkamäki Nurmosta. (Juhani Yli-Rantalan arkisto) '),
+('1',NOW(),NULL,'Jean Sibeliuksen salatut tarinat','Sibeliuksen keskeisimmät teokset ovat hänen seitsemän sinfoniaansa. Sinfonioiden lisäksi hänen tunnetuimmat teoksensa ovat viulukonsertto sekä orkesteriteokset Finlandia, Karelia-sarja, Tuonelan joutsen (osa Lemminkäinen-sarjaa) ja Valse triste. Hänen muihin teoksiinsa kuuluu muun muassa vokaali-, kuoro- ja pianomusiikkia, näytelmämusiikkia ja kamarimusiikkia. Sibeliuksen viimeiset suurimuotoiset teokset olivat seitsemäs sinfonia (1924), näyttämöteos Myrsky (1926) ja sävelruno Tapiola (1926). Suomessa Sibeliuksen syntymäpäivä 8. joulukuuta on liputuspäivä, suomalaisen musiikin päivä.'),
+('2',NOW(),NULL,'Ari-Pekan uusimmat uutiset','Suomalainen olympiauimari  kaapista ulos - *Vihdoin voin olla oma* itseni Olympiatason uimari Ari-Pekka Liukkonen kertoi olevansa homoseksuaali Ylen suorassa Urheiluviikonloppu-ohjelmassa ja sitä ennen Ylen Urheilun haastattelussa tänään. Tasan viikon päästä 25 vuotta täyttävä Liukkonen on tiettävästi ensimmäinen suomalainen huippumiesurheilija, joka on tullut julkisesti ulos kaapista uransa aikana.'),
+('3',NOW(),NOW(),'ASD päivitys','ASD'),
+('1',NOW(),NULL,'ASD päivitys2','ASD2'),
+('1',NOW(),NULL,'ASD päivitys3','ASD3'),
+('1',NOW(),NOW(),'ASD päivitys4','ASD4'),
+('2',NOW(),NOW(),'ASD päivitys5','ASD5');
+
+insert into Kommentti (idKayttaja, idPostaus, luontiAika, vanhempi, tila, muokattu, otsikko, sisalto) values 
+('1','1',NOW(), NULL, '0', NULL, 'asd','Tämä on minun eka kommenttini, pls be gentle.'),
+('2','1',NOW(),'1', '0', NULL, 'asd','Mene pois, täällä ei kaivata ensimmäisiä kommentoijia'),
+('3','1',NOW(),'2','1', NULL, 'asd','H***T S*****A KAIKKI POIS'),
+('1','3',NOW(), NULL, '0', NULL, 'asd','Oih, olipas mukava postaus, tykkäsin ja laikkasin facebookissa. Twiittasin myös <3!'),
+('3','3',NOW(), NULL, '0',NOW(), 'asd','Sibelius oli hieno mies!');
+
+insert into Oikeus (idOikeudet, oikeusNimi, oikeusKuvaus) values
+('1', 'Guest', 'Saa tehdä kommentteja'),
+('2', 'User', 'Saa tehdä postauksia'),
+('3', 'Admin', 'Näkee admin valikot');
+
+insert into Rooli (idOikeudet, idKayttaja) values
+('1', '1'),
+('2', '1'),
+('3', '1');

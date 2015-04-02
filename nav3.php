@@ -4,9 +4,9 @@
         <ul class="dropdown-menu">
             <li><a href="index.php?page=showUsers">Show users</a>
             </li>
-            <li><a href="#">Another action</a>
+            <li><a href="#">Manage Users</a>
             </li>
-            <li><a href="#">Something else here</a>
+            <li><a href="#">Manage Posts</a>
             </li>
             <li class="divider"></li>
             <li><a href="#">Separated link</a>
