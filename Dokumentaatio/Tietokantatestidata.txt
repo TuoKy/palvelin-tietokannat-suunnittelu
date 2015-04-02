@@ -3,7 +3,8 @@ Kayttaja testidata
 insert into Kayttaja (kayttajaNimi, salasana, email, liittymisPaiva) values 
 ('admin','admin','pekanputka@gmail.com',NOW()),
 ('petismatis','salasana1234','petis@hotmail.com',NOW()),
-('Pandaspede','panda1','panda@live.fi',NOW());
+('Pandaspede','panda1','panda@live.fi',NOW()),
+('Penapontikka','viina','kilju@live.fi',NOW());
 
 Postaus testidata
 
