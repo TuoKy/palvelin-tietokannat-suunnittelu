@@ -37,6 +37,15 @@ class Tietokanta {
 		}
     }
 	
+	public function oikeudet($idKayttaja) {
+		$stmt = $this->db->prepare("SELECT idOikeudet FROM Rooli  WHERE idKayttaja = ? ");
+		$stmt->execute(array($idKayttaja));
+		
+		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			$oikeustaulu[$row['idOikeudet']] = '';
+		}
+		return $oikeustaulu;
+    }
 	
 	public function luo_kayttaja($kayttajaNimi, $email, $salasana) {
 		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ?");

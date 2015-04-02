@@ -8,13 +8,13 @@ $requiredPrivileges = array(
 //2 = user can make posts
 //3 = user is admin
 
-$yourPrivileges = array('2' => '', '3' => '');
+$yourPrivileges = $dbTouch->oikeudet($_SESSION['idKayttaja']);
 
 include("navbar.php");
 
 
 @$page = $_GET['page'];
-if (!empty($page)) {
+if (!empty($page) && (!isset($requiredPrivileges[$page]) || isset($yourPrivileges[$requiredPrivileges[$page]]))) {
 	$page .= '.php';
 	include($page);
 }
