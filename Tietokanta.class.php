@@ -26,11 +26,12 @@ class Tietokanta {
     }
 	
 	public function kirjaudu_sisaan($kayttajaNimi, $salasana) {
-		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
+		$stmt = $this->db->prepare("SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
 		$stmt->execute(array($kayttajaNimi, $salasana));
 		
 		if ($stmt->rowCount() == 1) {
-			return true;
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $row['idKayttaja'];
 		} else {
 			return false;
 		}

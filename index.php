@@ -8,9 +8,10 @@ if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['pass
 	$username = $_POST['username'];
 	$password = $_POST['password'];	
 
-	if ($dbTouch->kirjaudu_sisaan($username,$password)) {	
+	if ($idKayttaja = $dbTouch->kirjaudu_sisaan($username,$password)) {	
 		$_SESSION['app2_islogged'] = true;
 		$_SESSION['username'] = $_POST['username'];
+		$_SESSION['idKayttaja'] = $idKayttaja;
 	}
 	else
 		echo 'wrong username/password !';       
