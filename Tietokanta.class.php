@@ -101,5 +101,11 @@ class Tietokanta {
 		
 	}
 	
+	public function showPost($id) {
+		$stmt = $this->db->query("SELECT * FROM Postaus WHERE idPostaus = ?;");
+		$stmt->execute(array($id));
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
 	
 }?>

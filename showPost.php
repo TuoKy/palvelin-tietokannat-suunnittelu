@@ -1,8 +1,6 @@
-<div class="container">
-		
+<div class="container">		
 			<?php
-				$tiedot = $dbTouch->showPosts();
-				//print_r ($tiedot);	
+				$tiedot = $dbTouch->showPost($_GET['post']);			
 				foreach($tiedot as $plaa)
 				{
 				echo "<div class='content'>";
@@ -10,6 +8,5 @@
 				echo "{$plaa['sisalto']}  Kirjoittaja:{$plaa['idKayttaja']} <br> Luotu: {$plaa['luontiAika']}<br> Muokattu: {$plaa['muokattu']} ";
 				echo "</div>";
 				}	
-			?>	
-				
+			?>					
 </div>
