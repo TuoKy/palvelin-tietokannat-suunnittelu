@@ -7,8 +7,8 @@ class Tietokanta {
     function __construct() {
 		try {
 			//require_once ("/home/H3543/db-init-harkkatyo.php");
-			require_once ("../palvelin/myslijuttu/hurhur2.php");
-			//require_once ("../php-dbconfig/db-init.php");
+			//require_once ("../palvelin/myslijuttu/hurhur2.php");
+			require_once ("../php-dbconfig/db-init.php");
 
 			
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
@@ -101,11 +101,34 @@ class Tietokanta {
 		
 	}
 	
+<<<<<<< HEAD
 	public function showPost($id) {
 		$stmt = $this->db->query("SELECT * FROM Postaus WHERE idPostaus = ?;");
 		$stmt->execute(array($id));
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
+=======
+	public function deleteUser($idKayttaja) {
+	
+		$stmt = $this->db->prepare('DELETE FROM Kayttaja WHERE idKayttaja = ?');
+		$stmt->execute(array($idKayttaja));
+		
+    }
+	
+	public function deleteComment($idKommentti) {
+	
+		$stmt = $this->db->prepare('DELETE FROM Kommentti WHERE idKommentti = ?');
+		$stmt->execute(array($idKommentti));
+		
+    }
+	
+	public function deletePost($idPostaus) {
+	
+		$stmt = $this->db->prepare('DELETE FROM Postaus WHERE idPostaus = ?');
+		$stmt->execute(array($idPostaus));
+		
+    }
+>>>>>>> origin/master
 	
 }?>
