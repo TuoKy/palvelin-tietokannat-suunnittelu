@@ -47,16 +47,20 @@ class Tietokanta {
 		return $oikeustaulu;
     }
 	
-	public function luo_kayttaja($kayttajaNimi, $email, $salasana) {
+	public function luo_kayttaja($kayttajaNimi, $email, $salasana) {				
 		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ?");
 		$stmt->execute(array($kayttajaNimi));
-		
+				
 		if ($stmt->rowCount() == 1) {
 			return false;
 		} else {
 			$stmt = $this->db->prepare("INSERT INTO Kayttaja (kayttajaNimi, email, salasana, liittymisPaiva) VALUES(?,?,?,NOW())");
 			$stmt->execute(array($kayttajaNimi, $email, $salasana));
-
+			
+			$stmt2 = "SELECT idKayttaja FROM Kayttaja where kayttajaNimi = '$kayttajaNimi'";
+			$stmt = $this->db->prepare("insert into Rooli (idOikeudet, idKayttaja) values('1', '?' )");
+			$stmt->execute(($this->db->$stmt2['idKayttaja']));
+						
 			return true;
 		}
     }
@@ -110,30 +114,31 @@ class Tietokanta {
 		
 	}
 	
-
 	public function showPost($id) {
 		$stmt = $this->db->query("SELECT * FROM Postaus WHERE idPostaus = ?;");
 		$stmt->execute(array($id));
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
-
-	public function deleteUser($idKayttaja) {
-	
+	public function readComment($id, $dad ) {
+		//Anteeksi
+		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = $id AND vanhempi = $dad;");
+		return $stmt;
+	}
+		
+	public function deleteUser($idKayttaja) {	
 		$stmt = $this->db->prepare('DELETE FROM Kayttaja WHERE idKayttaja = ?');
 		$stmt->execute(array($idKayttaja));
 		
     }
 	
-	public function deleteComment($idKommentti) {
-	
+	public function deleteComment($idKommentti) {	
 		$stmt = $this->db->prepare('DELETE FROM Kommentti WHERE idKommentti = ?');
 		$stmt->execute(array($idKommentti));
 		
     }
 	
 	public function deletePost($idPostaus) {
-	
 		$stmt = $this->db->prepare('DELETE FROM Postaus WHERE idPostaus = ?');
 		$stmt->execute(array($idPostaus));
 		

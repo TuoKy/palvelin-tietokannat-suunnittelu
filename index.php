@@ -13,8 +13,13 @@ if (isset($_POST['signIn']) AND isset($_POST['username']) AND isset($_POST['pass
 		$_SESSION['username'] = $_POST['username'];
 		$_SESSION['idKayttaja'] = $idKayttaja;
 	}
-	else
-		echo 'wrong username/password !';       
+	else{
+		?>
+		<script>
+		alert("Wrong userName or Password");	
+		</script>
+<?php	
+	}	
 }
 else if (isset($_POST['register']))
 	$_GET['page']='register'; 
