@@ -5,6 +5,5 @@
 	$threaded_comments = new Threaded_comments($tiedot);  
   
 	$threaded_comments->print_comments();  
-	
-	
+		
 ?>					
