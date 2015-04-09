@@ -57,9 +57,11 @@ class Tietokanta {
 			$stmt = $this->db->prepare("INSERT INTO Kayttaja (kayttajaNimi, email, salasana, liittymisPaiva) VALUES(?,?,?,NOW())");
 			$stmt->execute(array($kayttajaNimi, $email, $salasana));
 			
-			$stmt2 = "SELECT idKayttaja FROM Kayttaja where kayttajaNimi = '$kayttajaNimi'";
-			$stmt = $this->db->prepare("insert into Rooli (idOikeudet, idKayttaja) values('1', '?' )");
-			$stmt->execute(($this->db->$stmt2['idKayttaja']));
+			$stmt = $this->db->prepare("insert into Rooli (idOikeudet, idKayttaja) values( 1,
+									(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ))");
+										//insert into Rooli (idOikeudet, idKayttaja) values( 1,
+										//(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = 'ankka' ))
+			$stmt->execute(array($kayttajaNimi));
 						
 			return true;
 		}
@@ -120,10 +122,10 @@ class Tietokanta {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
-	public function readComment($id, $dad ) {
-		//Anteeksi
-		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = $id AND vanhempi = $dad;");
-		return $stmt;
+	public function listComments($id) {
+		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = $id");
+		$stmt->execute(array($id));
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 		
 	public function deleteUser($idKayttaja) {	
