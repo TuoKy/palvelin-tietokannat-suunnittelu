@@ -86,17 +86,23 @@ class Tietokanta {
 		$stmt->execute(array($email, $kayttajaNimi));
     }
 	
-	public function kayttaja_postaukset() {
-		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(Postaus.idPostaus) as postausten_lukumaara FROM Kayttaja LEFT OUTER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi ORDER BY idKayttaja;");
+	public function kayttajatiedot() {
+		$stmt = $this->db->query("SELECT * FROM Kayttajatiedot ORDER BY idKayttaja;");
 			
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+		return $stmt->fetchAll(PDO::FETCH_ASSOC)
+	}
 	
-	public function kayttaja_kommentit() {
-		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, COUNT(Kommentti.idKommentti) as kommenttien_lukumaara FROM Kayttaja LEFT OUTER JOIN Kommentti ON Kommentti.idKayttaja = Kayttaja.IdKayttaja group by idKayttaja;");
-			
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+//	public function kayttaja_postaukset() {
+//		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(Postaus.idPostaus) as postausten_lukumaara FROM Kayttaja LEFT OUTER JOIN Postaus ON Postaus.idKayttaja = Kayttaja.IdKayttaja group by kayttajaNimi ORDER BY idKayttaja;");
+//			
+//		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+//    }
+//	
+//	public function kayttaja_kommentit() {
+//		$stmt = $this->db->query("SELECT Kayttaja.idKayttaja, COUNT(Kommentti.idKommentti) as kommenttien_lukumaara FROM Kayttaja LEFT OUTER JOIN Kommentti ON Kommentti.idKayttaja = Kayttaja.IdKayttaja group by idKayttaja;");
+//			
+//		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+//    }
 	
 	public function luo_postaus($otsikko, $sisalto, $kayttajaNimi) {
 		$stmt = $this->db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
