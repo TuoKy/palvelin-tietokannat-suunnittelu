@@ -29,26 +29,26 @@
          * @param array $comment 
          * @param int $depth  
          */  
-        private function format_comment($comment, $depth)  
-        {     
-            for ($depth; $depth > 0; $depth--)  
-            {  
-                echo "\t";  
-            }  
-            echo "<li>";
-			echo "<div class='content'>";			
-            echo $comment['otsikko']; 
-			echo "<br>";
-			echo $comment['sisalto'];
-			echo "<br>";
-			echo $comment['idKayttaja'];
-			echo "<br>";
-			echo $comment['luontiAika'];
-			echo "<br>";
-			echo $comment['muokattu'];			
-            echo "\n";
-			echo "</div>";
-			echo "</li>"; 
+        private function format_comment($comment)  
+        {   
+			$output = <<<OUTPUTEND
+             <li>
+			 <div class='content'>			
+             {$comment['otsikko']}
+			 <br>
+			 {$comment['sisalto']}
+			 <br>
+			 {$comment['idKayttaja']}
+			 <br>
+			 {$comment['luontiAika']}
+			 <br>
+			 {$comment['muokattu']}
+			 <span class='right'><button type='button' class='btn btn-default'>Kommentoi</button></span><br>			
+             \n
+			 </div>
+			 </li> 
+OUTPUTEND;
+			echo $output;
         }  
           
         /** 
@@ -65,7 +65,7 @@
 				  
                 if (isset($this->children[$c['idKommentti']]))  
                 {  
-                    $this->print_parent($this->children[$c['idKommentti']], $depth + 1);
+                    $this->print_parent($this->children[$c['idKommentti']]);
                 }
 				
 			echo "</ul>";		

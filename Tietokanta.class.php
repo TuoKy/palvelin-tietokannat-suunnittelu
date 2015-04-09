@@ -89,7 +89,7 @@ class Tietokanta {
 	public function kayttajatiedot() {
 		$stmt = $this->db->query("SELECT * FROM Kayttajatiedot ORDER BY idKayttaja;");
 			
-		return $stmt->fetchAll(PDO::FETCH_ASSOC)
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 //	public function kayttaja_postaukset() {

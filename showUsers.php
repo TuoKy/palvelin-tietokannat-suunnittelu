@@ -6,18 +6,10 @@
 			<th>KäyttäjaId</th><th>KayttäjäNimi</th><th>PostaustenMäärä</th><th>KommenttienMäärä</th>
 			</tr>
 			<?php
-				$tiedot = $dbTouch->kayttaja_postaukset();	
-				$kommentit = $dbTouch->kayttaja_kommentit();	
+				$tiedot = $dbTouch->kayttajatiedot();	
 				foreach($tiedot as $plaa)
 				{
-					foreach($kommentit as $boo)
-					{
-						if($plaa['idKayttaja'] == $boo['idKayttaja']) {
-							$kommenttilkm = $boo['kommenttien_lukumaara'];
-						}
-					}
-				echo "<tr> <td> {$plaa['idKayttaja']} </td> <td> {$plaa['kayttajaNimi']} </td> <td> {$plaa['postausten_lukumaara']} </td> <td> $kommenttilkm </td> </tr>";
-								
+				echo "<tr> <td> {$plaa['idKayttaja']} </td> <td> {$plaa['kayttajaNimi']} </td> <td> {$plaa['postausten_lukumaara']} </td> <td> {$plaa['kommenttiLkm']} </td> </tr>";								
 				}			
 			?>
 			</table>

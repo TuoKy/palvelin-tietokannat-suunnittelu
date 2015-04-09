@@ -52,16 +52,16 @@ background-color: #F8F8F8;
 .content ul,li{
 list-style: none
 }
+.content button{
+margin-right:30px;
+}
 .content {
 	background-color: lightblue;
 	margin: 10px;
 	list-style-type:none;
+	padding-bottom:30px;
 }
 
-.kidComment {
-	background-color: red;
-	margin: 10px;
-}
 table {
 	border: 1px solid black;
 	width: 100%;
