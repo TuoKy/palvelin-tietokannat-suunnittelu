@@ -144,3 +144,20 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Nämä Temput tekee view:n nimeltä Kayttajatiedot
+-- -----------------------------------------------------
+create view Kayttajatiedot_valitaulu as
+SELECT Kayttaja.idKayttaja, kayttajaNimi, COUNT(Postaus.idPostaus) as postausten_lukumaara
+FROM Kayttaja
+LEFT OUTER JOIN Postaus
+ON Postaus.idKayttaja = Kayttaja.IdKayttaja
+group by kayttajaNimi;
+
+create view Kayttajatiedot as
+SELECT Kayttajatiedot_valitaulu.idKayttaja, kayttajaNimi, postausten_lukumaara, COUNT(Kommentti.idKommentti) as kommenttiLkm
+FROM Kayttajatiedot_valitaulu
+LEFT OUTER JOIN Kommentti
+ON Kommentti.idKayttaja = Kayttajatiedot_valitaulu.IdKayttaja
+group by idKayttaja;
