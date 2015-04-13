@@ -16,7 +16,20 @@
 							$kommenttilkm = $boo['kommenttien_lukumaara'];
 						}
 					}
-				echo "<tr> <td> {$plaa['idKayttaja']} </td> <td> {$plaa['kayttajaNimi']} </td> <td> {$plaa['postausten_lukumaara']} </td> <td> $kommenttilkm </td> </tr>";
+				echo "
+					<form id="form" method="post" action="<?php $_SERVER['PHP_SELF'] ?>">
+					<tr>
+						<td> {$plaa['idKayttaja']} </td>
+						<td> {$plaa['kayttajaNimi']} </td>
+						<td> {$plaa['postausten_lukumaara']} </td>
+						<td> $kommenttilkm </td>
+						<td>
+							<button type="submit" name ="edit" value={$plaa['idKayttaja']} class="btn btn-default">Edit</button>
+							<button type="submit" name ="delete" value={$plaa['idKayttaja']} class="btn btn-default">Delete</button>
+							<button type="submit" name ="info" value={$plaa['idKayttaja']} class="btn btn-default">Info</button>
+						</td>
+					</tr>
+					</form>";
 								
 				}			
 			?>
