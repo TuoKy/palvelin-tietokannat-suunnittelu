@@ -1,4 +1,4 @@
-﻿Kayttaja testidata
+Kayttaja testidata
 
 insert into Kayttaja (idKayttaja, kayttajaNimi, salasana, email, liittymisPaiva) values 
 ('1','admin','admin','pekanputka@gmail.com',NOW()),
