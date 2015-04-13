@@ -100,7 +100,7 @@ class Tietokanta {
 	public function show_user($idKayttaja) {
 		$stmt = $this->db->query("SELECT * FROM Kayttaja WHERE $idKayttaja = ?;");
 		$stmt->execute(array($idKayttaja));
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
 	
 	public function kayttaja_postaukset() {
