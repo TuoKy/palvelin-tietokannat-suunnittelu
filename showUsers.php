@@ -20,19 +20,19 @@ if (isset($_POST['edit'])) {
 			</tr>
 			<?php
 				$tiedot = $dbTouch->kayttajatiedot();	
-				foreach($tiedot as $plaa)
+				foreach($tiedot as $rivi)
 				{
 				echo "
 				<form id='form' method='post' action='index.php?page=showUsers'>
 				<tr>
-					<td> {$plaa['idKayttaja']} </td>
-					<td> {$plaa['kayttajaNimi']} </td>
-					<td> {$plaa['postausten_lukumaara']} </td>
-					<td> {$plaa['kommenttiLkm']} </td>
+					<td> {$rivi['idKayttaja']} </td>
+					<td> {$rivi['kayttajaNimi']} </td>
+					<td> {$rivi['postausten_lukumaara']} </td>
+					<td> {$rivi['kommenttiLkm']} </td>
 					<td>
-						<button type='submit' name ='edit' value={$plaa['idKayttaja']} class='btn btn-default'>Edit</button>
-						<button type='submit' name ='delete' value={$plaa['idKayttaja']} class='btn btn-default'>Delete</button>
-						<button type='submit' name ='info' value={$plaa['idKayttaja']} class='btn btn-default'>Info</button>
+						<button type='submit' name ='edit' value={$rivi['idKayttaja']} class='btn btn-default'>Edit</button>
+						<button type='submit' name ='delete' value={$rivi['idKayttaja']} class='btn btn-default'>Delete</button>
+						<button type='submit' name ='info' value={$rivi['idKayttaja']} class='btn btn-default'>Info</button>
 					</td>
 				</tr>
 				</form>";								
