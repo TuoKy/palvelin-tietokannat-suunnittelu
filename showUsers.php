@@ -1,14 +1,14 @@
 <?php
 if (isset($_POST['edit'])) {
 	$_SESSION['manageUserId'] = $_POST['edit'];
-    header('index.php?page=editUser');
+    header("Location: index.php?page=editUser");
 	
 } elseif (isset($_POST['delete'])) {
     $dbTouch->deleteUser($_POST['delete']);
 	
 } elseif (isset($_POST['info'])) {
     $_SESSION['manageUserId'] = $_POST['info'];
-	header('index.php?page=userInfo');
+	header("Location: index.php?page=userInfo");
 }
 ?>
 <div class="container">
