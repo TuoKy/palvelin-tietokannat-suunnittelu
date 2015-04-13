@@ -3,13 +3,13 @@ $row = $dbTouch->show_user($_SESSION['manageUserId']);
 ?>
 
 <div class="container">
-	<div class="content">	
+	<div class="content">
 		<div class="formContainer">
 			<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 			<label>Name</label>
 			<input type="text" name="name" value=<?php echo $row['kayttajaNimi'];?> ><br />
 			<label>Password</label>
-			<input type="text" name="password" value=<?php echo $row['password'];?>><br />
+			<input type="text" name="password" value=<?php echo $row['salasana'];?>><br />
 			<label>Email</label>
 			<input type="text" name="email" value=<?php echo $row['email'];?>><br />
 			<button type="submit" name ="save" class="btn btn-default">Save changes</button>

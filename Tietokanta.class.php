@@ -82,12 +82,12 @@ class Tietokanta {
     } 
 
     public function muokkaa_kayttaja($kayttajaNimi, $email) {
-		$stmt = $this->db->prepare("UPDATE Kayttaja SET email=? WHERE kayttajaNimi=?");
+		$stmt = $this->db->prepare("UPDATE Kayttaja SET email=? WHERE kayttajaNimi=?;");
 		$stmt->execute(array($email, $kayttajaNimi));
     }
 	
 	public function edit_post($idPostaus, $otsikko, $sisalto) {
-		$stmt = $this->db->prepare("UPDATE Postaus SET otsikko=?, sisalto=?, muokattu=NOW() WHERE $idPostaus=?");
+		$stmt = $this->db->prepare("UPDATE Postaus SET otsikko=?, sisalto=?, muokattu=NOW() WHERE $idPostaus=?;");
 		$stmt->execute(array($otsikko, $sisalto, $idPostaus));
 	}
 	
@@ -98,7 +98,7 @@ class Tietokanta {
 	}
 	
 	public function show_user($idKayttaja) {
-		$stmt = $this->db->query("SELECT * FROM Kayttaja WHERE $idKayttaja = ?;");
+		$stmt = $this->db->query("SELECT * FROM Kayttaja WHERE idKayttaja = ?;");
 		$stmt->execute(array($idKayttaja));
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
