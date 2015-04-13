@@ -1,10 +1,14 @@
 <?php
 if (isset($_POST['edit'])) {
-    
+	$_SESSION['manageUserId'] = $_POST['edit'];
+    header(index.php?page=editUser);
+	
 } elseif (isset($_POST['delete'])) {
     $dbTouch->deleteUser($_POST['delete']);
+	
 } elseif (isset($_POST['info'])) {
-    
+    $_SESSION['manageUserId'] = $_POST['info'];
+	header(index.php?page=userInfo);
 }
 ?>
 <div class="container">
@@ -12,7 +16,7 @@ if (isset($_POST['edit'])) {
 		<div class="table-responsive">
 			<table class="table">
 			<tr>
-			<th>KäyttäjaId</th><th>KayttäjäNimi</th><th>PostaustenMäärä</th><th>KommenttienMäärä</th>
+			<th>Käyttäjä-Id</th><th>Kayttäjänimi</th><th>Postausten Määrä</th><th>Kommenttien Määrä</th><th>Hallinta</th>
 			</tr>
 			<?php
 				$tiedot = $dbTouch->kayttajatiedot();	
