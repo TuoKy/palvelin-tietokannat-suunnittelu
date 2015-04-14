@@ -5,7 +5,7 @@
 					<label>Otsikko</label>
 						<input type="text" name="otsikko"> <br/>
 					<label>Sisältö</label>	
-					<textarea name="newPost" >  </textarea>
+					<textarea name="newPost" class="Post">  </textarea>
 					<label>Avainsanat (erota pilkulla)</label>
 					<input type="text" name="avainsanat"><br/>
 					<button type="submit" name ="post" class="btn btn-default">Post</button>

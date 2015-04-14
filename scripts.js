@@ -1,6 +1,6 @@
 tinymce.init({
-        selector: "textarea",
-        browser_spellcheck : true,
+		selector:"textarea.Post",
+        browser_spellcheck : false,
         height : 500,
 		file_picker_callback: function(callback, value, meta) {
         // Provide file and text for the link dialog
@@ -17,4 +17,9 @@ tinymce.init({
                              "table contextmenu"],
 
 		 relative_urls: false					 							 
+        });
+tinymce.init({
+		selector:"textarea.Comment",
+        browser_spellcheck : false,
+        height : 200,						 							 
         });
