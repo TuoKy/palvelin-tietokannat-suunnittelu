@@ -132,6 +132,12 @@ class Tietokanta {
 		$stmt->execute(array($otsikko, $sisalto, $idKayttaja));
     }
 	
+	public function luo_kommentti($otsikko, $sisalto, $idKayttaja, $postId, $idKommentti) {
+		
+		$stmt = $this->db->prepare("INSERT INTO Kommentti (otsikko, sisalto, idKayttaja, idPostaus, luontiAika, vanhempi, tila, Muokattu) VALUES(?,?,(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ),?,NOW(),?,0,NOW())");
+		$stmt->execute(array($otsikko, $sisalto, $idKayttaja, $postId, $idKommentti));
+	}
+	
 	public function showPosts() {
 		$stmt = $this->db->query("SELECT * FROM Postaus order by idPostaus DESC;");
 			

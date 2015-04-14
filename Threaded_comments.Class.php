@@ -1,6 +1,6 @@
     <?php
 	//http://www.jongales.com/blog/2009/01/27/php-class-for-threaded-comments/
-	//vähän muokattu
+	//vähän muokattu, itseasiassa aika rankasti
 	class Threaded_comments  
     {  
           
@@ -14,7 +14,7 @@
         {  
             foreach ($comments as $comment)  
             {  
-                if ($comment['vanhempi'] == NULL)  
+                if ($comment['vanhempi'] == 0)  
                 {  
                     $this->parents[$comment['idKommentti']][] = $comment;  
                 }  
@@ -30,25 +30,37 @@
          * @param int $depth  
          */  
         private function format_comment($comment)  
-        {   
+        {   			
 			$output = <<<OUTPUTEND
              <li>
-			 <div class='content'>			
+			 <div class='content'>\n			
              {$comment['otsikko']}
-			 <br>
+			 <br>\n
 			 {$comment['sisalto']}
-			 <br>
+			 <br>\n
 			 {$comment['idKayttaja']}
-			 <br>
+			 <br>\n
 			 {$comment['luontiAika']}
-			 <br>
+			 <br>\n
 			 {$comment['muokattu']}
-			 <span class='right'><button type='button' class='btn btn-default'>Kommentoi</button></span><br>			
-             \n
+			 <span class='right'><button type='button' class='btn btn-default' data-toggle='collapse' data-target='#{$comment['idKommentti']}'>Kommentoi</button></span><br><br>			
 			 </div>
-			 </li> 
+			 
 OUTPUTEND;
-			echo $output;
+		echo $output;
+		echo "<div id='{$comment['idKommentti']}' class='collapse' class='commentDiv'>			 		
+			<div class='content'>			
+			<form method='post' action='newComment.php?comment= {$comment['idKommentti']}'>
+			<label>Otsikko</label>
+				<input type='text' name='otsikko'> <br/>
+			<label>Sisältö</label>	
+				<textarea name='newComment' class='Comment' >  </textarea>
+				<input type='hidden' name='idKommentti' value='{$comment['idKommentti']}'>
+					<button type='submit' name ='post' class='btn btn-default'>Post</button>								
+			</form>					
+			</div>	
+			</div>	 
+			</li> ";	
         }  
           
         /** 
