@@ -152,7 +152,7 @@ class Tietokanta {
 	}
 	
 	public function listComments($id) {
-		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = $id");
+		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = ?");
 		$stmt->execute(array($id));
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
