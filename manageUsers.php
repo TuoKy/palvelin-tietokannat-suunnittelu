@@ -1,36 +1,41 @@
+<?php
+if (isset($_POST['edit'])) {
+	$_SESSION['manageUserId'] = $_POST['edit'];
+    header("Location: index.php?page=editUser");
+	
+} elseif (isset($_POST['delete'])) {
+    $dbTouch->deleteUser($_POST['delete']);
+	
+} elseif (isset($_POST['info'])) {
+    $_SESSION['manageUserId'] = $_POST['info'];
+	header("Location: index.php?page=userInfo");
+}
+?>
 <div class="container">
 		<div class="content">
 		<div class="table-responsive">
 			<table class="table">
 			<tr>
-			<th>K‰ytt‰jaId</th><th>Kaytt‰j‰Nimi</th><th>PostaustenM‰‰r‰</th><th>KommenttienM‰‰r‰</th>
+			<th>K√§ytt√§j√§-Id</th><th>Kaytt√§j√§nimi</th><th>Postausten M√§√§r√§</th><th>Kommenttien M√§√§r√§</th><th>Hallinta</th>
 			</tr>
 			<?php
-				$tiedot = $dbTouch->kayttaja_postaukset();	
-				$kommentit = $dbTouch->kayttaja_kommentit();	
-				foreach($tiedot as $plaa)
+				$tiedot = $dbTouch->kayttajatiedot();	
+				foreach($tiedot as $rivi)
 				{
-					foreach($kommentit as $boo)
-					{
-						if($plaa['idKayttaja'] == $boo['idKayttaja']) {
-							$kommenttilkm = $boo['kommenttien_lukumaara'];
-						}
-					}
 				echo "
-					<form id="form" method="post" action="<?php $_SERVER['PHP_SELF'] ?>">
-					<tr>
-						<td> {$plaa['idKayttaja']} </td>
-						<td> {$plaa['kayttajaNimi']} </td>
-						<td> {$plaa['postausten_lukumaara']} </td>
-						<td> $kommenttilkm </td>
-						<td>
-							<button type="submit" name ="edit" value={$plaa['idKayttaja']} class="btn btn-default">Edit</button>
-							<button type="submit" name ="delete" value={$plaa['idKayttaja']} class="btn btn-default">Delete</button>
-							<button type="submit" name ="info" value={$plaa['idKayttaja']} class="btn btn-default">Info</button>
-						</td>
-					</tr>
-					</form>";
-								
+				<form id='form' method='post' action='index.php?page=manageUsers'>
+				<tr>
+					<td> {$rivi['idKayttaja']} </td>
+					<td> {$rivi['kayttajaNimi']} </td>
+					<td> {$rivi['postausten_lukumaara']} </td>
+					<td> {$rivi['kommenttiLkm']} </td>
+					<td>
+						<button type='submit' name ='edit' value={$rivi['idKayttaja']} class='btn btn-default'>Edit</button>
+						<button type='submit' name ='delete' value={$rivi['idKayttaja']} class='btn btn-default'>Delete</button>
+						<button type='submit' name ='info' value={$rivi['idKayttaja']} class='btn btn-default'>Info</button>
+					</td>
+				</tr>
+				</form>";								
 				}			
 			?>
 			</table>
