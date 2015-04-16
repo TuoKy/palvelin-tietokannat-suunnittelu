@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Postaus` (
   `idPostaus` INT NOT NULL AUTO_INCREMENT,
   `otsikko` VARCHAR(45) NULL,
   `sisalto` LONGTEXT NULL,
-  `idKayttaja` INT NOT NULL,
+  `idKayttaja` INT NULL,
   `luontiAika` DATETIME NOT NULL,
   `muokattu` DATETIME NULL,
   PRIMARY KEY (`idPostaus`),
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Postaus` (
   CONSTRAINT `fk_Merkinta_Kayttaja`
     FOREIGN KEY (`idKayttaja`)
     REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Kommentti` (
   `idKommentti` INT NOT NULL AUTO_INCREMENT,
   `otsikko` VARCHAR(45) NOT NULL,
   `sisalto` TEXT NULL,
-  `idKayttaja` INT NOT NULL,
+  `idKayttaja` INT NULL,
   `idPostaus` INT NOT NULL,
   `luontiAika` DATETIME NULL,
   `vanhempi` INT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Kommentti` (
   CONSTRAINT `fk_Kommnetti_Kayttaja1`
     FOREIGN KEY (`idKayttaja`)
     REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Kommnetti_Merkinta1`
     FOREIGN KEY (`idPostaus`)
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Rooli` (
   CONSTRAINT `fk_Oikeudet_has_Kayttaja_Kayttaja1`
     FOREIGN KEY (`idKayttaja`)
     REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
