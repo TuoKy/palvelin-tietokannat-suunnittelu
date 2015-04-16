@@ -132,6 +132,10 @@ class Tietokanta {
 		$stmt->execute(array($otsikko, $sisalto, $idKayttaja));
     }
 	
+	public function editPost($otsikko, $sisalto, $kayttajanimi) {
+	
+	}
+	
 	public function luo_kommentti($otsikko, $sisalto, $idKayttaja, $postId, $idKommentti) {
 		
 		$stmt = $this->db->prepare("INSERT INTO Kommentti (otsikko, sisalto, idKayttaja, idPostaus, luontiAika, vanhempi, tila, Muokattu) VALUES(?,?,(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ),?,NOW(),?,0,NOW())");
@@ -148,10 +152,16 @@ class Tietokanta {
 	public function showPost($id) {
 		$stmt = $this->db->query("SELECT * FROM Postaus WHERE idPostaus = ?;");
 		$stmt->execute(array($id));
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+	
+	public function listComments() {
+		$stmt = $this->db->query("SELECT * FROM Kommentti");
+		$stmt->execute(array());
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
-	public function listComments($id) {
+	public function listComments1($id) {
 		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = ?");
 		$stmt->execute(array($id));
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);

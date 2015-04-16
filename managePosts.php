@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['edit'])) {
 	$_SESSION['managePostId'] = $_POST['edit'];
-    header("Location: index.php?page=editPost");
+    header("Location: index.php?page=editPost&post={$_POST['edit']}");
 }
  elseif (isset($_POST['delete'])) {
     $dbTouch->deletePost($_POST['delete']);

@@ -40,7 +40,7 @@ $error = !in_array($detectedType, $allowedTypes);
  
 	if(!$error){
 		$path = 'pictures/';
-		$path1 = 'http://student.labranet.jamk.fi/~H3408/palvelin-tietokannat-suunnittelu/'; // tämä pitää muuttaa
+		$path1 = 'http://student.labranet.jamk.fi/~H3667/palvelin-tietokannat-suunnittelu/'; // tämä pitää muuttaa
 		@$image = $_FILES['image'];
 		$name = $image['name'];
 		move_uploaded_file($_FILES['image']['tmp_name'], $path.$name); 

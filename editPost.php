@@ -1,30 +1,35 @@
 <div class="container">
-		<div class="content">
-			
-				<form id="form" method="post" action="index.php?page=newPost">
-					<label>Otsikko</label>
-						<input type="text" name="otsikko"> <br/>
-					<label>Sisältö</label>	
-					<textarea name="newPost" >  </textarea>
-					<label>Avainsanat (erota pilkulla)</label>
-					<input type="text" name="avainsanat"><br/>
-					<button type="submit" name ="post" class="btn btn-default">Post</button>
-					<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>								
-				</form>
-			
-			<!-- KUVA / KUVAT -->
-			<iframe id="form_target" name="form_target" style="display:none"></iframe>
-			<form id="my_form" action="index.php?page=newPost" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
-			<input name="image" type="file" onchange="$('#my_form').submit(); this.value='';">
-			</form>			
-		</div>
-</div>					
+	<div class="content">
+		<?php
+			$tiedot = $dbTouch->showPost($_GET['post']);
+			$otsikko = strip_tags($tiedot['otsikko']);
+			echo "
+			<form id='form' method='post' action='index.php?page=editPost'>
+				<label>Otsikko</label>
+					<input type='text' name='otsikko' value='{$otsikko}'><br/>
+				<label>Sisältö</label>	
+				<textarea class='Post' name='editPost' >{$tiedot['sisalto']}</textarea>
+				<label>Avainsanat (erota pilkulla)</label>
+				<input type='text' name='avainsanat'><br/>
+				<button type='submit' name ='post' class='btn btn-default'>Post</button>
+				<button type='submit' name ='cancel' class='btn btn-default'>Cancel</button>								
+			</form>
+			"
+		?>
+		
+		<!-- KUVA / KUVAT -->
+		<iframe id="form_target" name="form_target" style="display:none"></iframe>
+		<form id="my_form" action="index.php?page=editPost" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
+		<input name="image" type="file" onchange="$('#my_form').submit(); this.value='';">
+		</form>			
+	</div>
+</div>		
 		
 <?php
 if(isset($_POST['post']) AND $_SESSION['app2_islogged'] == true){
-if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){		
+if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){		
 		$otsikko = "<h2>{$_POST['otsikko']}</h2>";		
-		$dbTouch->luo_postaus($otsikko, $_POST['newPost'], $_SESSION['username']); 
+		$dbTouch->luo_postaus($otsikko, $_POST['editPost'], $_SESSION['username']); 
 }
 else
  echo "Ei oikeuksia / virhe";

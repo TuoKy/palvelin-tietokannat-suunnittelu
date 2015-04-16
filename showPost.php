@@ -1,14 +1,13 @@
 <div class="container">		
 	<?php
 		$_SESSION['postId']=$_GET['post'];
-		$tiedot = $dbTouch->showPost($_GET['post']);			
-		foreach($tiedot as $plaa){
-			echo "<div class='content'>";
-			echo "<a href='index.php?page=showPost&post={$plaa['idPostaus']}'>{$plaa['otsikko']}</a>";
-			echo "{$plaa['sisalto']}  Kirjoittaja:{$plaa['idKayttaja']} <br> Luotu: {$plaa['luontiAika']}<br> Muokattu: {$plaa['muokattu']}";
-			echo "<span class='right'><button type='button' class='btn btn-default' data-toggle='collapse' data-target='#comment'>Kommentoi</button></span><br>";
-			echo "</div>";
-		}
+		$rivi = $dbTouch->showPost($_GET['post']);			
+		echo "<div class='content'>";
+		echo "<a href='index.php?page=showPost&post={$rivi['idPostaus']}'>{$rivi['otsikko']}</a>";
+		echo "{$rivi['sisalto']}  Kirjoittaja:{$rivi['idKayttaja']} <br> Luotu: {$rivi['luontiAika']}<br> Muokattu: {$rivi['muokattu']}";
+		echo "<span class='right'><button type='button' class='btn btn-default' data-toggle='collapse' data-target='#comment'>Kommentoi</button></span><br>";
+		echo "</div>";
+			
 		$comment=0;
 	?>
 		<div id="comment" class="collapse">
