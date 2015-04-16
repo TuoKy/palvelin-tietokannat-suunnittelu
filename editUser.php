@@ -1,5 +1,6 @@
 <?php
 $row = $dbTouch->show_user($_SESSION['manageUserId']);
+@$editedPrivileges = $dbTouch->oikeudet($_SESSION['manageUserId']);
 ?>
 
 <div class="container">
@@ -12,6 +13,11 @@ $row = $dbTouch->show_user($_SESSION['manageUserId']);
 			<input type="text" name="password" value=<?php echo $row['salasana'];?>><br />
 			<label>Email</label>
 			<input type="text" name="email" value=<?php echo $row['email'];?>><br />
+			
+			<input type="checkbox" name="privilegeBox" value="Admin" <?php if(isset($editedPrivileges['Admin'])) echo "checked='checked'"; ?>  />Admin<br />
+			<input type="checkbox" name="privilegeBox" value="User" <?php if(isset($editedPrivileges['User'])) echo "checked='checked'"; ?>  />User<br />
+			<input type="checkbox" name="privilegeBox" value="Guest" <?php if(isset($editedPrivileges['Guest'])) echo "checked='checked'"; ?>  />Guest<br />
+
 			<button type="submit" name ="save" class="btn btn-default">Save changes</button>
 			<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>
 			</form>

@@ -1,15 +1,13 @@
 <?php
 $requiredPrivileges = array(
-	'showUsers' => '3',
-	'newPost' => '2'
+	'showUsers' => 'Admin',
+	'newPost' => 'User'
 );
 //privileges are as follows:
-//1 = user can comment
-//2 = user can make posts
-//3 = user is admin
-
+//1 = Guest (can comment)
+//2 = User (can create posts)
+//3 = Admin
 @$yourPrivileges = $dbTouch->oikeudet($_SESSION['idKayttaja']);
-
 include("navbar.php");
 
 

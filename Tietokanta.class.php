@@ -38,11 +38,11 @@ class Tietokanta {
     }
 	
 	public function oikeudet($idKayttaja) {
-		$stmt = $this->db->prepare("SELECT idOikeudet FROM Rooli  WHERE idKayttaja = ? ");
+		$stmt = $this->db->prepare("select Oikeus.oikeusNimi from Oikeus left join Rooli on Oikeus.idOikeudet = Rooli.idOikeudet where Rooli.idKayttaja = ?");
 		$stmt->execute(array($idKayttaja));
 		
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$oikeustaulu[$row['idOikeudet']] = '';
+			$oikeustaulu[$row['oikeusNimi']] = '';
 		}
 		return $oikeustaulu;
     }
@@ -166,11 +166,9 @@ class Tietokanta {
 		$stmt->execute(array($id));
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
-		
-	public function deleteUser($idKayttaja) {
-		$stmt = $this->db->prepare('DELETE FROM Rooli WHERE idKayttaja = ?');
-		$stmt->execute(array($idKayttaja));
-		
+	
+	//Tekijä: Leppänen
+	public function deleteUser($idKayttaja) {		
 		$stmt = $this->db->prepare('DELETE FROM Kayttaja WHERE idKayttaja = ?');
 		$stmt->execute(array($idKayttaja));
 		
