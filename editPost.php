@@ -4,14 +4,14 @@
 			$tiedot = $dbTouch->showPost($_GET['post']);
 			$otsikko = strip_tags($tiedot['otsikko']);
 			echo "
-			<form id='form' method='post' action='index.php?page=editPost'>
+			<form id='form' method='postaus' action='index.php?page=editPost'>
 				<label>Otsikko</label>
 					<input type='text' name='otsikko' value='{$otsikko}'><br/>
 				<label>Sisältö</label>	
 				<textarea class='Post' name='editPost' >{$tiedot['sisalto']}</textarea>
 				<label>Avainsanat (erota pilkulla)</label>
 				<input type='text' name='avainsanat'><br/>
-				<button type='submit' name ='post' class='btn btn-default'>Post</button>
+				<button type='submit' name ='postaus' class='btn btn-default'>Edit</button>
 				<button type='submit' name ='cancel' class='btn btn-default'>Cancel</button>								
 			</form>
 			"
@@ -26,15 +26,15 @@
 </div>		
 		
 <?php
-if(isset($_POST['post']) AND $_SESSION['app2_islogged'] == true){
+if(isset($_POST['postaus']) AND $_SESSION['app2_islogged'] == true){
 if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){		
 		$otsikko = "<h2>{$_POST['otsikko']}</h2>";		
-		$dbTouch->luo_postaus($otsikko, $_POST['editPost'], $_SESSION['username']); 
+		$dbTouch->edit_post($_GET['post'], $otsikko, $_POST['editPost']);
 }
 else
  echo "Ei oikeuksia / virhe";
 }
-else if (isset($_POST['post']) AND $_SESSION['app2_islogged'] == false)
+else if (isset($_POST['postaus']) AND $_SESSION['app2_islogged'] == false)
 	 echo "Ei oikeuksia / virhe";
 
 if(isset($_FILES) AND $_SESSION['app2_islogged'] == true){
