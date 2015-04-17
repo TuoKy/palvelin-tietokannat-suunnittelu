@@ -1,9 +1,15 @@
 <?php
+$allPrivileges = array(
+	'Guest' => '',
+	'User' => '',
+	'Admin' => ''
+);
+
 $requiredPrivileges = array(
 	'showUsers' => 'Admin',
 	'newPost' => 'User'
 );
-//privileges are as follows:
+//permissions are as follows:
 //1 = Guest (can comment)
 //2 = User (can create posts)
 //3 = Admin

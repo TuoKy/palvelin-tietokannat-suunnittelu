@@ -13,6 +13,12 @@ $row = $dbTouch->show_user($_SESSION['manageUserId']);
 			<input type="text" name="password" value=<?php echo $row['salasana'];?>><br />
 			<label>Email</label>
 			<input type="text" name="email" value=<?php echo $row['email'];?>><br />
+			<?php
+			foreach($allPrivileges as $key => $ value) { ?>
+				<input type="checkbox" name="privilegeBox" value="<?php echo $key; ?>" <?php if(isset($editedPrivileges[$key])) echo "checked='checked'"; ?>  /><?php echo $key; ?><br />
+			<?php
+			}
+			?>
 			
 			<input type="checkbox" name="privilegeBox" value="Admin" <?php if(isset($editedPrivileges['Admin'])) echo "checked='checked'"; ?>  />Admin<br />
 			<input type="checkbox" name="privilegeBox" value="User" <?php if(isset($editedPrivileges['User'])) echo "checked='checked'"; ?>  />User<br />
@@ -29,6 +35,8 @@ if (isset($_POST['register']) AND isset($_POST['name']) AND isset($_POST['passwo
 			$kayttajaNimi = $_POST['name'];
 			$email = $_POST['email'];
 			$salasana = $_POST['password'];
+			
+			
 			
 			$dbTouch->luo_kayttaja($kayttajaNimi, $email, $salasana); 
 }
