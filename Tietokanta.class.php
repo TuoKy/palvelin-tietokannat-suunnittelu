@@ -47,6 +47,28 @@ class Tietokanta {
 		return $oikeustaulu;
     }
 	
+	//Tekijä: Leppänen
+	public function lisaa_rooli($idKayttaja, $oikeusNimi) {
+		$stmt = $this->db->prepare("select idOikeudet from Oikeus where oikeusNimi = ?");
+		$stmt->execute(array($oikeusNimi));
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$idOikeudet = $row['idOikeudet'];
+		
+		$stmt = $this->db->prepare("insert into Rooli (idKayttaja, idOikeudet) values(?, ?)");
+		$stmt->execute(array($idKayttaja, $idOikeudet));
+    }
+	
+	//Tekijä: Leppänen
+	public function poista_rooli($idKayttaja, $oikeusNimi) {
+		$stmt = $this->db->prepare("select idOikeudet from Oikeus where oikeusNimi = ?");
+		$stmt->execute(array($oikeusNimi));
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$idOikeudet = $row['idOikeudet'];
+		
+		$stmt = $this->db->prepare("DELETE FROM Rooli WHERE  idKayttaja = ? AND idOikeudet = ?");
+		$stmt->execute(array($idKayttaja, $idOikeudet));
+    }
+	
 	public function luo_kayttaja($kayttajaNimi, $email, $salasana) {				
 		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ?");
 		$stmt->execute(array($kayttajaNimi));
