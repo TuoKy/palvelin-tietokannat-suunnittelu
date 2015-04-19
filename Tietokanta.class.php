@@ -103,6 +103,7 @@ class Tietokanta {
 		$stmt->execute(array($email, $salasana, $kayttajaNimi));
     }
 	
+	//Tekijä: Manninen
 	public function edit_post($idPostaus, $otsikko, $sisalto) {
 		$stmt = $this->db->prepare("UPDATE Postaus SET otsikko=?, sisalto=?, muokattu=NOW() WHERE $idPostaus=?;");
 		$stmt->execute(array($otsikko, $sisalto, $idPostaus));
@@ -114,6 +115,7 @@ class Tietokanta {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
+	//Tekijä: Manninen
 	public function show_user($idKayttaja) {
 		$stmt = $this->db->query("SELECT * FROM Kayttaja WHERE idKayttaja = ?;");
 		$stmt->execute(array($idKayttaja));
@@ -132,6 +134,7 @@ class Tietokanta {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 	
+	//Tekijä: Manninen
 	public function post_comments() {
 		$stmt = $this->db->query("SELECT Postaus.idPostaus, Postaus.otsikko, Kayttaja.kayttajaNimi, COUNT(DISTINCT Kommentti.idKommentti) as kommenttien_lukumaara, Postaus.luontiAika FROM Postaus LEFT OUTER JOIN Kommentti ON Kommentti.idPostaus = Postaus.idPostaus LEFT OUTER JOIN Kayttaja ON Kayttaja.idKayttaja = Postaus.idKayttaja GROUP BY Postaus.otsikko ORDER BY Postaus.idPostaus DESC;");
 		
@@ -151,16 +154,13 @@ class Tietokanta {
 		
     }
 	
-	public function editPost($otsikko, $sisalto, $kayttajanimi) {
-	
-	}
-	
 	public function luo_kommentti($otsikko, $sisalto, $idKayttaja, $postId, $idKommentti) {
 		
 		$stmt = $this->db->prepare("INSERT INTO Kommentti (otsikko, sisalto, idKayttaja, idPostaus, luontiAika, vanhempi, tila, Muokattu) VALUES(?,?,(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ),?,NOW(),?,0,NOW())");
 		$stmt->execute(array($otsikko, $sisalto, $idKayttaja, $postId, $idKommentti));
 	}
 	
+	//Tekijä: Manninen
 	public function showPosts() {
 		$stmt = $this->db->query("SELECT * FROM Postaus order by idPostaus DESC;");
 			
@@ -189,13 +189,14 @@ class Tietokanta {
 		$stmt->execute(array($id));
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
-	
+	//Tekijä: Manninen
 	public function listComments() {
 		$stmt = $this->db->query("SELECT * FROM Kommentti");
 		$stmt->execute(array());
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
+	//Tekijä: Manninen
 	public function listComments1($id) {
 		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = ? order by luontiAika DESC");
 		$stmt->execute(array($id));
@@ -257,13 +258,14 @@ class Tietokanta {
 		$stmt2->execute(array($idP,$idT));
 	}
 	
-	
+	//Tekijä: Manninen
 	public function deleteComment($idKommentti) {	
 		$stmt = $this->db->prepare('DELETE FROM Kommentti WHERE idKommentti = ?');
 		$stmt->execute(array($idKommentti));
 		
     }
 	
+	//Tekijä: Manninen
 	public function deletePost($idPostaus) {
 		$stmt = $this->db->prepare('DELETE FROM Postaus WHERE idPostaus = ?');
 		$stmt->execute(array($idPostaus));
