@@ -1,14 +1,13 @@
 <?php
 
 class Tietokanta {
-    //private $stmt;
 	private $db;
 	
     function __construct() {
 		try {
-			//require_once ("/home/H3543/db-init-harkkatyo.php");
+			require_once ("/home/H3543/db-init-harkkatyo.php");
 			//require_once ("../palvelin/myslijuttu/hurhur2.php");
-			require_once ("../php-dbconfig/db-init.php");
+			// require_once ("../php-dbconfig/db-init.php");
 
 			
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
@@ -25,6 +24,9 @@ class Tietokanta {
 		
     }
 	
+    //Tekijä: Leppänen
+    /* Tarkistetaan olivatko annetut tunnukset oikein ja jos olivat niin palautetaan
+    sisään kirjautuneen käyttäjän id. Muuten palautetaan false */
 	public function kirjaudu_sisaan($kayttajaNimi, $salasana) {
 		$stmt = $this->db->prepare("SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
 		$stmt->execute(array($kayttajaNimi, $salasana));
@@ -37,6 +39,8 @@ class Tietokanta {
 		}
     }
 	
+    //Tekijä: Leppänen
+    /* Funktiolle tuodaan käyttäjän id ja se palauttaa taulukon joka sisältää kaikki tämän käyttäjän oikeudet */
 	public function oikeudet($idKayttaja) {
 		$stmt = $this->db->prepare("select Oikeus.oikeusNimi from Oikeus left join Rooli on Oikeus.idOikeudet = Rooli.idOikeudet where Rooli.idKayttaja = ?");
 		$stmt->execute(array($idKayttaja));
@@ -48,24 +52,16 @@ class Tietokanta {
     }
 	
 	//Tekijä: Leppänen
-	public function lisaa_rooli($idKayttaja, $oikeusNimi) {
-		$stmt = $this->db->prepare("select idOikeudet from Oikeus where oikeusNimi = ?");
-		$stmt->execute(array($oikeusNimi));
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-		$idOikeudet = $row['idOikeudet'];
-		
+    // Suoritetaan kun käyttäjälle halutaan lisätä jokin oikeus
+	public function lisaa_rooli($idKayttaja, $idOikeudet) {
 		$stmt = $this->db->prepare("insert into Rooli (idKayttaja, idOikeudet) values(?, ?)");
 		$stmt->execute(array($idKayttaja, $idOikeudet));
     }
 	
 	//Tekijä: Leppänen
-	public function poista_rooli($idKayttaja, $oikeusNimi) {
-		$stmt = $this->db->prepare("select idOikeudet from Oikeus where oikeusNimi = ?");
-		$stmt->execute(array($oikeusNimi));
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-		$idOikeudet = $row['idOikeudet'];
-		
-		$stmt = $this->db->prepare("DELETE FROM Rooli WHERE  idKayttaja = ? AND idOikeudet = ?");
+    // Suoritetaan kun käyttäjältä halutaan poistaa jokin oikeus
+	public function poista_rooli($idKayttaja, $idOikeudet) {
+        $stmt = $this->db->prepare("DELETE FROM Rooli WHERE  idKayttaja = ? AND idOikeudet = ?");
 		$stmt->execute(array($idKayttaja, $idOikeudet));
     }
 	
@@ -81,8 +77,6 @@ class Tietokanta {
 			
 			$stmt = $this->db->prepare("insert into Rooli (idOikeudet, idKayttaja) values( 1,
 									(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ))");
-										//insert into Rooli (idOikeudet, idKayttaja) values( 1,
-										//(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = 'ankka' ))
 			$stmt->execute(array($kayttajaNimi));
 						
 			return true;
@@ -102,10 +96,12 @@ class Tietokanta {
 			return false;
 		}
     } 
-
-    public function muokkaa_kayttaja($kayttajaNimi, $email) {
-		$stmt = $this->db->prepare("UPDATE Kayttaja SET email=? WHERE kayttajaNimi=?;");
-		$stmt->execute(array($email, $kayttajaNimi));
+    
+    //Tekijä: Leppänen
+    /* Funktiolle tuodaan käyttäjän nimi sähköposti ja salasana, ja nimen perusteella päivitetään kaksi jälkimmäistä tietoa tietokantaan */
+    public function muokkaa_kayttaja($kayttajaNimi, $email, $salasana) {
+		$stmt = $this->db->prepare("UPDATE Kayttaja SET email=?, salasana=? WHERE kayttajaNimi=?;");
+		$stmt->execute(array($email, $salasana, $kayttajaNimi));
     }
 	
 	public function edit_post($idPostaus, $otsikko, $sisalto) {
@@ -190,6 +186,7 @@ class Tietokanta {
 	}
 	
 	//Tekijä: Leppänen
+    // Poistaa tietokannasta käyttäjän jonka id on idKayttaja
 	public function deleteUser($idKayttaja) {		
 		$stmt = $this->db->prepare('DELETE FROM Kayttaja WHERE idKayttaja = ?');
 		$stmt->execute(array($idKayttaja));
