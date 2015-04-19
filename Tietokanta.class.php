@@ -6,9 +6,9 @@ class Tietokanta {
 	
     function __construct() {
 		try {
-			require_once ("/home/H3543/db-init-harkkatyo.php");
+			//require_once ("/home/H3543/db-init-harkkatyo.php");
 			//require_once ("../palvelin/myslijuttu/hurhur2.php");
-			//require_once ("../php-dbconfig/db-init.php");			
+			require_once ("../php-dbconfig/db-init.php");			
 			
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
 			
@@ -105,7 +105,7 @@ class Tietokanta {
 	
 	//Tekijä: Manninen
 	public function edit_post($idPostaus, $otsikko, $sisalto) {
-		$stmt = $this->db->prepare("UPDATE Postaus SET otsikko=?, sisalto=?, muokattu=NOW() WHERE $idPostaus=?;");
+		$stmt = $this->db->prepare("UPDATE Postaus SET otsikko=?, sisalto=?, muokattu=NOW() WHERE idPostaus=?;");
 		$stmt->execute(array($otsikko, $sisalto, $idPostaus));
 	}
 	

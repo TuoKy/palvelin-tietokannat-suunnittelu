@@ -30,8 +30,16 @@ if(isset($_POST['edit']) AND $_SESSION['app2_islogged'] == true){
 if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
 		$otsikko = htmlentities($_POST['otsikko']);
 		$otsikko = "<h2>{$_POST['otsikko']}</h2>";
-		echo "<script type='text/javascript'>alert('{$tiedot['idPostaus']} {$otsikko} {$_POST['editPost']}');</script>";
 		$dbTouch->edit_post($_GET['postaus'], $otsikko, $_POST['editPost']);
+		if(isset($_POST['avainsanat']))
+		{
+			$sanat = explode(",",$_POST['avainsanat']);
+			foreach($sanat as $rivi)
+			{	
+				$dbTouch->luo_Tagi($rivi);
+				$dbTouch->sidoPostiin($rivi, $otsikko);
+			}
+	}	
 }
 else
  echo "Ei oikeuksia / virhe";
