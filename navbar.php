@@ -54,7 +54,7 @@
 					<button type="submit" name ="register" style="margin-left:50px" class="btn btn-default">Register</button>
                 </form>
 FORM;
-if (@$_SESSION['app2_islogged'] == FALSE)
+        if (@$_SESSION['app2_islogged'] == FALSE)
 			echo $form;
 		else
 			echo ("<span class='right'> <a href ='logout.php'> Logout ({$_SESSION['username']})</a> </span>");				

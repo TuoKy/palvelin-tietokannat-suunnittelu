@@ -1,8 +1,8 @@
 <?php
 $allPrivileges = array(
-	'Guest' => '',
-	'User' => '',
-	'Admin' => ''
+	'Guest' => '1',
+	'User' => '2',
+	'Admin' => '3'
 );
 
 $requiredPrivileges = array(
