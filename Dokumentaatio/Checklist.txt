@@ -1,9 +1,9 @@
 % 1. Yleiskuvaus ongelmasta ­ mitä ongelmaa ohjelmalla pyritään ratkaisemaan, ongelman analysointi
 % 2. Näytöt piirtämällä (protoilu) ­ hahmottelu, ei mitään toteutusta tässä vaiheessa, vaan hahmotelma tulevasta sovelluksesta
-70% 3. UML:n Käyttötapaukset (Use Cases) ja/tai Scrum User Stories
-60% 4. Käsitemallit (domain models) UML:llä
-40% 5. Luokkamallit UML:llä
-60% 6. Sekvenssikaavio kuvaamaan olioiden välistä vuorovaikutusta
-10% 7. Projektisuunnitelma: työnjako, vastuut, tuntimäärät
+% 3. UML:n Käyttötapaukset (Use Cases) ja/tai Scrum User Stories
+% 4. Käsitemallit (domain models) UML:llä
+% 5. Luokkamallit UML:llä
+% 6. Sekvenssikaavio kuvaamaan olioiden välistä vuorovaikutusta
+40% 7. Projektisuunnitelma: työnjako, vastuut, tuntimäärät
 % 8. E&R ­kaaviot tietokannasta
 % 9. Kokonaisarkkitehtuurin kuvaus vapaamuotoisesti (esim. tasomalli, package diagram tai deployment diagram UML:ssä)
