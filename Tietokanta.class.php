@@ -197,7 +197,7 @@ class Tietokanta {
 	}
 	
 	public function listComments1($id) {
-		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = ?");
+		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = ? order by luontiAika DESC");
 		$stmt->execute(array($id));
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
