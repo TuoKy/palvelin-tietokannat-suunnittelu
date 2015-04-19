@@ -6,8 +6,8 @@ class Tietokanta {
 	
     function __construct() {
 		try {
-			//require_once ("/home/H3543/db-init-harkkatyo.php");
-			require_once ("../palvelin/myslijuttu/hurhur2.php");
+			require_once ("/home/H3543/db-init-harkkatyo.php");
+			//require_once ("../palvelin/myslijuttu/hurhur2.php");
 			//require_once ("../php-dbconfig/db-init.php");			
 			
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
@@ -168,6 +168,22 @@ class Tietokanta {
 		
 	}
 	
+    //Tekijä: Leppänen
+    /* Funktiolle tuodaan käyttäjän id ja stmt muuttujan jossa on kaikki käyttäjän tekemät postaukset */
+    public function kayttajan_postaukset($idKayttaja) {
+		$stmt = $this->db->query("SELECT * FROM Postaus WHERE idKayttaja = ?;");
+		$stmt->execute(array($idKayttaja));
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+    
+    //Tekijä: Leppänen
+    /* Funktiolle tuodaan käyttäjän id ja stmt muuttujan jossa on kaikki käyttäjän tekemät kommentit */
+    public function kayttajan_kommentit($idKayttaja) {
+		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idKayttaja = ?;");
+		$stmt->execute(array($idKayttaja));
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+    
 	public function showPost($id) {
 		$stmt = $this->db->query("SELECT * FROM Postaus WHERE idPostaus = ?;");
 		$stmt->execute(array($id));
