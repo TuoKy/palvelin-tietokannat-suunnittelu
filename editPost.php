@@ -1,17 +1,17 @@
 <div class="container">
 	<div class="content">
 		<?php
-			$tiedot = $dbTouch->showPost($_GET['post']);
-			$otsikko = strip_tags($tiedot['otsikko']);
+			$tiedot = $dbTouch->showPost($_GET['postaus']);
+			$otsikkoStripped = strip_tags($tiedot['otsikko']);
 			echo "
-			<form id='form' method='postaus' action='index.php?page=editPost'>
+			<form id='form' method='post' action='index.php?page=editPost&postaus={$tiedot['idPostaus']}'>
 				<label>Otsikko</label>
-					<input type='text' name='otsikko' value='{$otsikko}'><br/>
+					<input type='text' name='otsikko' value='{$otsikkoStripped}' maxlength='38'><br/>
 				<label>Sisältö</label>	
 				<textarea class='Post' name='editPost' >{$tiedot['sisalto']}</textarea>
 				<label>Avainsanat (erota pilkulla)</label>
 				<input type='text' name='avainsanat'><br/>
-				<button type='submit' name ='postaus' class='btn btn-default'>Edit</button>
+				<button type='submit' name ='edit' class='btn btn-default'>Edit</button>
 				<button type='submit' name ='cancel' class='btn btn-default'>Cancel</button>								
 			</form>
 			"
@@ -26,10 +26,12 @@
 </div>		
 		
 <?php
-if(isset($_POST['postaus']) AND $_SESSION['app2_islogged'] == true){
-if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){		
-		$otsikko = "<h2>{$_POST['otsikko']}</h2>";		
-		$dbTouch->edit_post($_GET['post'], $otsikko, $_POST['editPost']);
+if(isset($_POST['edit']) AND $_SESSION['app2_islogged'] == true){
+if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
+		$otsikko = htmlentities($_POST['otsikko']);
+		$otsikko = "<h2>{$_POST['otsikko']}</h2>";
+		echo "<script type='text/javascript'>alert('{$tiedot['idPostaus']} {$otsikko} {$_POST['editPost']}');</script>";
+		$dbTouch->edit_post($_GET['postaus'], $otsikko, $_POST['editPost']);
 }
 else
  echo "Ei oikeuksia / virhe";
