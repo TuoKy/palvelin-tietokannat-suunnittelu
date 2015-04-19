@@ -15,19 +15,18 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-						<li><a href="index.php">Kaikki / All</a>
-						<li class="divider"></li>
-                            <?php
-							$tagit = $dbTouch->canHasTags();
-							foreach($tagit as $plaa)
-							{
-							echo "
-							<li>
-							<a href='index.php?tagi={$plaa['tagiNimi']}'>{$plaa['tagiNimi']}</a>
-                            </li>";									
-							}						
-							?>
-							
+                            <li><a href="#">Action</a>
+                            </li>
+                            <li><a href="#">Another action</a>
+                            </li>
+                            <li><a href="#">Something else here</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">One more separated link</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

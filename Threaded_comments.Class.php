@@ -1,6 +1,6 @@
     <?php
 	//http://www.jongales.com/blog/2009/01/27/php-class-for-threaded-comments/
-	//vÃ¤hÃ¤n muokattu, itseasiassa aika rankasti : TuoKy
+	//vähän muokattu, itseasiassa aika rankasti
 	class Threaded_comments  
     {  
           
@@ -52,8 +52,8 @@ OUTPUTEND;
 			<div class='content'>			
 			<form method='post' action='newComment.php?comment= {$comment['idKommentti']}'>
 			<label>Otsikko</label>
-				<input type='text' name='otsikko' maxlength='38'> <br/>
-			<label>SisÃ¤ltÃ¶</label>	
+				<input type='text' name='otsikko'> <br/>
+			<label>Sisältö</label>	
 				<textarea name='newComment' class='Comment' >  </textarea>
 				<input type='hidden' name='idKommentti' value='{$comment['idKommentti']}'>
 					<button type='submit' name ='post' class='btn btn-default'>Post</button>								

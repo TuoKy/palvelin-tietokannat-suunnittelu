@@ -35,11 +35,11 @@ if (isset($_POST['register']) AND isset($_POST['name']) AND isset($_POST['passwo
 			foreach($allPrivileges as $key => $value) {
 				$checkedBoxes = $_POST['privilegeBox'];
 				//Ensin tarkistetaan onko käyttäjälle lisätty oikeuksia
-				if(in_array($key, $checkedBoxes) && !isset($editedPrivileges[$key])) {
+				if(in_array($key, $checkedBoxes) && !isset($editedPrivileges[$key]) {
 					//Insert
 					$dbTouch->lisaa_rooli($_SESSION['manageUserId'], $key);
 				}//Sitten tarkistetaan onko käyttäjältä poistettu oikeuksia
-				else if(!in_array($key, $checkedBoxes) && isset($editedPrivileges[$key])) {
+				else if(!in_array($key, $checkedBoxes) && isset($editedPrivileges[$key]) {
 					//Delete
 					$dbTouch->poista_rooli($_SESSION['manageUserId'], $key);
 				}
