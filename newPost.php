@@ -1,9 +1,12 @@
+<?php
+@session_start();
+?>
 <div class="container">
 		<div class="content">
 			
 				<form id="form" method="post" action="index.php?page=newPost">
 					<label>Otsikko</label>
-						<input type="text" name="otsikko"> <br/>
+						<input type="text" name="otsikko" maxlength="38"> <br/>
 					<label>Sisältö</label>	
 					<textarea name="newPost" class="Post">  </textarea>
 					<label>Avainsanat (erota pilkulla)</label>
@@ -23,8 +26,17 @@
 <?php
 if(isset($_POST['post']) AND $_SESSION['app2_islogged'] == true){
 if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){		
-		$otsikko = "<h2>{$_POST['otsikko']}</h2>";		
+		$otsikko = htmlentities($_POST['otsikko']);
+		$otsikko = "<h2>$otsikko</h2>";		
 		$dbTouch->luo_postaus($otsikko, $_POST['newPost'], $_SESSION['username']); 
+	if(isset($_POST['avainsanat']))
+	{
+		$sanat = explode(",",$_POST['avainsanat']);
+		foreach($sanat as $plaa){	
+		$dbTouch->luo_Tagi($plaa);
+		$dbTouch->sidoPostiin($plaa, $otsikko);
+		}
+	}		
 }
 else
  echo "Ei oikeuksia / virhe";
@@ -40,7 +52,7 @@ $error = !in_array($detectedType, $allowedTypes);
  
 	if(!$error){
 		$path = 'pictures/';
-		$path1 = 'http://student.labranet.jamk.fi/~H3667/palvelin-tietokannat-suunnittelu/'; // tämä pitää muuttaa
+		$path1 = 'http://student.labranet.jamk.fi/~H3408/palvelin-tietokannat-suunnittelu/'; // tämä pitää muuttaa
 		@$image = $_FILES['image'];
 		$name = $image['name'];
 		move_uploaded_file($_FILES['image']['tmp_name'], $path.$name); 
