@@ -14,7 +14,7 @@
 			<div class="content">			
 			<form method="post" action="newComment.php?comment=<?php echo $comment['idKommentti']?>">
 			<label>Otsikko</label>
-				<input type="text" name="otsikko"> <br/>
+				<input type="text" maxlength="38" name="otsikko"> <br/>
 			<label>Sisältö</label>	
 				<textarea name="newComment" class="Comment" >  </textarea>
 				<input type="hidden" name="idKommentti" value="<?php echo $comment['idKommentti'] ?>">
@@ -25,7 +25,7 @@
 	<?php			
 		 //Kommenttien listaus
 	require_once ("Threaded_comments.Class.php");
-	$tiedot = $dbTouch->listComments($_GET['post']);			
+	$tiedot = $dbTouch->listComments1($_GET['post']);			
 	
 	$threaded_comments = new Threaded_comments($tiedot);  
   

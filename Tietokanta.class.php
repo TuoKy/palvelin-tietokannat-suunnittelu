@@ -7,9 +7,8 @@ class Tietokanta {
     function __construct() {
 		try {
 			//require_once ("/home/H3543/db-init-harkkatyo.php");
-			//require_once ("../palvelin/myslijuttu/hurhur2.php");
-			require_once ("../php-dbconfig/db-init.php");
-
+			require_once ("../palvelin/myslijuttu/hurhur2.php");
+			//require_once ("../php-dbconfig/db-init.php");			
 			
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
 			
@@ -69,6 +68,7 @@ class Tietokanta {
 		$stmt->execute(array($idKayttaja, $idOikeudet));
     }
 	
+	//TuoKy
 	public function luo_kayttaja($kayttajaNimi, $email, $salasana) {				
 		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ?");
 		$stmt->execute(array($kayttajaNimi));
@@ -81,8 +81,6 @@ class Tietokanta {
 			
 			$stmt = $this->db->prepare("insert into Rooli (idOikeudet, idKayttaja) values( 1,
 									(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ))");
-										//insert into Rooli (idOikeudet, idKayttaja) values( 1,
-										//(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = 'ankka' ))
 			$stmt->execute(array($kayttajaNimi));
 						
 			return true;
@@ -142,7 +140,7 @@ class Tietokanta {
 		
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
+	//TuoKY
 	public function luo_postaus($otsikko, $sisalto, $kayttajaNimi) {
 		$stmt = $this->db->prepare('SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ?');
 		$stmt->execute(array($kayttajaNimi));
@@ -152,6 +150,8 @@ class Tietokanta {
 		
 		$stmt = $this->db->prepare("INSERT INTO Postaus (otsikko, sisalto, idKayttaja, luontiAika, Muokattu) VALUES(?,?,?,NOW(),NOW())");
 		$stmt->execute(array($otsikko, $sisalto, $idKayttaja));
+		
+		
     }
 	
 	public function editPost($otsikko, $sisalto, $kayttajanimi) {
@@ -195,6 +195,55 @@ class Tietokanta {
 		$stmt->execute(array($idKayttaja));
 		
     }
+	
+	//TuoKy
+	public function canHasTags() {
+		$stmt = $this->db->query("SELECT * FROM Tagi");
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+	//TuoKy
+	public function showPostsHasTag($nimiTagi)
+	{
+		$stmt = $this->db->prepare("SELECT idTagi FROM Tagi where tagiNimi = ?");
+		$stmt->execute(array($nimiTagi));
+		
+		$temp = $stmt->fetch(PDO::FETCH_ASSOC);		
+		$id = $temp['idTagi'];
+		
+		$stmt1 = $this->db->prepare("SELECT idPostaus FROM Esiintyma where idTagi = ?");
+		$stmt1->execute(array($id));
+		return $stmt1->fetchAll(PDO::FETCH_ASSOC);
+		
+	}
+	
+	//TuoKy
+	public function luo_Tagi($tagi){
+		$stmt = $this->db->prepare("SELECT * FROM Tagi WHERE tagiNimi = ?");
+		$stmt->execute(array($tagi));
+		if(!$stmt->rowCount() == 1){					
+		$stmt = $this->db->prepare("INSERT INTO Tagi (tagiNimi) VALUES (?)");
+		$stmt->execute(array($tagi));
+		}
+	}
+	//TuoKy
+	public function sidoPostiin($tagi, $otsikko){
+		$stmt = $this->db->prepare("SELECT idPostaus FROM Postaus where otsikko = ?");
+		$stmt->execute(array($otsikko));
+		
+		$temp = $stmt->fetch(PDO::FETCH_ASSOC);
+		$idP = $temp['idPostaus'];
+		
+		$stmt1 = $this->db->prepare("SELECT idTagi FROM Tagi where tagiNimi = ?");
+		$stmt1->execute(array($tagi));
+		
+		$temp2 = $stmt1->fetch(PDO::FETCH_ASSOC);
+		$idT = $temp2['idTagi'];
+		
+		$stmt2 = $this->db->prepare("INSERT INTO Esiintyma VALUES (?,?)");
+		$stmt2->execute(array($idP,$idT));
+	}
+	
 	
 	public function deleteComment($idKommentti) {	
 		$stmt = $this->db->prepare('DELETE FROM Kommentti WHERE idKommentti = ?');
