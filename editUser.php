@@ -23,7 +23,7 @@ if (isset($_POST['save'])){
             
             // Tarkasta uudelleen käyttäjän oikeudet muutosten jälkeen
             @$editedPrivileges = $dbTouch->oikeudet($_SESSION['manageUserId']);
-}// Tämä ei toimi
+
 else if (isset($_POST['cancel'])){
     header('Location: index.php?page=showUsers');
 }

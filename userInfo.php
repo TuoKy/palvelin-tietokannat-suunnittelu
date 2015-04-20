@@ -2,6 +2,7 @@
 <?php
 
 $tiedot = $dbTouch->kayttajan_postaukset($_SESSION['manageUserId']);	
+echo "<h2>Postaukset</h2>";
 foreach($tiedot as $rivi)
 {
     echo "<div class='content'>";
@@ -10,7 +11,8 @@ foreach($tiedot as $rivi)
     echo "</div>";
 }
 ?> <br> <?php
-$tiedot = $dbTouch->kayttajan_kommentit($_SESSION['manageUserId']);	
+$tiedot = $dbTouch->kayttajan_kommentit($_SESSION['manageUserId']);
+echo "<h2>Kommentit</h2>";
 foreach($tiedot as $rivi)
 {
     $output = <<<OUTPUTEND
