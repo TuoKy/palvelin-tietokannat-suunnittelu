@@ -24,6 +24,10 @@
 </div>		
 		
 <?php
+if(isset($_POST['cancel']) AND $_SESSION['app2_islogged'] == true){
+	header("Location: index.php?page=manageComments");
+}
+
 if(isset($_POST['edit']) AND $_SESSION['app2_islogged'] == true){
 if (isset($_POST['otsikko']) AND isset($_POST['editComment'])){
 		$otsikko = htmlentities($_POST['otsikko']);

@@ -10,6 +10,7 @@ $requiredPrivileges = array(
 	'showUsers' => 'Admin',
     'editUser' => 'Admin',
     'editPost' => 'Admin',
+	'editComment' => 'Admin',
     'manageComments' => 'Admin',
     'managePosts' => 'Admin',
     'userInfo' => 'Admin',
