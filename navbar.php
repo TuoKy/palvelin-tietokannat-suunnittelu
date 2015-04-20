@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">Sitename</a>
+            <a class="navbar-brand" href="index.php">Fabulous Blog</a>
         </div>
         <center>
             <div class="navbar-collapse collapse" id="navbar-main">
