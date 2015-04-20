@@ -4,7 +4,24 @@ if (isset($_POST['edit'])) {
     header("Location: index.php?page=editPost&postaus={$_POST['edit']}");
 }
  elseif (isset($_POST['delete'])) {
+	
+	$tiedot = $dbTouch->showEsiintymaTagit($_POST['delete']);
     $dbTouch->deletePost($_POST['delete']);
+	$esiTiedot = $dbTouch->showEsiintyma();
+	
+	$bool = false;
+	foreach($tiedot as $rivi){
+		foreach($esiTiedot as $esiRivi){
+			if($rivi['idTagi'] === $esiRivi['idTagi']){
+				$bool = true;
+			}
+		}
+		if($bool != true)
+		{
+			$dbTouch->deleteTag($rivi['idTagi']);
+		}
+		$bool = false;
+	}
 }
 ?>
 <div class="container">

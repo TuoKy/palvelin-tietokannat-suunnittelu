@@ -6,7 +6,7 @@
 			
 				<form id="form" method="post" action="index.php?page=newPost">
 					<label>Otsikko</label>
-						<input type="text" name="otsikko" maxlength="38"> <br/>
+						<input type="text" name="otsikko" maxlength="36"> <br/>
 					<label>Sisältö</label>	
 					<textarea name="newPost" class="Post">  </textarea>
 					<label>Avainsanat (erota pilkulla)</label>
@@ -34,7 +34,7 @@ if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){
 		$avainsanat = htmlentities($_POST['avainsanat']);
 		$avainsanat = strtolower($avainsanat);
 		$sanat = explode(",",$avainsanat);
-		foreach($sanat as $plaa){	
+		foreach($sanat as $plaa){
 		$dbTouch->luo_Tagi($plaa);
 		$dbTouch->sidoPostiin($plaa);
 		}

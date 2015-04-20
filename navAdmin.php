@@ -8,6 +8,8 @@
             </li>
             <li><a href="index.php?page=managePosts">Manage Posts</a>
             </li>
+			<li><a href="index.php?page=manageComments">Manage Comments</a>
+            </li>
             <li class="divider"></li>
             <li><a href="#">Separated link</a>
             </li>

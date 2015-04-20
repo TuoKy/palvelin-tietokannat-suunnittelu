@@ -1,16 +1,14 @@
 <div class="container">
 	<div class="content">
 		<?php
-			$tiedot = $dbTouch->showPost($_GET['postaus']);
+			$tiedot = $dbTouch->showComment($_GET['kommentti']);
 			$otsikkoStripped = strip_tags($tiedot['otsikko']);
 			echo "
-			<form id='form' method='post' action='index.php?page=editPost&postaus={$tiedot['idPostaus']}'>
+			<form id='form' method='post' action='index.php?page=editComment&kommentti={$tiedot['idKommentti']}'>
 				<label>Otsikko</label>
 					<input type='text' name='otsikko' value='{$otsikkoStripped}' maxlength='38'><br/>
 				<label>Sisältö</label>	
-				<textarea class='Post' name='editPost' >{$tiedot['sisalto']}</textarea>
-				<label>Avainsanat (erota pilkulla)</label>
-				<input type='text' name='avainsanat' maxlength='36'><br/>
+				<textarea class='Post' name='editComment' >{$tiedot['sisalto']}</textarea>
 				<button type='submit' name ='edit' class='btn btn-default'>Edit</button>
 				<button type='submit' name ='cancel' class='btn btn-default'>Cancel</button>								
 			</form>
@@ -19,7 +17,7 @@
 		
 		<!-- KUVA / KUVAT -->
 		<iframe id="form_target" name="form_target" style="display:none"></iframe>
-		<form id="my_form" action="index.php?page=editPost" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
+		<form id="my_form" action="index.php?page=editComment" target="form_target" method="post" enctype="multipart/form-data" style="width:0px;height:0;overflow:hidden">
 		<input name="image" type="file" onchange="$('#my_form').submit(); this.value='';">
 		</form>			
 	</div>
@@ -27,20 +25,10 @@
 		
 <?php
 if(isset($_POST['edit']) AND $_SESSION['app2_islogged'] == true){
-if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
+if (isset($_POST['otsikko']) AND isset($_POST['editComment'])){
 		$otsikko = htmlentities($_POST['otsikko']);
-		$otsikko = "<h2>{$_POST['otsikko']}</h2>";
-		$dbTouch->edit_post($_GET['postaus'], $otsikko, $_POST['editPost']);
-		if(isset($_POST['avainsanat']))
-		{
-			$avainsanat = htmlentities($_POST['avainsanat']);
-			$sanat = explode(",",$avainsanat);
-			foreach($sanat as $rivi)
-			{	
-				$dbTouch->luo_Tagi($rivi);
-				$dbTouch->sidoPostiin($rivi, $otsikko);
-			}
-	}	
+		$otsikko = "<h3>{$_POST['otsikko']}</h3>";
+		$dbTouch->edit_comment($_GET['kommentti'], $otsikko, $_POST['editComment']);
 }
 else
  echo "Ei oikeuksia / virhe";

@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['edit'])) {
 	$_SESSION['managePostId'] = $_POST['edit'];
-    header("Location: index.php?page=editComment");
+    header("Location: index.php?page=editComment&kommentti={$_POST['edit']}");
 }
  elseif (isset($_POST['delete'])) {
     $dbTouch->deleteComment($_POST['delete']);
@@ -16,19 +16,19 @@ if (isset($_POST['edit'])) {
 				</tr>
 				<?php
 					$tiedot = $dbTouch->listComments();
-					foreach($tiedot as $plaa)
+					foreach($tiedot as $rivi)
 					{
-						$otsikko = strip_tags($plaa['otsikko']);
+						$otsikko = strip_tags($rivi['otsikko']);
 						echo "
 						<form id='form' method='post' action='index.php?page=manageComments'>
 						<tr>
-							<td> {$otsikko} </td>
-							<td> {$plaa['idKayttaja']} </td>
-							<td> {$plaa['sisalto']} </td>
-							<td> {$plaa['luontiAika']} </td>
+							<td> <a href='index.php?page=showPost&post={$rivi['idPostaus']}'>{$otsikko}</a></td>
+							<td> {$rivi['idKayttaja']} </td>
+							<td> {$rivi['sisalto']} </td>
+							<td> {$rivi['luontiAika']} </td>
 							<td>
-								<button type='submit' name ='edit' value={$plaa['idKommentti']} class='btn btn-default'>E</button>
-								<button type='submit' name ='delete' value={$plaa['idKommentti']} class='btn btn-default'>D</button>
+								<button type='submit' name ='edit' value={$rivi['idKommentti']} class='btn btn-default'>E</button>
+								<button type='submit' name ='delete' value={$rivi['idKommentti']} class='btn btn-default'>D</button>
 							</td>
 						</tr>
 						</form>";
