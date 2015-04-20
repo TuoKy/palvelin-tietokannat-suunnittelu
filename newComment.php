@@ -1,4 +1,5 @@
 <?php
+//Tänne lähetetään uusikommenti formin tiedot ja ne on eroteltu GET muuttajalla joka on id
 require_once ("Tietokanta.class.php");
 session_start();
 

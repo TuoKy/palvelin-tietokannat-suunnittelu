@@ -32,10 +32,11 @@ if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){
 	if(isset($_POST['avainsanat']))
 	{
 		$avainsanat = htmlentities($_POST['avainsanat']);
+		$avainsanat = strtolower($avainsanat);
 		$sanat = explode(",",$avainsanat);
 		foreach($sanat as $plaa){	
 		$dbTouch->luo_Tagi($plaa);
-		$dbTouch->sidoPostiin($plaa, $otsikko);
+		$dbTouch->sidoPostiin($plaa);
 		}
 	}		
 }
