@@ -4,6 +4,15 @@
 			$tiedot = $dbTouch->showPost($_GET['postaus']);
 			$otsikkoStripped = strip_tags($tiedot['otsikko']);
 			$tags = $dbTouch->listTags($_GET['postaus']);
+			$tagline = '';
+			foreach($tags as $single_tag) {
+				if($tagline != '') {
+					$tagline .= ",".$single_tag['tagiNimi'];
+				} 
+				else {
+					$tagline .= $single_tag['tagiNimi'];
+				}
+			}
 			echo "
 			<form id='form' method='post' action='index.php?page=editPost&postaus={$tiedot['idPostaus']}'>
 				<label>Otsikko</label>
@@ -11,7 +20,7 @@
 				<label>Sisältö</label>	
 				<textarea class='Post' name='editPost' >{$tiedot['sisalto']}</textarea>
 				<label>Avainsanat (erota pilkulla)</label>
-				<input type='text' name='avainsanat' maxlength='36' value='{$data}'><br/>
+				<input type='text' name='avainsanat' maxlength='36' value='{$tagline}'><br/>
 				<button type='submit' name ='edit' class='btn btn-default'>Edit</button>
 				<button type='submit' name ='cancel' class='btn btn-default'>Cancel</button>								
 			</form>
@@ -34,6 +43,23 @@ if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
 		$dbTouch->edit_post($_GET['postaus'], $otsikko, $_POST['editPost']);
 		if(isset($_POST['avainsanat']))
 		{
+			$tiedot = $dbTouch->showEsiintymaTagit($_GET['postaus']);
+			$dbTouch->deleteEsiintyma($_GET['postaus']);
+			$esiTiedot = $dbTouch->showEsiintyma();
+			$bool = false;
+			foreach($tiedot as $tagiRivi){
+				foreach($esiTiedot as $esiRivi){
+					if($tagiRivi['idTagi'] === $esiRivi['idTagi']){
+						$bool = true;
+					}
+				}
+				if($bool != true)
+				{
+					$dbTouch->deleteTag($tagiRivi['idTagi']);
+				}
+				$bool = false;
+			}
+	
 			$avainsanat = htmlentities($_POST['avainsanat']);
 			$sanat = explode(",",$avainsanat);
 			foreach($sanat as $rivi)
