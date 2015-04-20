@@ -3,6 +3,7 @@
 		<?php
 			$tiedot = $dbTouch->showPost($_GET['postaus']);
 			$otsikkoStripped = strip_tags($tiedot['otsikko']);
+			$tags = $dbTouch->listTags($_GET['postaus']);
 			echo "
 			<form id='form' method='post' action='index.php?page=editPost&postaus={$tiedot['idPostaus']}'>
 				<label>Otsikko</label>
@@ -10,7 +11,7 @@
 				<label>Sisältö</label>	
 				<textarea class='Post' name='editPost' >{$tiedot['sisalto']}</textarea>
 				<label>Avainsanat (erota pilkulla)</label>
-				<input type='text' name='avainsanat' maxlength='36'><br/>
+				<input type='text' name='avainsanat' maxlength='36' value='{$data}'><br/>
 				<button type='submit' name ='edit' class='btn btn-default'>Edit</button>
 				<button type='submit' name ='cancel' class='btn btn-default'>Cancel</button>								
 			</form>

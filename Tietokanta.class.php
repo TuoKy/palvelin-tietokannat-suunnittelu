@@ -226,6 +226,13 @@ class Tietokanta {
 	}
 	
 	//Tekijä: Manninen
+	public function listTags($idPostaus){
+		$stmt = $this->db->query("SELECT Tagi.tagiNimi FROM Tagi LEFT OUTER JOIN Esiintyma ON Tagi.idTagi = Esiintyma.idTagi WHERE Esiintyma.idPostaus = ?;");
+		$stmt->execute(array($idPostaus));
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	//Tekijä: Manninen
 	public function listComments() {
 		$stmt = $this->db->query("SELECT * FROM Kommentti order by luontiAika DESC");
 		$stmt->execute(array());
@@ -239,13 +246,6 @@ class Tietokanta {
 		$stmt->execute(array($id));
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
-	//Tekijä: Leppänen
-	public function deleteUser($idKayttaja) {		
-		$stmt = $this->db->prepare('DELETE FROM Kayttaja WHERE idKayttaja = ?');
-		$stmt->execute(array($idKayttaja));
-		
-    }
 	
 	//TuoKy
 	public function canHasTags() {
@@ -312,6 +312,12 @@ class Tietokanta {
 	public function deleteTag($idTag) {
 		$stmt = $this->db->prepare('DELETE FROM Tagi WHERE idTagi = ?');
 		$stmt->execute(array($idTag));
+    }
+	
+	//Tekijä: Leppänen
+	public function deleteUser($idKayttaja) {		
+		$stmt = $this->db->prepare('DELETE FROM Kayttaja WHERE idKayttaja = ?');
+		$stmt->execute(array($idKayttaja));
     }
 	
 }?>
