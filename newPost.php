@@ -10,7 +10,7 @@
 					<label>Sisältö</label>	
 					<textarea name="newPost" class="Post">  </textarea>
 					<label>Avainsanat (erota pilkulla)</label>
-					<input type="text" name="avainsanat"><br/>
+					<input type="text" name="avainsanat" maxlength="38"><br/>
 					<button type="submit" name ="post" class="btn btn-default">Post</button>
 					<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>								
 				</form>
@@ -31,7 +31,8 @@ if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){
 		$dbTouch->luo_postaus($otsikko, $_POST['newPost'], $_SESSION['username']); 
 	if(isset($_POST['avainsanat']))
 	{
-		$sanat = explode(",",$_POST['avainsanat']);
+		$avainsanat = htmlentities($_POST['avainsanat']);
+		$sanat = explode(",",$avainsanat);
 		foreach($sanat as $plaa){	
 		$dbTouch->luo_Tagi($plaa);
 		$dbTouch->sidoPostiin($plaa, $otsikko);
