@@ -18,9 +18,9 @@ $requiredPrivileges = array(
 	'newPost' => 'User',
     
     //Näillä sivuilla ei tarvita oikeuksia
-    'listPosts' => NULL,
-    'register' => NULL,
-    'showPost' => NULL,
+    'listPosts' => 'Free',
+    'register' => 'Free',
+    'showPost' => 'Free',
     
 );
 //permissions are as follows:
@@ -36,7 +36,7 @@ if(isset($_GET['page'])) {
     }
 }
 
-if (!empty($page) && (is_null($requiredPrivileges[$page]) || isset($yourPrivileges[$requiredPrivileges[$page]]))) {
+if (!empty($page) && (($requiredPrivileges[$page] == 'Free') || isset($yourPrivileges[$requiredPrivileges[$page]]))) {
 	$page .= '.php';
 	include($page);
 }
