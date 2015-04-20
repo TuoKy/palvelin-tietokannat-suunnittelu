@@ -19,8 +19,10 @@ include("navbar.php");
 
 @$page = $_GET['page'];
 if (!empty($page) && (!isset($requiredPrivileges[$page]) || isset($yourPrivileges[$requiredPrivileges[$page]]))) {
+	if (!in_array($page, array('index', 'privilege'))){ //tähän voi määritellä mitä sivuja ei voi olla page= kohdassa, tämä sen takia, että sivu räjähti jos sinne laittoi esim. page=index
 	$page .= '.php';
 	include($page);
+	}
 }
 else {
 	include('listPosts.php');
