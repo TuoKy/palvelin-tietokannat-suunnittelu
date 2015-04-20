@@ -6,8 +6,22 @@ $allPrivileges = array(
 );
 
 $requiredPrivileges = array(
+    //Admin tason oikeuksia tarvitaan näillä sivuilla
 	'showUsers' => 'Admin',
-	'newPost' => 'User'
+    'editUser' => 'Admin',
+    'editPost' => 'Admin',
+    'manageComments' => 'Admin',
+    'managePosts' => 'Admin',
+    'userInfo' => 'Admin',
+    
+    //Käyttäjä tason oikeuksia tarvitaan näillä sivuilla
+	'newPost' => 'User',
+    
+    //Näillä sivuilla ei tarvita oikeuksia
+    'listPosts' => NULL,
+    'register' => NULL,
+    'showPost' => NULL,
+    
 );
 //permissions are as follows:
 //1 = Guest (can comment)
@@ -16,13 +30,15 @@ $requiredPrivileges = array(
 @$yourPrivileges = $dbTouch->oikeudet($_SESSION['idKayttaja']);
 include("navbar.php");
 
+if(isset($_GET['page'])) {
+    if(isset($requiredPrivileges[$_GET['page']])) {
+        @$page = $_GET['page'];
+    }
+}
 
-@$page = $_GET['page'];
-if (!empty($page) && (!isset($requiredPrivileges[$page]) || isset($yourPrivileges[$requiredPrivileges[$page]]))) {
-	if (!in_array($page, array('index', 'privilege'))){ //tähän voi määritellä mitä sivuja ei voi olla page= kohdassa, tämä sen takia, että sivu räjähti jos sinne laittoi esim. page=index
+if (!empty($page) && (is_null($requiredPrivileges[$page]) || isset($yourPrivileges[$requiredPrivileges[$page]]))) {
 	$page .= '.php';
 	include($page);
-	}
 }
 else {
 	include('listPosts.php');
