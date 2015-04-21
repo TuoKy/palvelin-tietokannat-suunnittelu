@@ -40,7 +40,7 @@ $row = $dbTouch->show_user($_SESSION['manageUserId']);
 			<label>Password</label>
 			<input type="text" name="password" value=<?php echo $row['salasana'];?>><br />
 			<label>Email</label>
-			<input type="text" name="email" value=<?php echo $row['email'];?>><br />
+			<input type="email" name="email" value=<?php echo $row['email'];?>><br />
 			<?php
 			foreach($allPrivileges as $key => $value) { ?>
 				<input type="checkbox" name="privilegeBox[]" value="<?php echo $key; ?>" <?php if(isset($editedPrivileges[$key])) echo "checked='checked'"; ?>  /><?php echo $key; ?><br />

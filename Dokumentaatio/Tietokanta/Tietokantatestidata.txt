@@ -6,14 +6,14 @@ insert into Kayttaja (kayttajaNimi, salasana, email, liittymisPaiva) values
 ('Penapontikka','viina','kilju@live.fi',NOW());
 
 insert into Postaus (idKayttaja, luontiAika, muokattu, otsikko, sisalto) values
-('1',NOW(),NULL,'<h2>Kyllikki Mansikkamäki sano näin</h2>','<p>Iltakurssit olivat aikanaan oiva koulutusmuoto sisälle seuratoimintaan ja nuorisoseura-aatteeseen. Sotatalven 1943 iltakurssilaiset. Ohjaajana oli Kyllikki Mansikkamäki Nurmosta. (Juhani Yli-Rantalan arkisto) '),
-('1',NOW(),NULL,'<h2>Jean Sibeliuksen salatut tarinat</h2>','<p>Sibeliuksen keskeisimmät teokset ovat hänen seitsemän sinfoniaansa. Sinfonioiden lisäksi hänen tunnetuimmat teoksensa ovat viulukonsertto sekä orkesteriteokset Finlandia, Karelia-sarja, Tuonelan joutsen (osa Lemminkäinen-sarjaa) ja Valse triste. Hänen muihin teoksiinsa kuuluu muun muassa vokaali-, kuoro- ja pianomusiikkia, näytelmämusiikkia ja kamarimusiikkia. Sibeliuksen viimeiset suurimuotoiset teokset olivat seitsemäs sinfonia (1924), näyttämöteos Myrsky (1926) ja sävelruno Tapiola (1926). Suomessa Sibeliuksen syntymäpäivä 8. joulukuuta on liputuspäivä, suomalaisen musiikin päivä.'),
-('2',NOW(),NULL,'<h2>Ari-Pekan uusimmat uutiset</h2>','<p>Suomalainen olympiauimari  kaapista ulos - *Vihdoin voin olla oma* itseni Olympiatason uimari Ari-Pekka Liukkonen kertoi olevansa homoseksuaali Ylen suorassa Urheiluviikonloppu-ohjelmassa ja sitä ennen Ylen Urheilun haastattelussa tänään. Tasan viikon päästä 25 vuotta täyttävä Liukkonen on tiettävästi ensimmäinen suomalainen huippumiesurheilija, joka on tullut julkisesti ulos kaapista uransa aikana.'),
-('3',NOW(),NOW(),'<h2>ASD päivitys</h2>','<p>ASD'),
-('1',NOW(),NULL,'<h2>ASD päivitys2</h2>','<p>ASD2'),
-('1',NOW(),NULL,'<h2>ASD päivitys3</h2>','<p>ASD3'),
-('1',NOW(),NOW(),'<h2>ASD päivitys4</h2>','<p>ASD4'),
-('2',NOW(),NOW(),'<h2>ASD päivitys5</h2>','<p>ASD5');
+('1',NOW(),NULL,'<h2>Kyllikki Mansikkamäki sano näin</h2>','<p>Iltakurssit olivat aikanaan oiva koulutusmuoto sisälle seuratoimintaan ja nuorisoseura-aatteeseen. Sotatalven 1943 iltakurssilaiset. Ohjaajana oli Kyllikki Mansikkamäki Nurmosta. (Juhani Yli-Rantalan arkisto) </p> '),
+('1',NOW(),NULL,'<h2>Jean Sibeliuksen salatut tarinat</h2>','<p>Sibeliuksen keskeisimmät teokset ovat hänen seitsemän sinfoniaansa. Sinfonioiden lisäksi hänen tunnetuimmat teoksensa ovat viulukonsertto sekä orkesteriteokset Finlandia, Karelia-sarja, Tuonelan joutsen (osa Lemminkäinen-sarjaa) ja Valse triste. Hänen muihin teoksiinsa kuuluu muun muassa vokaali-, kuoro- ja pianomusiikkia, näytelmämusiikkia ja kamarimusiikkia. Sibeliuksen viimeiset suurimuotoiset teokset olivat seitsemäs sinfonia (1924), näyttämöteos Myrsky (1926) ja sävelruno Tapiola (1926). Suomessa Sibeliuksen syntymäpäivä 8. joulukuuta on liputuspäivä, suomalaisen musiikin päivä.</p>'),
+('2',NOW(),NULL,'<h2>Ari-Pekan uusimmat uutiset</h2>','<p>Suomalainen olympiauimari  kaapista ulos - *Vihdoin voin olla oma* itseni Olympiatason uimari Ari-Pekka Liukkonen kertoi olevansa homoseksuaali Ylen suorassa Urheiluviikonloppu-ohjelmassa ja sitä ennen Ylen Urheilun haastattelussa tänään. Tasan viikon päästä 25 vuotta täyttävä Liukkonen on tiettävästi ensimmäinen suomalainen huippumiesurheilija, joka on tullut julkisesti ulos kaapista uransa aikana.</p>'),
+('3',NOW(),NOW(),'<h2>ASD päivitys</h2>','<p>ASD</p>'),
+('1',NOW(),NULL,'<h2>ASD päivitys2</h2>','<p>ASD2</p>'),
+('1',NOW(),NULL,'<h2>ASD päivitys3</h2>','<p>ASD3</p>'),
+('1',NOW(),NOW(),'<h2>ASD päivitys4</h2>','<p>ASD4</p>'),
+('2',NOW(),NOW(),'<h2>ASD päivitys5</h2>','<p>ASD5</p>');
 
 insert into Kommentti (idKayttaja, idPostaus, luontiAika, vanhempi, tila, muokattu, otsikko, sisalto) values 
 ('1','1',NOW(), NULL, '0', NULL, '<h3>asd</h3>','<p>Tämä on minun eka kommenttini, pls be gentle.'),
@@ -32,9 +32,7 @@ insert into Rooli (idOikeudet, idKayttaja) values
 ('2', '1'),
 ('3', '1'),
 ('1', '2'),
-
 ('1', '3'),
-
 ('1', '4');
 
 insert into Tagi (idTagi, tagiNimi, tagiKuvaus) values

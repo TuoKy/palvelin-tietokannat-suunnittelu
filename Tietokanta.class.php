@@ -159,7 +159,7 @@ class Tietokanta {
 		
 		
     }
-	
+	//TuoKy?
 	public function luo_kommentti($otsikko, $sisalto, $idKayttaja, $postId, $idKommentti) {
 		
 		$stmt = $this->db->prepare("INSERT INTO Kommentti (otsikko, sisalto, idKayttaja, idPostaus, luontiAika, vanhempi, tila, Muokattu) VALUES(?,?,(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ),?,NOW(),?,0,NOW())");
@@ -245,6 +245,12 @@ class Tietokanta {
 		$stmt = $this->db->query("SELECT * FROM Kommentti WHERE idPostaus = ? order by luontiAika DESC");
 		$stmt->execute(array($id));
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	public function haeHenkNimi($id) {
+	$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja where idKayttaja = ?");	
+	$stmt->execute(array($id));
+	return $stmt->fetch(PDO::FETCH_ASSOC);	
 	}
 	
 	//TuoKy

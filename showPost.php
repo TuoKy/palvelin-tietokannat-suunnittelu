@@ -1,7 +1,7 @@
 <div class="container">		
 	<?php
 		$_SESSION['postId']=$_GET['post'];
-		$rivi = $dbTouch->showPost($_GET['post']);			
+		$rivi = $dbTouch->showPost($_GET['post']);		
 		echo "<div class='content'>";
 		echo "<a href='index.php?page=showPost&post={$rivi['idPostaus']}'>{$rivi['otsikko']}</a>";
 		echo "{$rivi['sisalto']}  Kirjoittaja:{$rivi['idKayttaja']} <br> Luotu: {$rivi['luontiAika']}<br> Muokattu: {$rivi['muokattu']}";
