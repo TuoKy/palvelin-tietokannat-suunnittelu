@@ -1,5 +1,5 @@
 <?php
-$row = $dbTouch->show_user($_SESSION['manageUserId']);
+@$row = $dbTouch->show_user($_SESSION['manageUserId']);
 ?>
 
 <div class="container">
