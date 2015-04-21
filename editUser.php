@@ -43,11 +43,11 @@ $row = $dbTouch->show_user($_SESSION['manageUserId']);
 			<input type="email" name="email" value=<?php echo $row['email'];?>><br />
 			<?php
 			foreach($allPrivileges as $key => $value) { ?>
-				<input type="checkbox" name="privilegeBox[]" value="<?php echo $key; ?>" <?php if(isset($editedPrivileges[$key])) echo "checked='checked'"; ?>  /><?php echo $key; ?><br />
+				<label><?php echo $key; ?><input type="checkbox" name="privilegeBox[]" value="<?php echo $key; ?>" <?php if(isset($editedPrivileges[$key])) echo "checked='checked'"; ?>/></label>
 			<?php
 			}
 			?>
-
+			<br>
 			<button type="submit" name ="save" class="btn btn-default">Save changes</button>
 			<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>
 			</form>
