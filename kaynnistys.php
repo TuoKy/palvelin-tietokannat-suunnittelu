@@ -19,10 +19,9 @@ try {
 
 
 $stmt = $db->query("SELECT * FROM Kayttaja;");
-$stmt->fetchAll(PDO::FETCH_ASSOC);
-var_dump($stmt);
+$temp = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach($stmt as $row) {
+foreach($temp as $row) {
     $salasana_hash = $bcrypt->hash($row['salasana']);
     var_dump($salasana_hash);
     var_dump($row);

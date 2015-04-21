@@ -30,12 +30,11 @@ class Tietokanta {
     /* Tarkistetaan olivatko annetut tunnukset oikein ja jos olivat niin palautetaan
     sisään kirjautuneen käyttäjän id. Muuten palautetaan false */
 	public function kirjaudu_sisaan($kayttajaNimi, $salasana) {
-        $salasana_hash = $this->bcrypt->hash($salasana);
-		$stmt = $this->db->prepare("SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
-		$stmt->execute(array($kayttajaNimi, $salasana_hash));
+		$stmt = $this->db->prepare("SELECT idKayttaja, salasana FROM Kayttaja WHERE kayttajaNimi = ?");
+		$stmt->execute(array($kayttajaNimi));
 		
-		if ($stmt->rowCount() == 1) {
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($this->bcrypt->verify($salasana, $row['salasana'])) {
 			return $row['idKayttaja'];
 		} else {
 			return false;
