@@ -321,9 +321,7 @@ class Tietokanta {
 	}
 	
 	//Tekijä: Leppänen
-	public function deleteUser($idKayttaja) {		
-		$stmt = $this->db->prepare('DELETE FROM Rooli WHERE idKayttaja = ?');
-		$stmt->execute(array($idKayttaja));
+	public function deleteUser($idKayttaja) {	
 		$stmt = $this->db->prepare('DELETE FROM Kayttaja WHERE idKayttaja = ?');
 		$stmt->execute(array($idKayttaja));
     }
