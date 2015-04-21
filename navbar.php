@@ -45,10 +45,10 @@
 				$form = <<<FORM
 				<form class="navbar-form navbar-right" role="search" method="post" action="{$_SERVER['PHP_SELF']}">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+                        <input type="text" autocomplete="off" class="form-control" name="username" placeholder="Username">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="password" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
                     </div>
                     <button type="submit" name ="signIn" class="btn btn-default">Sign In</button>
 					<button type="submit" name ="register" style="margin-left:50px" class="btn btn-default">Register</button>

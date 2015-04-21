@@ -11,7 +11,7 @@
 			<label>Password</label>
 			<input type="text" name="password" maxlength="32"><br />
 			<label>Email</label>
-			<input type="text" name="email" maxlength="32"><br />
+			<input type="email" name="email" maxlength="32"><br />
 			<button type="submit" name ="register" class="btn btn-default">Register</button>
 			<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>
 			</form>
