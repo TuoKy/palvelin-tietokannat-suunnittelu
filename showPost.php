@@ -5,7 +5,7 @@
 		echo "<div class='content'>";
 		echo "<a href='index.php?page=showPost&post={$rivi['idPostaus']}'>{$rivi['otsikko']}</a>";
 		echo "{$rivi['sisalto']}  Kirjoittaja:{$rivi['idKayttaja']} <br> Luotu: {$rivi['luontiAika']}<br> Muokattu: {$rivi['muokattu']}";
-		if ($_SESSION['app2_islogged'] != false) echo "<span class='right'><button type='button' class='btn btn-default' data-toggle='collapse' data-target='#comment'>Kommentoi</button></span><br>";
+		if (@$_SESSION['app2_islogged'] != false) echo "<span class='right'><button type='button' class='btn btn-default' data-toggle='collapse' data-target='#comment'>Kommentoi</button></span><br>";
 		echo "</div>";
 			
 		$comment=0;

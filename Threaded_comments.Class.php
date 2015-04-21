@@ -47,7 +47,7 @@
 OUTPUTEND;
 		echo $output;
 		// Jaoin tämän sen takia, että nyt kommentointi nappula ei tule näkyviin jos ei ole kirjautuneena. Manninen
-		if ($_SESSION['app2_islogged'] != false) echo "<span class='right'><button type='button' class='btn btn-default' data-toggle='collapse' data-target='#{$comment['idKommentti']}'>Kommentoi</button></span><br>";
+		if (@$_SESSION['app2_islogged'] != false) echo "<span class='right'><button type='button' class='btn btn-default' data-toggle='collapse' data-target='#{$comment['idKommentti']}'>Kommentoi</button></span><br>";
 		echo "<br></div>";
 		echo "<div id='{$comment['idKommentti']}' class='collapse' class='commentDiv'>			 		
 			<div class='content'>			
