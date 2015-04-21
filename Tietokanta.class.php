@@ -1,15 +1,18 @@
 <?php
+require_once ("Bcrypt.class.php");
 
 class Tietokanta {
-    //private $stmt;
 	private $db;
+    private $bcrypt;
 	
     function __construct() {
 		try {
-			//require_once ("/home/H3543/db-init-harkkatyo.php");
-			require_once ("../palvelin/myslijuttu/hurhur2.php");
+			require_once ("/home/H3543/db-init-harkkatyo.php");
+			//require_once ("../palvelin/myslijuttu/hurhur2.php");
 			//require_once ("../php-dbconfig/db-init.php");			
 			
+            $this->bcrypt = new Bcrypt(15);
+            
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
 			
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -27,8 +30,9 @@ class Tietokanta {
     /* Tarkistetaan olivatko annetut tunnukset oikein ja jos olivat niin palautetaan
     sisään kirjautuneen käyttäjän id. Muuten palautetaan false */
 	public function kirjaudu_sisaan($kayttajaNimi, $salasana) {
+        $salasana_hash = $this->bcrypt->hash($salasana);
 		$stmt = $this->db->prepare("SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
-		$stmt->execute(array($kayttajaNimi, $salasana));
+		$stmt->execute(array($kayttajaNimi, $salasana_hash));
 		
 		if ($stmt->rowCount() == 1) {
 			$row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -71,8 +75,9 @@ class Tietokanta {
 		if ($stmt->rowCount() == 1) {
 			return false;
 		} else {
+            $salasana_hash = $this->bcrypt->hash($salasana);
 			$stmt = $this->db->prepare("INSERT INTO Kayttaja (kayttajaNimi, email, salasana, liittymisPaiva) VALUES(?,?,?,NOW())");
-			$stmt->execute(array($kayttajaNimi, $email, $salasana));
+			$stmt->execute(array($kayttajaNimi, $email, $salasana_hash));
 			
 			$stmt = $this->db->prepare("insert into Rooli (idOikeudet, idKayttaja) values( 1,
 									(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ))");
@@ -82,6 +87,7 @@ class Tietokanta {
 		}
     }
 	
+    //Tekijä: Leppänen
 	public function vaihda_salasana($kayttajaNimi, $vanhaSalasana, $uusiSalasana) {
 		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
 		$stmt->execute(array($kayttajaNimi, $vanhaSalasana));
@@ -115,6 +121,7 @@ class Tietokanta {
 			$stmt->execute(array($otsikko, $sisalto, $idKommentti));
 	}
 	
+    //Tekijä: Leppänen
 	public function kayttajatiedot() {
 		$stmt = $this->db->query("SELECT * FROM Kayttajatiedot ORDER BY idKayttaja;");
 			
@@ -247,6 +254,7 @@ class Tietokanta {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
+    //Tekijä: Leppänen
 	public function haeHenkNimi($id) {
 	$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja where idKayttaja = ?");	
 	$stmt->execute(array($id));
