@@ -13,6 +13,5 @@ if (isset($_POST['otsikko']) AND isset($_POST['newComment'])){
 }
 header("Location: index.php?page=showPost&post={$_SESSION['postId']}");
 }
-else if (isset($_POST['post']) AND $_SESSION['app2_islogged'] == false)
-	 echo "Ei oikeuksia / virhe";
+
 ?>

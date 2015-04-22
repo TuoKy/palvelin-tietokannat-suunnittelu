@@ -15,7 +15,7 @@
 			<div class="content">			
 			<form method="post" action="newComment.php?comment=<?php echo $comment['idKommentti']?>">
 			<label>Otsikko</label>
-				<input type="text" maxlength="36" name="otsikko"> <br/>
+				<input type="text" maxlength="36" name="otsikko" required> <br/>
 			<label>Sisältö</label>	
 				<textarea name="newComment" class="Comment" >  </textarea>
 				<input type="hidden" name="idKommentti" value="<?php echo $comment['idKommentti'] ?>">
