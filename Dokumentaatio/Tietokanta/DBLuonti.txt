@@ -1,6 +1,13 @@
+-- -----------------------------------------------------
+-- Seuraavat 3 riviä ovat scripteja ilmeisesti
+-- -----------------------------------------------------
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema H3408_3
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema H3408_3
@@ -15,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Kayttaja` (
   `idKayttaja` INT NOT NULL AUTO_INCREMENT,
   `kayttajaNimi` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `salasana` VARCHAR(45) NULL,
+  `salasana` VARCHAR(255) NOT NULL,
   `liittymisPaiva` DATETIME NULL,
   PRIMARY KEY (`idKayttaja`),
   UNIQUE INDEX `kayttajaNimi_UNIQUE` (`kayttajaNimi` ASC))
@@ -144,6 +151,7 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 -- -----------------------------------------------------
 -- Nämä Temput tekee view:n nimeltä Kayttajatiedot

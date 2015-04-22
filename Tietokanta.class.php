@@ -1,14 +1,17 @@
 <?php
-
+require_once ("Bcrypt.class.php");
 class Tietokanta {
-    //private $stmt;
+
 	private $db;
+	private $bcrypt;
 	
     function __construct() {
 		try {
 			//require_once ("/home/H3543/db-init-harkkatyo.php");
 			require_once ("../palvelin/myslijuttu/hurhur2.php");
 			//require_once ("../php-dbconfig/db-init.php");			
+			
+			$this->bcrypt = new Bcrypt(15);
 			
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
 			
@@ -27,11 +30,11 @@ class Tietokanta {
     /* Tarkistetaan olivatko annetut tunnukset oikein ja jos olivat niin palautetaan
     sisään kirjautuneen käyttäjän id. Muuten palautetaan false */
 	public function kirjaudu_sisaan($kayttajaNimi, $salasana) {
-		$stmt = $this->db->prepare("SELECT idKayttaja FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
-		$stmt->execute(array($kayttajaNimi, $salasana));
+				$stmt = $this->db->prepare("SELECT idKayttaja, salasana FROM Kayttaja WHERE kayttajaNimi = ?");
+		$stmt->execute(array($kayttajaNimi));
 		
-		if ($stmt->rowCount() == 1) {
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($this->bcrypt->verify($salasana, $row['salasana'])) {
 			return $row['idKayttaja'];
 		} else {
 			return false;
@@ -71,8 +74,9 @@ class Tietokanta {
 		if ($stmt->rowCount() == 1) {
 			return false;
 		} else {
+			$salasana_hash = $this->bcrypt->hash($salasana);
 			$stmt = $this->db->prepare("INSERT INTO Kayttaja (kayttajaNimi, email, salasana, liittymisPaiva) VALUES(?,?,?,NOW())");
-			$stmt->execute(array($kayttajaNimi, $email, $salasana));
+			$stmt->execute(array($kayttajaNimi, $email, $salasana_hash));
 			
 			$stmt = $this->db->prepare("insert into Rooli (idOikeudet, idKayttaja) values( 1,
 									(SELECT idKayttaja FROM Kayttaja where kayttajaNimi = ? ))");
