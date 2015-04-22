@@ -2,32 +2,32 @@
 @$editedPrivileges = $dbTouch->oikeudet($_SESSION['manageUserId']);
 
 if (isset($_POST['save'])){
-			$email = $_POST['email'];
-			
-			@$checkedBoxes = $_POST['privilegeBox'];
-			
-			if(!empty($checkedBoxes)) {
-				foreach($allPrivileges as $key => $value) {
-					//Ensin tarkistetaan onko käyttäjälle lisätty oikeuksia
-					if(in_array($key, $checkedBoxes) && !isset($editedPrivileges[$key])) {
-						//Insert
-						$dbTouch->lisaa_rooli($_SESSION['manageUserId'], $value);
-					}//Sitten tarkistetaan onko käyttäjältä poistettu oikeuksia
-					else if(!in_array($key, $checkedBoxes) && isset($editedPrivileges[$key])) {
-						//Delete
-						$dbTouch->poista_rooli($_SESSION['manageUserId'], $value);
-					}
-				}
-			} else { ?>
-				<script>alert("Käyttäjällä täytyy olla ainakin yksi oikeus.")</script>
-			<?php
+	$email = $_POST['email'];
+	
+	@$checkedBoxes = $_POST['privilegeBox'];
+	
+	if(!empty($checkedBoxes)) {
+		foreach($allPrivileges as $key => $value) {
+			//Ensin tarkistetaan onko käyttäjälle lisätty oikeuksia
+			if(in_array($key, $checkedBoxes) && !isset($editedPrivileges[$key])) {
+				//Insert
+				$dbTouch->lisaa_rooli($_SESSION['manageUserId'], $value);
+			}//Sitten tarkistetaan onko käyttäjältä poistettu oikeuksia
+			else if(!in_array($key, $checkedBoxes) && isset($editedPrivileges[$key])) {
+				//Delete
+				$dbTouch->poista_rooli($_SESSION['manageUserId'], $value);
 			}
-			// Päivitetään sähköposti käyttäjän tietoihin
-			$dbTouch->muokkaa_kayttaja($_SESSION['manageUserId'], $email);
-            
-			
-            // Tarkasta uudelleen käyttäjän oikeudet muutosten jälkeen
-            @$editedPrivileges = $dbTouch->oikeudet($_SESSION['manageUserId']);
+		}
+	} else { ?>
+		<script>alert("Käyttäjällä täytyy olla ainakin yksi oikeus.")</script>
+	<?php
+	}
+	// Päivitetään sähköposti käyttäjän tietoihin
+	$dbTouch->muokkaa_kayttaja($_SESSION['manageUserId'], $email);
+          
+	
+          // Tarkasta uudelleen käyttäjän oikeudet muutosten jälkeen
+          @$editedPrivileges = $dbTouch->oikeudet($_SESSION['manageUserId']);
 }
 else if (isset($_POST['cancel'])){
     header('Location: index.php?page=showUsers');
@@ -35,7 +35,6 @@ else if (isset($_POST['cancel'])){
 else if (isset($_POST['passwordButton'])){
 	$salasana = $_POST['password'];
     // Päivitetään salasana käyttäjän tietoihin
-	var_dump($salasana);
 	$dbTouch->admin_vaihda_salasana($_SESSION['manageUserId'], $salasana);
 }
 

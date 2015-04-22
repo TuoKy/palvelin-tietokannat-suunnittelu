@@ -48,7 +48,7 @@ class Tietokanta {
 	   //Tekijä: Leppänen
     /* Funktiolle tuodaan käyttäjän id ja se palauttaa taulukon joka sisältää kaikki tämän käyttäjän oikeudet */
 	public function oikeudet($idKayttaja) {
-		$stmt = $this->db->prepare("select Oikeus.oikeusNimi from Oikeus left join Rooli on Oikeus.idOikeudet = Rooli.idOikeudet where Rooli.idKayttaja = ?");
+		$stmt = $this->db->prepare("select Oikeus.oikeusNimi from Oikeus left join Rooli on Oikeus.idOikeudet = Rooli.idOikeudet where Rooli.idKayttaja = ? ORDER BY Oikeus.oikeusNimi DESC");
 		$stmt->execute(array($idKayttaja));
 		
 		while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -101,13 +101,15 @@ class Tietokanta {
 	
     //Tekijä: Leppänen
 	public function vaihda_salasana($idKayttaja, $vanhaSalasana, $uusiSalasana) {
-		$stmt = $this->db->prepare("SELECT salasana FROM Kayttaja WHERE idKayttaja = ? AND salasana = ?");
-		$stmt->execute(array($idKayttaja, $vanhaSalasana));
+		$stmt = $this->db->prepare("SELECT idKayttaja, salasana FROM Kayttaja WHERE idKayttaja = ?");
+		$stmt->execute(array($idKayttaja));
 		
-		if ($stmt->rowCount() == 1) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($this->bcrypt->verify($vanhaSalasana, $row['salasana'])) {
+			$salasana_hash = $this->bcrypt->hash($uusiSalasana);
 			$stmt = $this->db->prepare("UPDATE Kayttaja SET salasana=? WHERE idKayttaja=?");
-			$stmt->execute(array($uusiSalasana, $idKayttaja));
-			
+			$stmt->execute(array($salasana_hash, $idKayttaja));
+
 			return true;
 		} else {
 			return false;

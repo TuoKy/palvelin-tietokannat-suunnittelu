@@ -22,6 +22,8 @@ $requiredPrivileges = array(
     'listPosts' => 'Free',
     'register' => 'Free',
     'showPost' => 'Free',
+	
+	'editMyInfo' => 'Any',
     
 );
 //permissions are as follows:
@@ -37,7 +39,7 @@ if(isset($_GET['page'])) {
     }
 }
 
-if (!empty($page) && (($requiredPrivileges[$page] == 'Free') || isset($yourPrivileges[$requiredPrivileges[$page]]))) {
+if (!empty($page) && (($requiredPrivileges[$page] == 'Free') || isset($yourPrivileges[$requiredPrivileges[$page]]) || ($requiredPrivileges[$page] == 'Any' && !empty($yourPrivileges)))) {
 	$page .= '.php';
 	include($page);
 }

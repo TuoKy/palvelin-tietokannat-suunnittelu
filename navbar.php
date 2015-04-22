@@ -33,7 +33,11 @@
                 </ul>
 
 				<?php
-				if(!empty($yourPrivileges)){	
+				if(!empty($yourPrivileges)){ ?>
+					<ul class="nav navbar-nav">
+						<li><a href="index.php?page=editMyInfo">My Account</a></li>
+					</ul>
+					<?php
 					foreach($yourPrivileges as $key => $value) {
 						$navFile = 'nav'.$key.'.php';
 						if(file_exists($navFile)) {
