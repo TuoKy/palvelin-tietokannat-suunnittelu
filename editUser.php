@@ -38,7 +38,7 @@ $row = $dbTouch->show_user($_SESSION['manageUserId']);
 			<label>Name</label>
 			<input type="text" name="name" value=<?php echo $row['kayttajaNimi'];?> readonly><br />
 			<label>Password</label>
-			<input type="text" name="password" value=<?php echo $row['salasana'];?>><br />
+			<input type="text" name="password"><button type="submit" name ="password" class="btn btn-default">Change password</button><br />
 			<label>Email</label>
 			<input type="email" name="email" value=<?php echo $row['email'];?>><br />
 			<?php
