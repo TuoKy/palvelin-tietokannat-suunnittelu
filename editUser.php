@@ -2,9 +2,7 @@
 @$editedPrivileges = $dbTouch->oikeudet($_SESSION['manageUserId']);
 
 if (isset($_POST['save'])){
-			$kayttajaNimi = $_POST['name'];
 			$email = $_POST['email'];
-			$salasana = $_POST['password'];
 			
 			foreach($allPrivileges as $key => $value) {
 				$checkedBoxes = $_POST['privilegeBox'];
@@ -18,14 +16,20 @@ if (isset($_POST['save'])){
 					$dbTouch->poista_rooli($_SESSION['manageUserId'], $value);
 				}
 			}
-			// Päivitetään sähköposti ja salasana käyttäjän tietoihin
-			$dbTouch->muokkaa_kayttaja($kayttajaNimi, $email, $salasana);
+			// Päivitetään sähköposti käyttäjän tietoihin
+			$dbTouch->muokkaa_kayttaja($_SESSION['manageUserId'], $email);
             
             // Tarkasta uudelleen käyttäjän oikeudet muutosten jälkeen
             @$editedPrivileges = $dbTouch->oikeudet($_SESSION['manageUserId']);
 }
 else if (isset($_POST['cancel'])){
     header('Location: index.php?page=showUsers');
+}
+else if (isset($_POST['passwordButton'])){
+	$salasana = $_POST['password'];
+    // Päivitetään salasana käyttäjän tietoihin
+	var_dump($salasana);
+	$dbTouch->admin_vaihda_salasana($_SESSION['manageUserId'], $salasana);
 }
 
 $row = $dbTouch->show_user($_SESSION['manageUserId']);
@@ -38,7 +42,7 @@ $row = $dbTouch->show_user($_SESSION['manageUserId']);
 			<label>Name</label>
 			<input type="text" name="name" value=<?php echo $row['kayttajaNimi'];?> readonly><br />
 			<label>Password</label>
-			<input type="text" name="password"><button type="submit" name ="password" class="btn btn-default">Change password</button><br />
+			<input type="text" name="password"><button type="submit" name ="passwordButton" class="btn btn-default">Change password</button><br />
 			<label>Email</label>
 			<input type="email" name="email" value=<?php echo $row['email'];?>><br />
 			<?php
