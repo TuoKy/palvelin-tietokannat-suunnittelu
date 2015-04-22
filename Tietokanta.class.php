@@ -1,30 +1,21 @@
 <?php
 require_once ("Bcrypt.class.php");
-<<<<<<< HEAD
+
 class Tietokanta {
 
 	private $db;
 	private $bcrypt;
-=======
-
-class Tietokanta {
-	private $db;
-    private $bcrypt;
->>>>>>> origin/master
 	
     function __construct() {
 		try {
-			require_once ("/home/H3543/db-init-harkkatyo.php");
-			//require_once ("../palvelin/myslijuttu/hurhur2.php");
+			//require_once ("/home/H3543/db-init-harkkatyo.php");
+			require_once ("../palvelin/myslijuttu/hurhur2.php");
 			//require_once ("../php-dbconfig/db-init.php");			
 			
-<<<<<<< HEAD
+
 			$this->bcrypt = new Bcrypt(15);
 			
-=======
-            $this->bcrypt = new Bcrypt(15);
-            
->>>>>>> origin/master
+
 			$this->db = new PDO('mysql:host=mysql.labranet.jamk.fi;dbname='. DB_NAME .';charset=utf8', USER_NAME, PASSWORD);
 			
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -42,17 +33,10 @@ class Tietokanta {
     /* Tarkistetaan olivatko annetut tunnukset oikein ja jos olivat niin palautetaan
     sisään kirjautuneen käyttäjän id. Muuten palautetaan false */
 	public function kirjaudu_sisaan($kayttajaNimi, $salasana) {
-<<<<<<< HEAD
-				$stmt = $this->db->prepare("SELECT idKayttaja, salasana FROM Kayttaja WHERE kayttajaNimi = ?");
-		$stmt->execute(array($kayttajaNimi));
-		
-		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-=======
 		$stmt = $this->db->prepare("SELECT idKayttaja, salasana FROM Kayttaja WHERE kayttajaNimi = ?");
 		$stmt->execute(array($kayttajaNimi));
 		
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
->>>>>>> origin/master
 		if ($this->bcrypt->verify($salasana, $row['salasana'])) {
 			return $row['idKayttaja'];
 		} else {
@@ -93,11 +77,8 @@ class Tietokanta {
 		if ($stmt->rowCount() == 1) {
 			return false;
 		} else {
-<<<<<<< HEAD
 			$salasana_hash = $this->bcrypt->hash($salasana);
-=======
-            $salasana_hash = $this->bcrypt->hash($salasana);
->>>>>>> origin/master
+
 			$stmt = $this->db->prepare("INSERT INTO Kayttaja (kayttajaNimi, email, salasana, liittymisPaiva) VALUES(?,?,?,NOW())");
 			$stmt->execute(array($kayttajaNimi, $email, $salasana_hash));
 			
