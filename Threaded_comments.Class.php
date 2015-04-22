@@ -53,7 +53,7 @@ OUTPUTEND;
 			<div class='content'>			
 			<form method='post' action='newComment.php?comment= {$comment['idKommentti']}'>
 			<label>Otsikko</label>
-				<input type='text' name='otsikko' maxlength='38'> <br/>
+				<input type='text' name='otsikko' maxlength='38' required> <br/>
 			<label>Sisältö</label>	
 				<textarea name='newComment' class='Comment' >  </textarea>
 				<input type='hidden' name='idKommentti' value='{$comment['idKommentti']}'>

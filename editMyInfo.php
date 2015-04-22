@@ -31,7 +31,7 @@ $row = $dbTouch->show_user($_SESSION['idKayttaja']);
 			<label>Name</label>
 			<input type="text" name="name" value=<?php echo $row['kayttajaNimi'];?> readonly><br />
 			<label>Email</label>
-			<input type="email" name="email" value=<?php echo $row['email'];?> maxlength="32"><br />
+			<input type="email" name="email" value=<?php echo $row['email'];?> maxlength="32" required><br />
 			<br>
 			<button type="submit" name ="save" class="btn btn-default">Save changes</button>
 			<button type="submit" name ="cancel" class="btn btn-default">Cancel</button>
