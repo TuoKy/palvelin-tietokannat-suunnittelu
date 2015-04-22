@@ -6,19 +6,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema H3408_3
+-- Schema H3543_2
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema H3408_3
+-- Schema H3543_2
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `H3408_3` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `H3408_3` ;
+CREATE SCHEMA IF NOT EXISTS `H3543_2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `H3543_2` ;
 
 -- -----------------------------------------------------
--- Table `H3408_3`.`Kayttaja`
+-- Table `H3543_2`.`Kayttaja`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3408_3`.`Kayttaja` (
+CREATE TABLE IF NOT EXISTS `H3543_2`.`Kayttaja` (
   `idKayttaja` INT NOT NULL AUTO_INCREMENT,
   `kayttajaNimi` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
@@ -30,9 +30,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3408_3`.`Postaus`
+-- Table `H3543_2`.`Postaus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3408_3`.`Postaus` (
+CREATE TABLE IF NOT EXISTS `H3543_2`.`Postaus` (
   `idPostaus` INT NOT NULL AUTO_INCREMENT,
   `otsikko` VARCHAR(45) NULL,
   `sisalto` LONGTEXT NULL,
@@ -43,16 +43,16 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Postaus` (
   INDEX `fk_Merkinta_Kayttaja_idx` (`idKayttaja` ASC),
   CONSTRAINT `fk_Merkinta_Kayttaja`
     FOREIGN KEY (`idKayttaja`)
-    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
+    REFERENCES `H3543_2`.`Kayttaja` (`idKayttaja`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3408_3`.`Kommentti`
+-- Table `H3543_2`.`Kommentti`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3408_3`.`Kommentti` (
+CREATE TABLE IF NOT EXISTS `H3543_2`.`Kommentti` (
   `idKommentti` INT NOT NULL AUTO_INCREMENT,
   `otsikko` VARCHAR(45) NOT NULL,
   `sisalto` TEXT NULL,
@@ -67,21 +67,21 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Kommentti` (
   INDEX `fk_Kommnetti_Merkinta1_idx` (`idPostaus` ASC),
   CONSTRAINT `fk_Kommnetti_Kayttaja1`
     FOREIGN KEY (`idKayttaja`)
-    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
+    REFERENCES `H3543_2`.`Kayttaja` (`idKayttaja`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Kommnetti_Merkinta1`
     FOREIGN KEY (`idPostaus`)
-    REFERENCES `H3408_3`.`Postaus` (`idPostaus`)
+    REFERENCES `H3543_2`.`Postaus` (`idPostaus`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3408_3`.`Oikeus`
+-- Table `H3543_2`.`Oikeus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3408_3`.`Oikeus` (
+CREATE TABLE IF NOT EXISTS `H3543_2`.`Oikeus` (
   `idOikeudet` INT NOT NULL,
   `oikeusNimi` VARCHAR(45) NOT NULL,
   `oikeusKuvaus` VARCHAR(45) NULL,
@@ -91,9 +91,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3408_3`.`Rooli`
+-- Table `H3543_2`.`Rooli`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3408_3`.`Rooli` (
+CREATE TABLE IF NOT EXISTS `H3543_2`.`Rooli` (
   `idOikeudet` INT NOT NULL,
   `idKayttaja` INT NOT NULL,
   `aktiivinen` BIT NULL,
@@ -103,21 +103,21 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Rooli` (
   PRIMARY KEY (`idOikeudet`, `idKayttaja`),
   CONSTRAINT `fk_Oikeudet_has_Kayttaja_Oikeudet1`
     FOREIGN KEY (`idOikeudet`)
-    REFERENCES `H3408_3`.`Oikeus` (`idOikeudet`)
+    REFERENCES `H3543_2`.`Oikeus` (`idOikeudet`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Oikeudet_has_Kayttaja_Kayttaja1`
     FOREIGN KEY (`idKayttaja`)
-    REFERENCES `H3408_3`.`Kayttaja` (`idKayttaja`)
+    REFERENCES `H3543_2`.`Kayttaja` (`idKayttaja`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3408_3`.`Tagi`
+-- Table `H3543_2`.`Tagi`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3408_3`.`Tagi` (
+CREATE TABLE IF NOT EXISTS `H3543_2`.`Tagi` (
   `idTagi` INT NOT NULL AUTO_INCREMENT,
   `tagiNimi` VARCHAR(45) NOT NULL,
   `tagiKuvaus` VARCHAR(45) NULL,
@@ -127,9 +127,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `H3408_3`.`Esiintyma`
+-- Table `H3543_2`.`Esiintyma`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `H3408_3`.`Esiintyma` (
+CREATE TABLE IF NOT EXISTS `H3543_2`.`Esiintyma` (
   `idPostaus` INT NOT NULL,
   `idTagi` INT NOT NULL,
   PRIMARY KEY (`idPostaus`, `idTagi`),
@@ -137,12 +137,12 @@ CREATE TABLE IF NOT EXISTS `H3408_3`.`Esiintyma` (
   INDEX `fk_Postaus_has_Tagi_Postaus1_idx` (`idPostaus` ASC),
   CONSTRAINT `fk_Postaus_has_Tagi_Postaus1`
     FOREIGN KEY (`idPostaus`)
-    REFERENCES `H3408_3`.`Postaus` (`idPostaus`)
+    REFERENCES `H3543_2`.`Postaus` (`idPostaus`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Postaus_has_Tagi_Tagi1`
     FOREIGN KEY (`idTagi`)
-    REFERENCES `H3408_3`.`Tagi` (`idTagi`)
+    REFERENCES `H3543_2`.`Tagi` (`idTagi`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

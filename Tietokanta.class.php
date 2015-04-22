@@ -8,8 +8,8 @@ class Tietokanta {
 	
     function __construct() {
 		try {
-			//require_once ("/home/H3543/db-init-harkkatyo.php");
-			require_once ("../palvelin/myslijuttu/hurhur2.php");
+			require_once ("/home/H3543/db-init-harkkatyo.php");
+			//require_once ("../palvelin/myslijuttu/hurhur2.php");
 			//require_once ("../php-dbconfig/db-init.php");			
 			
 
@@ -90,14 +90,22 @@ class Tietokanta {
 		}
     }
 	
+	//Tekijä: Leppänen
+	public function admin_vaihda_salasana($idKayttaja, $uusiSalasana) {
+		
+		$salasana_hash = $this->bcrypt->hash($uusiSalasana);
+		$stmt = $this->db->prepare("UPDATE Kayttaja SET salasana=? WHERE idKayttaja=?");
+		$stmt->execute(array($salasana_hash, $idKayttaja));
+    }
+	
     //Tekijä: Leppänen
-	public function vaihda_salasana($kayttajaNimi, $vanhaSalasana, $uusiSalasana) {
-		$stmt = $this->db->prepare("SELECT kayttajaNimi FROM Kayttaja WHERE kayttajaNimi = ? AND salasana = ?");
-		$stmt->execute(array($kayttajaNimi, $vanhaSalasana));
+	public function vaihda_salasana($idKayttaja, $vanhaSalasana, $uusiSalasana) {
+		$stmt = $this->db->prepare("SELECT salasana FROM Kayttaja WHERE idKayttaja = ? AND salasana = ?");
+		$stmt->execute(array($idKayttaja, $vanhaSalasana));
 		
 		if ($stmt->rowCount() == 1) {
-			$stmt = $this->db->prepare("UPDATE Kayttaja SET salasana=? WHERE kayttajaNimi=?");
-			$stmt->execute(array($uusiSalasana, $kayttajaNimi));
+			$stmt = $this->db->prepare("UPDATE Kayttaja SET salasana=? WHERE idKayttaja=?");
+			$stmt->execute(array($uusiSalasana, $idKayttaja));
 			
 			return true;
 		} else {
@@ -107,9 +115,9 @@ class Tietokanta {
 
 	//Tekijä: Leppänen
     /* Funktiolle tuodaan käyttäjän nimi sähköposti ja salasana, ja nimen perusteella päivitetään kaksi jälkimmäistä tietoa tietokantaan */
-    public function muokkaa_kayttaja($kayttajaNimi, $email, $salasana) {
-		$stmt = $this->db->prepare("UPDATE Kayttaja SET email=?, salasana=? WHERE kayttajaNimi=?;");
-		$stmt->execute(array($email, $salasana, $kayttajaNimi));
+    public function muokkaa_kayttaja($idKayttaja, $email) {
+		$stmt = $this->db->prepare("UPDATE Kayttaja SET email=? WHERE idKayttaja=?;");
+		$stmt->execute(array($email, $idKayttaja));
     }
 	
 	//Tekijä: Manninen
