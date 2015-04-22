@@ -2,14 +2,10 @@
 require_once ("Bcrypt.class.php");
 
 try {
-<<<<<<< HEAD
+
 	//require_once ("/home/H3543/db-init-harkkatyo.php");
-	require_once ("../palvelin/myslijuttu/hurhur2.php");
-=======
-	require_once ("/home/H3543/db-init-harkkatyo.php");
 	//require_once ("../palvelin/myslijuttu/hurhur2.php");
->>>>>>> origin/master
-	//require_once ("../php-dbconfig/db-init.php");			
+	require_once ("../php-dbconfig/db-init.php");			
 	
     $bcrypt = new Bcrypt(15);
           
