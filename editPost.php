@@ -1,3 +1,9 @@
+<?php
+if(isset($_POST['cancel'])){
+	header("Location: index.php?page=managePosts");
+}
+?>
+
 <div class="container">
 	<div class="content">
 		<?php
@@ -36,21 +42,17 @@
 </div>		
 
 <?php
-if(isset($_POST['cancel']) AND $_SESSION['app2_islogged'] == true){
-	header("Location: index.php?page=managePosts");
-}
-
-if(isset($_POST['edit']) AND $_SESSION['app2_islogged'] == true){
-if (isset($_POST['otsikko']) AND $_POST['otsikko'] === ''){ 
-	?>
-	<script>alert("Otsikko ei saa olla tyhjä!")</script><?php
-	}
-else if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
-		$otsikko = htmlentities($_POST['otsikko']);
-		$otsikko = "<h2>{$_POST['otsikko']}</h2>";
-		$dbTouch->edit_post($_GET['postaus'], $otsikko, $_POST['editPost']);
-		if(isset($_POST['avainsanat']))
-		{
+if(isset($_POST['edit'])){
+	if (isset($_POST['otsikko']) AND $_POST['otsikko'] === ''){ 
+		?>
+		<script>alert("Otsikko ei saa olla tyhjä!")</script><?php
+		}
+	else if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
+			$otsikko = htmlentities($_POST['otsikko']);
+			$otsikko = "<h2>{$_POST['otsikko']}</h2>";
+			$dbTouch->edit_post($_GET['postaus'], $otsikko, $_POST['editPost']);
+			if(isset($_POST['avainsanat']))
+			{
 			$tiedot = $dbTouch->showEsiintymaTagit($_GET['postaus']);
 			$dbTouch->deleteEsiintyma($_GET['postaus']);
 			$esiTiedot = $dbTouch->showEsiintyma();
@@ -75,15 +77,12 @@ else if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
 				$dbTouch->luo_Tagi($rivi);
 				$dbTouch->sidoMuokattuunPostiin($rivi, $_GET['postaus']);
 			}
-	}	
+		}	
+	}
 }
-else
- echo "Ei oikeuksia / virhe";
-}
-else if (isset($_POST['postaus']) AND $_SESSION['app2_islogged'] == false)
-	 echo "Ei oikeuksia / virhe";
 
-if(isset($_FILES) AND $_SESSION['app2_islogged'] == true){
+
+if(isset($_FILES)){
 
 $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG);
 @$detectedType = exif_imagetype($_FILES['image']['tmp_name']);

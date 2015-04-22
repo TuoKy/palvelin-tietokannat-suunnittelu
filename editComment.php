@@ -1,3 +1,9 @@
+<?php
+if(isset($_POST['cancel'])){
+	header("Location: index.php?page=manageComments");
+}
+?>
+
 <div class="container">
 	<div class="content">
 		<?php
@@ -24,23 +30,17 @@
 </div>		
 		
 <?php
-if(isset($_POST['cancel']) AND $_SESSION['app2_islogged'] == true){
-	header("Location: index.php?page=manageComments");
-}
-
-if(isset($_POST['edit']) AND $_SESSION['app2_islogged'] == true){
-if (isset($_POST['otsikko']) AND isset($_POST['editComment'])){
+if(isset($_POST['edit'])){
+	if (isset($_POST['otsikko']) AND isset($_POST['editComment'])){
 		$otsikko = htmlentities($_POST['otsikko']);
 		$otsikko = "<h3>{$_POST['otsikko']}</h3>";
 		$dbTouch->edit_comment($_GET['kommentti'], $otsikko, $_POST['editComment']);
-}
-else
- echo "Ei oikeuksia / virhe";
-}
-else if (isset($_POST['postaus']) AND $_SESSION['app2_islogged'] == false)
-	 echo "Ei oikeuksia / virhe";
+	}
 
-if(isset($_FILES) AND $_SESSION['app2_islogged'] == true){
+}
+
+
+if(isset($_FILES)){
 
 $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG);
 @$detectedType = exif_imagetype($_FILES['image']['tmp_name']);

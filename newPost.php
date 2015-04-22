@@ -1,4 +1,10 @@
 <?php
+if(isset($_POST['cancel'])){
+	header("Location: index.php");
+}
+?>
+
+<?php
 @session_start();
 ?>
 <div class="container">
@@ -24,7 +30,7 @@
 </div>					
 		
 <?php
-if(isset($_POST['post']) AND $_SESSION['app2_islogged'] == true){
+if(isset($_POST['post'])){
 	if (isset($_POST['otsikko']) AND $_POST['otsikko'] === ''){ 
 	?>
 	<script>alert("Otsikko ei saa olla tyhjä!")</script><?php
@@ -44,13 +50,10 @@ if(isset($_POST['post']) AND $_SESSION['app2_islogged'] == true){
 			}
 		}		
 	}
-else
- echo "Ei oikeuksia / virhe";
 }
-else if (isset($_POST['post']) AND $_SESSION['app2_islogged'] == false)
-	 echo "Ei oikeuksia / virhe";
 
-if(isset($_FILES) AND $_SESSION['app2_islogged'] == true){
+
+if(isset($_FILES)){
 
 $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG);
 @$detectedType = exif_imagetype($_FILES['image']['tmp_name']);
