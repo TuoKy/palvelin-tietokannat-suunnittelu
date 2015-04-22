@@ -41,7 +41,11 @@ if(isset($_POST['cancel']) AND $_SESSION['app2_islogged'] == true){
 }
 
 if(isset($_POST['edit']) AND $_SESSION['app2_islogged'] == true){
-if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
+if (isset($_POST['otsikko']) AND $_POST['otsikko'] === ''){ 
+	?>
+	<script>alert("Otsikko ei saa olla tyhjä!")</script><?php
+	}
+else if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
 		$otsikko = htmlentities($_POST['otsikko']);
 		$otsikko = "<h2>{$_POST['otsikko']}</h2>";
 		$dbTouch->edit_post($_GET['postaus'], $otsikko, $_POST['editPost']);
@@ -69,7 +73,7 @@ if (isset($_POST['otsikko']) AND isset($_POST['editPost'])){
 			foreach($sanat as $rivi)
 			{	
 				$dbTouch->luo_Tagi($rivi);
-				$dbTouch->sidoPostiin($rivi, $otsikko);
+				$dbTouch->sidoMuokattuunPostiin($rivi, $_GET['postaus']);
 			}
 	}	
 }

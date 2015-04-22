@@ -44,8 +44,8 @@ if (isset($_POST['edit'])) {
 							<td> {$plaa['kommenttien_lukumaara']} </td>
 							<td> {$plaa['luontiAika']} </td>
 							<td>
-								<button type='submit' name ='edit' value={$plaa['idPostaus']} class='btn btn-default'>E</button>
-								<button type='submit' name ='delete' value={$plaa['idPostaus']} class='btn btn-default'>D</button>
+								<button type='submit' name ='edit' value={$plaa['idPostaus']} class='btn btn-default'>Edit</button>
+								<button type='submit' name ='delete' value={$plaa['idPostaus']} class='btn btn-default'>Delete</button>
 							</td>
 						</tr>
 						</form>";

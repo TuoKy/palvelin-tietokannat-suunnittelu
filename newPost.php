@@ -25,21 +25,25 @@
 		
 <?php
 if(isset($_POST['post']) AND $_SESSION['app2_islogged'] == true){
-if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){		
-		$otsikko = htmlentities($_POST['otsikko']);
-		$otsikko = "<h2>$otsikko</h2>";		
-		$dbTouch->luo_postaus($otsikko, $_POST['newPost'], $_SESSION['username']); 
-	if(isset($_POST['avainsanat']))
-	{
-		$avainsanat = htmlentities($_POST['avainsanat']);
-		$avainsanat = strtolower($avainsanat);
-		$sanat = explode(",",$avainsanat);
-		foreach($sanat as $plaa){
-		$dbTouch->luo_Tagi($plaa);
-		$dbTouch->sidoPostiin($plaa);
-		}
-	}		
-}
+	if (isset($_POST['otsikko']) AND $_POST['otsikko'] === ''){ 
+	?>
+	<script>alert("Otsikko ei saa olla tyhjä!")</script><?php
+	}
+	else if (isset($_POST['otsikko']) AND isset($_POST['newPost'])){		
+			$otsikko = htmlentities($_POST['otsikko']);
+			$otsikko = "<h2>$otsikko</h2>";		
+			$dbTouch->luo_postaus($otsikko, $_POST['newPost'], $_SESSION['username']); 
+		if(isset($_POST['avainsanat']))
+		{
+			$avainsanat = htmlentities($_POST['avainsanat']);
+			$avainsanat = strtolower($avainsanat);
+			$sanat = explode(",",$avainsanat);
+			foreach($sanat as $plaa){
+			$dbTouch->luo_Tagi($plaa);
+			$dbTouch->sidoPostiin($plaa);
+			}
+		}		
+	}
 else
  echo "Ei oikeuksia / virhe";
 }

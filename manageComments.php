@@ -15,7 +15,7 @@ if (isset($_POST['edit'])) {
 				<th>Otsikko</th><th>Kommentoija</th><th>Kommentti</th><th>Päivämäärä</th><th>Hallinta</th>
 				</tr>
 				<?php
-					$tiedot = $dbTouch->listComments();
+					$tiedot = $dbTouch->listManageComments();
 					foreach($tiedot as $rivi)
 					{
 						$otsikko = strip_tags($rivi['otsikko']);
@@ -23,12 +23,12 @@ if (isset($_POST['edit'])) {
 						<form id='form' method='post' action='index.php?page=manageComments'>
 						<tr>
 							<td> <a href='index.php?page=showPost&post={$rivi['idPostaus']}'>{$otsikko}</a></td>
-							<td> {$rivi['idKayttaja']} </td>
+							<td> {$rivi['kayttajaNimi']} </td>
 							<td> {$rivi['sisalto']} </td>
 							<td> {$rivi['luontiAika']} </td>
 							<td>
-								<button type='submit' name ='edit' value={$rivi['idKommentti']} class='btn btn-default'>E</button>
-								<button type='submit' name ='delete' value={$rivi['idKommentti']} class='btn btn-default'>D</button>
+								<button type='submit' name ='edit' value={$rivi['idKommentti']} class='btn btn-default'>Edit</button>
+								<button type='submit' name ='delete' value={$rivi['idKommentti']} class='btn btn-default'>Delete</button>
 							</td>
 						</tr>
 						</form>";

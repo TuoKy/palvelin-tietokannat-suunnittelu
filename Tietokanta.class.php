@@ -9,8 +9,8 @@ class Tietokanta {
     function __construct() {
 		try {
 			//require_once ("/home/H3543/db-init-harkkatyo.php");
-			require_once ("../palvelin/myslijuttu/hurhur2.php");
-			//require_once ("../php-dbconfig/db-init.php");			
+			//require_once ("../palvelin/myslijuttu/hurhur2.php");
+			require_once ("../php-dbconfig/db-init.php");			
 			
 
 			$this->bcrypt = new Bcrypt(15);
@@ -243,6 +243,13 @@ class Tietokanta {
 	}
 	
 	//Tekijä: Manninen
+	public function listManageComments() {
+		$stmt = $this->db->query("SELECT Kommentti.idKommentti, Kommentti.otsikko, Kommentti.sisalto, Kommentti.idPostaus, Kommentti.luontiAika, Kayttaja.kayttajaNimi FROM Kommentti LEFT OUTER JOIN Kayttaja ON Kommentti.idKayttaja = Kayttaja.idKayttaja order by luontiAika DESC;");
+		$stmt->execute(array());
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	//Tekijä: Manninen
 	public function listComments() {
 		$stmt = $this->db->query("SELECT * FROM Kommentti order by luontiAika DESC");
 		$stmt->execute(array());
@@ -310,6 +317,18 @@ class Tietokanta {
 		
 		$stmt2 = $this->db->prepare("INSERT INTO Esiintyma VALUES (?,?)");
 		$stmt2->execute(array($idP,$idT));
+	}
+	
+	//Tekijä: Manninen
+	public function sidoMuokattuunPostiin($tagi, $idPostaus){
+		$stmt1 = $this->db->prepare("SELECT idTagi FROM Tagi where tagiNimi = ?");
+		$stmt1->execute(array($tagi));
+		
+		$temp2 = $stmt1->fetch(PDO::FETCH_ASSOC);
+		$idT = $temp2['idTagi'];
+		
+		$stmt2 = $this->db->prepare("INSERT INTO Esiintyma VALUES (?,?)");
+		$stmt2->execute(array($idPostaus,$idT));
 	}
 	
 	//Tekijä: Manninen
