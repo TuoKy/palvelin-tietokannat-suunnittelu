@@ -4,21 +4,28 @@
 if (isset($_POST['save'])){
 			$email = $_POST['email'];
 			
-			foreach($allPrivileges as $key => $value) {
-				$checkedBoxes = $_POST['privilegeBox'];
-				//Ensin tarkistetaan onko käyttäjälle lisätty oikeuksia
-				if(in_array($key, $checkedBoxes) && !isset($editedPrivileges[$key])) {
-					//Insert
-					$dbTouch->lisaa_rooli($_SESSION['manageUserId'], $value);
-				}//Sitten tarkistetaan onko käyttäjältä poistettu oikeuksia
-				else if(!in_array($key, $checkedBoxes) && isset($editedPrivileges[$key])) {
-					//Delete
-					$dbTouch->poista_rooli($_SESSION['manageUserId'], $value);
+			@$checkedBoxes = $_POST['privilegeBox'];
+			
+			if(!empty($checkedBoxes)) {
+				foreach($allPrivileges as $key => $value) {
+					//Ensin tarkistetaan onko käyttäjälle lisätty oikeuksia
+					if(in_array($key, $checkedBoxes) && !isset($editedPrivileges[$key])) {
+						//Insert
+						$dbTouch->lisaa_rooli($_SESSION['manageUserId'], $value);
+					}//Sitten tarkistetaan onko käyttäjältä poistettu oikeuksia
+					else if(!in_array($key, $checkedBoxes) && isset($editedPrivileges[$key])) {
+						//Delete
+						$dbTouch->poista_rooli($_SESSION['manageUserId'], $value);
+					}
 				}
+			} else { ?>
+				<script>alert("Käyttäjällä täytyy olla ainakin yksi oikeus.")</script>
+			<?php
 			}
 			// Päivitetään sähköposti käyttäjän tietoihin
 			$dbTouch->muokkaa_kayttaja($_SESSION['manageUserId'], $email);
             
+			
             // Tarkasta uudelleen käyttäjän oikeudet muutosten jälkeen
             @$editedPrivileges = $dbTouch->oikeudet($_SESSION['manageUserId']);
 }
